@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, TextInput } from "react-native-paper";
+import { Button} from "react-native-paper";
 import { StyleSheet,  Text,  } from 'react-native';
 import Screen from "../component/screen"
 const WelcomeScreen = ({ navigation }) =>{

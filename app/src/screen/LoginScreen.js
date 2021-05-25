@@ -2,7 +2,7 @@ import React from 'react';
 import {Button} from "react-native-paper";
 import { StyleSheet,Text} from 'react-native';
 import Screen from "../component/screen"
-import { NavigationContainer } from '@react-navigation/native';
+
 const LoginScreen = () =>{
 
     return (
