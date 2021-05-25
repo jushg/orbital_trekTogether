@@ -1,11 +1,22 @@
-import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { Provider as PaperProvider } from "react-native-paper";
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet} from 'react-native';
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
 import LoginScreen from "./src/screen/LoginScreen"
-import HomeScreen from "./src/screen/HomeScreen"
+import WelcomeScreen from "./src/screen/WelcomeScreen"
+import SignupScreen from "./src/screen/SignupScreen"
 import ViewProfileScreen from "./src/screen/ViewProfileScreen"
 
+
+const screens = [
+  { name: "Welcome", component: WelcomeScreen },
+  { name: "Login", component: LoginScreen },
+  { name: "Signup", component: SignupScreen },
+  // { name: "List", component: ListScreen },
+];
+
+const Stack = createStackNavigator();
 export default function App() {
   //Need to implement a reusable screen component
     //Need a logo design 
@@ -13,11 +24,16 @@ export default function App() {
     //Add navigation routes
   return (
     <PaperProvider>
-       <View style={styles.container}>
+       {/* <View style={styles.container}>
         <Text>Hi Corn! Please work on me :)))))</Text>
         <StatusBar style="auto" />
-      </View>
-     
+      </View> */}
+      
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName={screens[0].name} headerMode="none">
+          {screens.map(({ name, component }) => <Stack.Screen key={name} name={name} component={component} />)}
+        </Stack.Navigator>
+      </NavigationContainer>
     </PaperProvider>
   );
 }
