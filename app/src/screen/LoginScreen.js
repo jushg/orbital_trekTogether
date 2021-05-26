@@ -1,21 +1,42 @@
-import React from 'react';
-import {Button} from "react-native-paper";
-import { StyleSheet,Text} from 'react-native';
+import React ,{useState} from 'react';
+import {Button, TextInput} from "react-native-paper";
+import { StyleSheet,Text, View} from 'react-native';
 import Screen from "../component/screen"
 
 const LoginScreen = () =>{
-
-    return (
-      <Screen style={styles.container}>
-        <Text style = {styles.title}> TrekTogether</Text>  
-        <Text style={{marginTop:10}}>Placeholder for Username</Text>
-        <Text style={{marginTop:10}}>Placeholder for Password</Text>
-      <Button 
-      mode="contained" 
-      style={styles.loginBtn}
-      >
-          Log In
-      </Button>
+  const [email,setEmail] = useState("");
+  const [password,setPassword] = useState("");
+  const [passwordVisible,setPasswordVisible] = useState(false);
+  return (
+    <Screen style={styles.container}>
+      <View style={{flex:2,backgroundColor:"red",justifyContent:"center"}}>
+        <Text style = {styles.title}> TrekTogether</Text>
+      </View>
+      <View style={{flex:7,backgroundColor:"#F0F3BD",justifyContent:"center"}} >
+        <TextInput 
+        label="Email"
+        placeholder="johndoe@gmail.com"
+        value={email}
+        onChangeText={setEmail}
+        />
+    
+        <TextInput 
+        label="Password"
+        placeholder="123456"
+        value={password}
+        onChangeText={setPassword}
+        secureTextEntry = {passwordVisible}
+        right={<TextInput.Icon name={passwordVisible ? "eye-off" : "eye"} onPress={() => setPasswordVisible((state) => !state)} />}
+        />
+        
+        <Button 
+        mode="contained" 
+        style={styles.loginBtn}
+        >Log In
+        </Button>
+      </View>
+      <View style={{flex:1,backgroundColor:"cyan",justifyContent:"center"}} />
+      
   </Screen>
     );
 }
@@ -25,8 +46,7 @@ const styles = StyleSheet.create({
       flex: 1,
       flexDirection:"column",
       backgroundColor: '#F0F3BD',
-      alignItems: 'center',
-      justifyContent: 'center',
+      
     },
     title: {
       fontSize: 30,
