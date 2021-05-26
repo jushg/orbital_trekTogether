@@ -11,15 +11,17 @@ const SignupScreen = () =>{
 
     return (
         <Screen style ={styles.container}>
-            <View style={{flex:2, backgroundColor:"red",justifyContent:"center"}}>
+            <View style={{flex:2, backgroundColor:"red", justifyContent:"center", alignItems:"center"}}>
                 <Text style = {styles.title}> TrekTogether</Text>
             </View>
-            <View style={{flex:7,backgroundColor:"#F0F3BD",justifyContent:"center"}}>
+            <View style={{flex:7, justifyContent:"center", alignItems:"center"}}>
                 <TextInput 
                 label="Email"
                 placeholder="johndoe@gmail.com"
                 value={email}
                 onChangeText={setEmail}
+                style={{marginBottom:10, width:"90%"}}
+                autoCapitalize="none"
                 />
             
                 <TextInput 
@@ -28,6 +30,7 @@ const SignupScreen = () =>{
                 value={username}
                 autoCapitalize="words"
                 onChangeText={setUsername}
+                style={{marginBottom:10, width:"90%"}}
                 />
 
                 <TextInput 
@@ -37,13 +40,21 @@ const SignupScreen = () =>{
                 onChangeText={setPassword}
                 secureTextEntry = {passwordVisible}
                 right={<TextInput.Icon name={passwordVisible ? "eye-off" : "eye"} onPress={() => setPasswordVisible((state) => !state)} />}
+                style={{marginBottom:10, width:"90%"}}
+                autoCapitalize="none"
                 />
 
                 <Button mode="contained" style={styles.signupBtn}>
                     Sign Up
                 </Button>
+                
             </View>
-            <View style={{flex:1,backgroundColor:"cyan"}}/>    
+            <View style={{flex:1,backgroundColor:"cyan"}}>
+                
+            </View>   
+            <View style={{flex:1,backgroundColor:"cyan"}}>
+
+            </View>    
         </Screen>
     )
 }
@@ -54,7 +65,7 @@ const styles = StyleSheet.create({
         color:"#05668D"
     },
     signupBtn: {
-        width:"30%",
+        width:"90%",
         borderRadius:25,
         height:50,
         alignItems:"center",

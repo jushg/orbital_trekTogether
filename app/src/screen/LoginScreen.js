@@ -9,15 +9,17 @@ const LoginScreen = () =>{
   const [passwordVisible,setPasswordVisible] = useState(false);
   return (
     <Screen style={styles.container}>
-      <View style={{flex:2,backgroundColor:"red",justifyContent:"center"}}>
-        <Text style = {styles.title}> TrekTogether</Text>
+      <View style={{flex:2,backgroundColor:"red",justifyContent:"center",alignItems:"center"}}>
+        <Text style = {styles.title}>TrekTogether</Text>
       </View>
-      <View style={{flex:7,backgroundColor:"#F0F3BD",justifyContent:"center"}} >
+      <View style={{flex:7,justifyContent:"center",alignItems:"center"}} >
         <TextInput 
         label="Email"
         placeholder="johndoe@gmail.com"
         value={email}
         onChangeText={setEmail}
+        style={{marginBottom:10, width:"90%"}}
+        autoCapitalize="none"
         />
     
         <TextInput 
@@ -27,6 +29,8 @@ const LoginScreen = () =>{
         onChangeText={setPassword}
         secureTextEntry = {passwordVisible}
         right={<TextInput.Icon name={passwordVisible ? "eye-off" : "eye"} onPress={() => setPasswordVisible((state) => !state)} />}
+        style={{marginBottom:10, width:"90%"}}
+        autoCapitalize="none"
         />
         
         <Button 
@@ -34,11 +38,12 @@ const LoginScreen = () =>{
         style={styles.loginBtn}
         >Log In
         </Button>
+        <Text style={{marginTop:20}}>Forgot password?</Text>
       </View>
       <View style={{flex:1,backgroundColor:"cyan",justifyContent:"center"}} />
       
   </Screen>
-    );
+  );
 }
 
 const styles = StyleSheet.create({
@@ -54,7 +59,7 @@ const styles = StyleSheet.create({
       color:"#05668D"
     },
     loginBtn: {
-      width:"30%",
+      width:"90%",
       borderRadius:25,
       height:50,
       alignItems:"center",
