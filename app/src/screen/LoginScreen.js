@@ -3,16 +3,23 @@ import {Button, TextInput} from "react-native-paper";
 import { StyleSheet,Text, View} from 'react-native';
 import Screen from "../component/screen"
 
-const LoginScreen = () =>{
+const LoginScreen = ({ navigation }) =>{
   const [email,setEmail] = useState("");
   const [password,setPassword] = useState("");
   const [passwordVisible,setPasswordVisible] = useState(false);
   return (
     <Screen style={styles.container}>
       <View style={{flex:2,backgroundColor:"red",justifyContent:"center",alignItems:"center"}}>
+
+        <Button 
+        mode="contained" 
+        onPress={() => navigation.navigate('Welcome')}>
+          Back
+        </Button>
+        
         <Text style = {styles.title}>TrekTogether</Text>
       </View>
-      <View style={{flex:7,justifyContent:"center",alignItems:"center"}} >
+      <View style={{flex:5,justifyContent:"center",alignItems:"center"}} >
         <TextInput 
         label="Email"
         placeholder="johndoe@gmail.com"
@@ -40,7 +47,20 @@ const LoginScreen = () =>{
         </Button>
         <Text style={{marginTop:20}}>Forgot password?</Text>
       </View>
-      <View style={{flex:1,backgroundColor:"cyan",justifyContent:"center"}} />
+      <View style={{flex:3,backgroundColor:"cyan",justifyContent:"center",alignItems:"center"}}>
+        
+        <Text>----------  Or  ----------</Text>
+        <Button 
+          mode="contained" 
+          style={styles.loginBtn}
+          >Log In with Facebook
+        </Button>
+        <Button 
+          mode="contained" 
+          style={styles.loginBtn}
+          >Log In with Google
+        </Button>
+      </View>
       
   </Screen>
   );
@@ -64,7 +84,7 @@ const styles = StyleSheet.create({
       height:50,
       alignItems:"center",
       justifyContent:"center",
-      marginTop:20,
+      marginTop:10,
       backgroundColor:"#02C39A",
     },
   });

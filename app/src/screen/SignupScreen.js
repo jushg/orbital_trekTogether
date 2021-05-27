@@ -3,7 +3,7 @@ import Screen from "../component/screen"
 import {StyleSheet,Text, View} from "react-native"
 import {Button, TextInput} from "react-native-paper"
 
-const SignupScreen = () =>{
+const SignupScreen = ({navigation}) =>{
     const [email,setEmail] = useState("");
     const [username,setUsername] = useState("")
     const [password,setPassword] = useState("");
@@ -12,9 +12,14 @@ const SignupScreen = () =>{
     return (
         <Screen style ={styles.container}>
             <View style={{flex:2, backgroundColor:"red", justifyContent:"center", alignItems:"center"}}>
+                <Button 
+                mode="contained" 
+                onPress={() => navigation.navigate('Welcome')}>
+                    Back
+                </Button>
                 <Text style = {styles.title}> TrekTogether</Text>
             </View>
-            <View style={{flex:7, justifyContent:"center", alignItems:"center"}}>
+            <View style={{flex:6, justifyContent:"center", alignItems:"center"}}>
                 <TextInput 
                 label="Email"
                 placeholder="johndoe@gmail.com"
@@ -49,11 +54,19 @@ const SignupScreen = () =>{
                 </Button>
                 
             </View>
-            <View style={{flex:1,backgroundColor:"cyan"}}>
-                
-            </View>   
-            <View style={{flex:1,backgroundColor:"cyan"}}>
-
+            
+            <View style={{flex:2,backgroundColor:"cyan"}}>
+                <Text>----------  Or  ----------</Text>
+                <Button 
+                mode="contained" 
+                style={styles.loginBtn}
+                >Log In with Facebook
+                </Button>
+                <Button 
+                mode="contained" 
+                style={styles.loginBtn}
+                >Log In with Google
+                </Button>
             </View>    
         </Screen>
     )
@@ -61,7 +74,7 @@ const SignupScreen = () =>{
 const styles = StyleSheet.create({
     title: {
         fontSize: 30,
-        paddingTop: 30,
+        paddingTop: 10,
         color:"#05668D"
     },
     signupBtn: {

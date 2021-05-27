@@ -18,7 +18,7 @@ const WelcomeScreen = ({ navigation }) =>{
                 style={styles.loginBtn}   
             >Log In
             </Button>
-             <Text> Use Firebase to make this work</Text>
+             <Text>Hi Corn, please use Firebase to make this work</Text>
        </Screen>
     );
 }

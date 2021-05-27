@@ -19,10 +19,6 @@ const Stack = createStackNavigator();
 export default function App() {
   return (
     <PaperProvider>
-       {/* <View style={styles.container}>
-        <Text>Hi Corn! Please work on me :)))))</Text>
-        <StatusBar style="auto" />
-      </View> */}
       <NavigationContainer>
         <Stack.Navigator initialRouteName={screens[0].name} headerMode="none">
           {screens.map(({ name, component }) => <Stack.Screen key={name} name={name} component={component} />)}
