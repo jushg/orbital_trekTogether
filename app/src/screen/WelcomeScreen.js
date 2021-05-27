@@ -6,17 +6,13 @@ const WelcomeScreen = ({ navigation }) =>{
     return (
        <Screen style = {styles.container}>
             <Text style = {styles.title}> TrekTogether</Text>
-            <Button
-                mode="contained"
-                onPress={() => navigation.navigate('Signup')}
-                style={styles.signupBtn}
-            >Sign Up
-            </Button>
+            
+            
             <Button
                 mode="contained"
                 onPress={() => navigation.navigate('Login')}
                 style={styles.loginBtn}   
-            >Log In
+            >Get Started
             </Button>
              <Text>Hi Corn, please use Firebase to make this work</Text>
        </Screen>
