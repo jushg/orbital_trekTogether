@@ -1,6 +1,7 @@
 import React, { useState } from "react"
 import {StyleSheet,Text, View} from "react-native"
 import {Button, TextInput} from "react-native-paper"
+import { CommonActions } from "@react-navigation/native";
 
 import Screen from "../component/screen"
 import * as Auth from "../../api/auth"
@@ -19,7 +20,7 @@ export default ({navigation}) =>{
                 index: 0,
                 routes: [{
                   name: "Home",
-                  params: { name: user.displayName }
+                //   params: { name: user.displayName }
                 }]
               })),
             (error) => {
@@ -80,7 +81,7 @@ export default ({navigation}) =>{
                 <Button 
                 mode="contained" 
                 style={styles.signupBtn}
-                onPress={() => navigation.navigate('Main')}
+                onPress={handleSignup}
                 >
                 Sign Up
                 </Button>           

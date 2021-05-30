@@ -10,7 +10,7 @@ export default ({ navigation }) => {
   useEffect(() => {
     return Authentication.setOnAuthStateChanged(
       () => navigation.dispatch(CommonActions.reset({ index: 0, routes: [{ name: "Home" }] })),
-      () => navigation.dispatch(CommonActions.reset({ index: 0, routes: [{ name: "Welcome" }] })),
+      () => navigation.dispatch(CommonActions.reset({ index: 0, routes: [{ name: "Login" }] })),
     );
   }, []);
 

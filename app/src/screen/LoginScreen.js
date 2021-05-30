@@ -1,6 +1,7 @@
 import React ,{useState} from 'react';
 import {Button, TextInput} from "react-native-paper";
 import { StyleSheet,Text, View, Pressable} from 'react-native';
+import { CommonActions } from "@react-navigation/native";
 
 
 import Screen from "../component/screen"
@@ -19,7 +20,7 @@ export default ({ navigation }) =>{
         index: 0,
         routes: [{
           name: "Home",
-          params: { name: user.displayName }
+          // params: { name: user.displayName }
         }]
       })),
       (error) => {
