@@ -20,8 +20,19 @@ export const loginEmail = async({email,password},onSuccess,onError) => {
         const {user} = await auth.signInWithEmailAndPassword(email, password)
         return onSuccess(user)
     } catch (error) {
-        return onError(user)
+        return onError(error)
         
     }
 }
+
+export const setOnAuthStateChanged = (onUserAuthenticated, onUserNotFound) => auth.onAuthStateChanged((user) => {
+        if (user) {
+        return onUserAuthenticated(user);
+        } else {
+        return onUserNotFound(user);
+        }
+    }
+);
+
+
    

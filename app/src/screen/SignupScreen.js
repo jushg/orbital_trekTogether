@@ -15,10 +15,13 @@ export default ({navigation}) =>{
 
         Auth.createAccount(
             {email,username,password},
-            (user) => {
-            return console.log(user)
-            },
-
+            (user) => navigation.dispatch(CommonActions.reset({
+                index: 0,
+                routes: [{
+                  name: "Home",
+                  params: { name: user.displayName }
+                }]
+              })),
             (error) => {
             return console.error(error)
             }

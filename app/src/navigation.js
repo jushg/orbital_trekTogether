@@ -11,6 +11,7 @@ import HomeScreen from "./screen/HomeScreen"
 import RouteScreen from "./screen/RouteScreen"
 import MatchScreen from "./screen/MatchScreen"
 import TestScreen from "./screen/TestScreen"
+import MainScreen from "./screen/MainScreen"
 
 const HomeStack = createStackNavigator();
 
@@ -32,13 +33,14 @@ const AuthStack = createStackNavigator();
 export const AuthScreenStack = () => {
     return (
         <AuthStack.Navigator
-            initialRouteName={"Welcome"} 
+            initialRouteName={"Main"} 
             headerMode="none" 
         >
             <AuthStack.Screen name="Welcome" key = "welcome" component = {WelcomeScreen}/>
             <AuthStack.Screen name="Login" key = "login" component = {LoginScreen}/>
             <AuthStack.Screen name="Signup" key = "signup" component = {SignupScreen}/>
-            <AuthStack.Screen name="Main" key = "mainUI" component = {HomeScreenStack}/>
+            <AuthStack.Screen name="Home" key = "home" component = {HomeScreenStack}/>
+            <AuthStack.Screen name="Main" key = "main" component = {MainScreen}/>
         </AuthStack.Navigator>
     )
 }

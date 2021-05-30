@@ -15,10 +15,13 @@ export default ({ navigation }) =>{
   const handleLoginEmail = () =>{
     Auth.loginEmail(
       {email,password},
-      (user) => {
-        return console.log(user)
-      },
-
+      (user) => navigation.dispatch(CommonActions.reset({
+        index: 0,
+        routes: [{
+          name: "Home",
+          params: { name: user.displayName }
+        }]
+      })),
       (error) => {
         return console.error(error)
       }
@@ -57,7 +60,7 @@ export default ({ navigation }) =>{
           <Button 
           mode="contained" 
           style={styles.loginBtn}
-          onPress={() => navigation.navigate('Main')}
+          onPress={handleLoginEmail}
           >Log In
           </Button>
 
