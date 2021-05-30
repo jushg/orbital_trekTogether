@@ -1,10 +1,11 @@
 import React, { useState } from "react"
-import Screen from "../component/screen"
 import {StyleSheet,Text, View} from "react-native"
 import {Button, TextInput} from "react-native-paper"
+
+import Screen from "../component/screen"
 import * as Auth from "../../api/auth"
 
- const SignupScreen = ({navigation}) =>{
+export default ({navigation}) =>{
     const [email,setEmail] = useState("");
     const [username,setUsername] = useState("")
     const [password,setPassword] = useState("");
@@ -25,20 +26,17 @@ import * as Auth from "../../api/auth"
     }
 
     return (
-        <Screen style ={styles.container}>
-           
-                <Button 
-                mode="flat" 
-                icon="arrow-left"
-                color="black"
-                compact="true"
-                style={{marginTop: 20,marginBottom:10, width:"20%"}}
-                onPress={() => navigation.navigate('Login')}>
-                Back
-                </Button>
-               
-                
-            
+        <Screen style ={styles.container}>          
+            <Button 
+            mode="flat" 
+            icon="arrow-left"
+            color="black"
+            compact="true"
+            style={{marginBottom:10, width:"20%"}}
+            onPress={() => navigation.navigate('Login')}>
+            Back
+            </Button>
+
             <View style={{ justifyContent:"center", alignItems:"center"}}>
                 <Text style = {styles.title}> TrekTogether</Text>
                 <TextInput 
@@ -81,12 +79,9 @@ import * as Auth from "../../api/auth"
                 style={styles.signupBtn}
                 onPress={() => navigation.navigate('Main')}
                 >
-                    Sign Up
-                </Button>
-                
-            </View>
-            
-            
+                Sign Up
+                </Button>           
+            </View>      
         </Screen>
     )
 }
@@ -107,14 +102,13 @@ const styles = StyleSheet.create({
         alignItems:"center",
         justifyContent:"center",
         marginTop:20,
-        backgroundColor:"#02C39A",   
+        // backgroundColor:"#02C39A",   
     },
     container: {
         flex:1,
         flexDirection:"column",
-        backgroundColor: '#F0F3BD',
+        // backgroundColor: '#F0F3BD',
         justifyContent:"flex-start"
     },
   });
 
-export default SignupScreen

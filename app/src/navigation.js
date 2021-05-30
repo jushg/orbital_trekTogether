@@ -49,8 +49,8 @@ export const HomeScreenTab = () => {
     return (
         <HomeTab.Navigator
             initialRouteName="Home"
-            activeColor="#e91e63"
-            barStyle={{ backgroundColor: 'tomato' }}
+            // activeColor="#e91e63"
+            // barStyle={{ backgroundColor: 'tomato' }}
         >
             <HomeTab.Screen
             name="Home"

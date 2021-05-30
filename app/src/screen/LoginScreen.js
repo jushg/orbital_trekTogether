@@ -1,10 +1,14 @@
 import React ,{useState} from 'react';
 import {Button, TextInput} from "react-native-paper";
 import { StyleSheet,Text, View, Pressable} from 'react-native';
-import Screen from "../component/screen"
 
+
+import Screen from "../component/screen"
 import * as Auth from "../../api/auth"
-const LoginScreen = ({ navigation }) =>{
+
+
+
+export default ({ navigation }) =>{
   const [email,setEmail] = useState("");
   const [password,setPassword] = useState("");
   const [passwordVisible,setPasswordVisible] = useState(true);
@@ -22,7 +26,7 @@ const LoginScreen = ({ navigation }) =>{
   }
   return (
     <Screen style={styles.container}  >
-        <View style={{borderWidth: 5, borderColor: "black", justifyContent:"center", alignItems:"center"}}>
+        <View style={{justifyContent:"center", alignItems:"center"}}>
           <Text style = {styles.title}>TrekTogether</Text>
 
           <TextInput 
@@ -60,11 +64,11 @@ const LoginScreen = ({ navigation }) =>{
           <Text style={styles.forgotPassword}>Forgot password?</Text>
 
           
-            <View style= {{borderWidth: 5, borderColor: "red",flexDirection:"row", justifyContent:"center"}}>
-              <Text>Don't have an account?  </Text>
+            <View style= {{flexDirection:"row", justifyContent:"center"}}>
+              <Text style={{fontSize:16}}>Don't have an account?  </Text>
               <Pressable onPress={() => {}}>
                 <Text 
-                style={{textDecorationLine: "underline"}} 
+                style={{fontSize:16, textDecorationLine: "underline"}} 
                 onPress={() => navigation.navigate("Signup")}>
                   Sign Up
                   </Text>
@@ -99,10 +103,8 @@ const LoginScreen = ({ navigation }) =>{
 const styles = StyleSheet.create({
     container: {
       flex:1,
-      backgroundColor: '#F0F3BD',  
-      justifyContent:"center",
-      borderWidth: 3,
-      borderColor:"green"
+      // backgroundColor: '#F0F3BD',  
+      justifyContent:"flex-start"
     },
     title: {
       fontSize: 30,
@@ -117,27 +119,14 @@ const styles = StyleSheet.create({
       alignItems:"center",
       justifyContent:"center",
       marginTop:10,
-      backgroundColor:"#02C39A",
+      // backgroundColor:"#02C39A",
     },
     forgotPassword: {
-      marginBottom: 20,
+      marginBottom: 40,
       marginTop: 10,
       fontStyle:"italic",
       fontSize: 16,
       textDecorationLine: "underline",
     },
-    signUp: {
-      fontSize: 16,
-      fontStyle:"italic",
-      marginTop:100, 
-      marginBottom:5
-    },
-    otherLogin: {
-      fontSize: 16,
-      fontStyle:"italic",
-      marginTop:5, 
-      marginBottom:10
-    }
   });
 
-export default LoginScreen;

@@ -1,8 +1,11 @@
 import React from 'react';
 import { Button} from "react-native-paper";
 import { StyleSheet,  Text,  } from 'react-native';
+
 import Screen from "../component/screen"
-const WelcomeScreen = ({ navigation }) =>{
+
+
+export default ({ navigation }) =>{
     return (
        <Screen style = {styles.container}>
             <Text style = {styles.title}> TrekTogether</Text>
@@ -11,7 +14,7 @@ const WelcomeScreen = ({ navigation }) =>{
             <Button
                 mode="contained"
                 onPress={() => navigation.navigate('Login')}
-                style={styles.loginBtn}   
+                style={styles.button}   
             >Get Started
             </Button>
            
@@ -25,17 +28,7 @@ const styles = StyleSheet.create({
         paddingTop: 30,
         color:"#05668D"
     },
-    signupBtn: {
-        width:"70%",
-        borderRadius:25,
-        height:50,
-        alignItems:"center",
-        justifyContent:"center",
-        marginTop:40,
-        backgroundColor:"#02C39A",
-    },
-
-    loginBtn: {
+    button: {
         width:"70%",
         borderRadius:25,
         height:50,
@@ -47,10 +40,8 @@ const styles = StyleSheet.create({
     container: {
       flex: 1,
       flexDirection:"column",
-      backgroundColor: '#F0F3BD',
+    //   backgroundColor: '#F0F3BD',
       alignItems: 'center',
       justifyContent: 'center',
     },
   });
-
-export default WelcomeScreen;
