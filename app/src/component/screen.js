@@ -1,7 +1,8 @@
 import React from "react"
-import {  SafeAreaView, StatusBar,FlatList,ScrollView } from 'react-native';
+import { StatusBar,FlatList,ScrollView } from 'react-native';
+import {SafeAreaView} from "react-native-safe-area-context"
 
-const Screen = (props) =>{
+export default (props) =>{
     return (
             <SafeAreaView style = {{paddingTop : StatusBar.currentHeight, ...props.style}}>
                 {props.children}
@@ -11,4 +12,4 @@ const Screen = (props) =>{
 }
 
 
-export default Screen;
+// export default Screen;

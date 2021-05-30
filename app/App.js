@@ -1,28 +1,14 @@
+//System Component
 import React from 'react';
 import { Provider as PaperProvider } from "react-native-paper";
 import { NavigationContainer } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
-import LoginScreen from "./src/screen/LoginScreen"
-import WelcomeScreen from "./src/screen/WelcomeScreen"
-import SignupScreen from "./src/screen/SignupScreen"
-import ViewProfileScreen from "./src/screen/ViewProfileScreen"
+import {AuthScreenStack, MainScreenTab} from "./src/navigation"
 
-
-const screens = [
-  { name: "Welcome", component: WelcomeScreen },
-  { name: "Login", component: LoginScreen },
-  { name: "Signup", component: SignupScreen },
-
-];
-
-const Stack = createStackNavigator();
 export default function App() {
   return (
     <PaperProvider>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName={screens[0].name} headerMode="none">
-          {screens.map(({ name, component }) => <Stack.Screen key={name} name={name} component={component} />)}
-        </Stack.Navigator>
+        <AuthScreenStack/>
       </NavigationContainer>
     </PaperProvider>
   );

@@ -1,6 +1,6 @@
 import React ,{useState} from 'react';
 import {Button, TextInput} from "react-native-paper";
-import { StyleSheet,Text, View} from 'react-native';
+import { StyleSheet,Text, View, Pressable} from 'react-native';
 import Screen from "../component/screen"
 
 import * as Auth from "../../api/auth"
@@ -9,23 +9,20 @@ const LoginScreen = ({ navigation }) =>{
   const [password,setPassword] = useState("");
   const [passwordVisible,setPasswordVisible] = useState(true);
   const handleLoginEmail = () =>{
-
     Auth.loginEmail(
-        {email,password},
-        (user) => {
+      {email,password},
+      (user) => {
         return console.log(user)
-        },
+      },
 
-        (error) => {
+      (error) => {
         return console.error(error)
-        }
+      }
     )
-}
+  }
   return (
     <Screen style={styles.container}  >
-           
-        
-        <View style={{justifyContent:"center", alignItems:"center"}}>
+        <View style={{borderWidth: 5, borderColor: "black", justifyContent:"center", alignItems:"center"}}>
           <Text style = {styles.title}>TrekTogether</Text>
 
           <TextInput 
@@ -56,28 +53,31 @@ const LoginScreen = ({ navigation }) =>{
           <Button 
           mode="contained" 
           style={styles.loginBtn}
-          onPress={handleLoginEmail}
+          onPress={() => navigation.navigate('Main')}
           >Log In
           </Button>
 
           <Text style={styles.forgotPassword}>Forgot password?</Text>
-          <Text style={styles.signUp}>- Don't have an account ? -</Text>
+
           
-          <Button 
-          mode="contained" 
-          style={styles.loginBtn}
-          onPress={() => navigation.navigate("Signup")}
-          >Creat new account
-          </Button>
+            <View style= {{borderWidth: 5, borderColor: "red",flexDirection:"row", justifyContent:"center"}}>
+              <Text>Don't have an account?  </Text>
+              <Pressable onPress={() => {}}>
+                <Text 
+                style={{textDecorationLine: "underline"}} 
+                onPress={() => navigation.navigate("Signup")}>
+                  Sign Up
+                  </Text>
+              </Pressable>
+          </View>
+          </View>  
+          {/* <Text style={styles.otherLogin}>- Or log in with -</Text>
 
-          <Text style={styles.otherLogin}>- Or log in with -</Text>
-
-        </View>
-        
-        <View style= {{flexDirection:"row", justifyContent:"center"}}>
+          
+        <View style= {{borderWidth: 5, borderColor: "red",flexDirection:"row", justifyContent:"center"}}>
           <Button 
             mode="contained" 
-            color="blue"
+            //color="blue"
             compact="true"
             >Facebook
             </Button> 
@@ -86,15 +86,13 @@ const LoginScreen = ({ navigation }) =>{
           
           <Button 
             mode="contained" 
-            color="red"
+            //color="red"
             compact="true"
             >Google
           </Button> 
-        </View>
-   
-      
-      
-  </Screen>
+        </View> */}
+        
+    </Screen>
   );
 }
 
@@ -102,8 +100,9 @@ const styles = StyleSheet.create({
     container: {
       flex:1,
       backgroundColor: '#F0F3BD',  
-      justifyContent:"flex-start",
-      
+      justifyContent:"center",
+      borderWidth: 3,
+      borderColor:"green"
     },
     title: {
       fontSize: 30,

@@ -79,7 +79,7 @@ import * as Auth from "../../api/auth"
                 <Button 
                 mode="contained" 
                 style={styles.signupBtn}
-                onPress={handleSignup}
+                onPress={() => navigation.navigate('Main')}
                 >
                     Sign Up
                 </Button>

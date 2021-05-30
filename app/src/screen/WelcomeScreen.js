@@ -6,7 +6,7 @@ const WelcomeScreen = ({ navigation }) =>{
     return (
        <Screen style = {styles.container}>
             <Text style = {styles.title}> TrekTogether</Text>
-            
+            <Text>Discover Singapore 2021</Text>
             
             <Button
                 mode="contained"
@@ -14,7 +14,7 @@ const WelcomeScreen = ({ navigation }) =>{
                 style={styles.loginBtn}   
             >Get Started
             </Button>
-             <Text>Hi Corn, please use Firebase to make this work</Text>
+           
        </Screen>
     );
 }
