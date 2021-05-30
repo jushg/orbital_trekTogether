@@ -1,16 +1,33 @@
 import React from 'react';
 import { Button} from "react-native-paper";
 import { StyleSheet,Text, View} from 'react-native';
+import { CommonActions } from "@react-navigation/native";
 
 import Screen from "../component/screen"
+import * as Auth from "../../api/auth"
 
 
 export default({navigation}) => {
+    const handleLogout = () => {
+        Auth.logout(
+            () => navigation.dispatch(CommonActions.reset({
+                index: 0,
+                routes: [{
+                  name: "Login",
+                  // params: { name: user.displayName }
+                }]
+            })),
+            (error) => {
+                return console.error(error)
+            }
+        )
+    }
     return (
         <Screen style={styles.container}>
             <Text style={styles.title}>This HomeScreen is under development</Text>
             <Button onPress={() => navigation.navigate('Test')}>Test</Button>
             <Button onPress={() => navigation.navigate('Setting')}>Setting</Button>
+            <Button onPress={handleLogout}>Log Out</Button>
         </Screen>
         
     )

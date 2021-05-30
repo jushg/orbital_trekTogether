@@ -13,7 +13,6 @@ export default ({navigation}) =>{
     const [passwordVisible,setPasswordVisible] = useState(true);
 
     const handleSignup = () =>{
-
         Auth.createAccount(
             {email,username,password},
             (user) => navigation.dispatch(CommonActions.reset({

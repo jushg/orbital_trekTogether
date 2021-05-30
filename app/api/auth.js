@@ -25,6 +25,14 @@ export const loginEmail = async({email,password},onSuccess,onError) => {
     }
 }
 
+export const logout = async(onSuccess,onError) => {
+    try {
+        await auth.signOut()
+        return onSuccess()
+    } catch (error) {
+        onError(error)
+    }
+}
 export const setOnAuthStateChanged = (onUserAuthenticated, onUserNotFound) => auth.onAuthStateChanged((user) => {
         if (user) {
         return onUserAuthenticated(user);
