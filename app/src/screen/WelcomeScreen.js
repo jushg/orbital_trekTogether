@@ -13,7 +13,7 @@ export default ({ navigation }) =>{
             
             <Button
                 mode="contained"
-                onPress={() => navigation.navigate('Login')}
+                onPress={() => navigation.navigate('Setup')}
                 style={styles.button}   
             >Get Started
             </Button>
@@ -40,7 +40,6 @@ const styles = StyleSheet.create({
     container: {
       flex: 1,
       flexDirection:"column",
-    //   backgroundColor: '#F0F3BD',
       alignItems: 'center',
       justifyContent: 'center',
     },

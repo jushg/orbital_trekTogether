@@ -6,8 +6,8 @@ import Screen from "../component/screen"
 export default ({navigation}) => {
     return (
         
-        <Screen styles={styles.container}>
-            <Text style={styles.title}>Setting Screen is under development</Text>
+        <Screen style={styles.container}>
+            <Text style={styles.title}>Setting Screen</Text>
             <Button onPress={() => navigation.navigate('Home')}>Home</Button>
         </Screen>
         

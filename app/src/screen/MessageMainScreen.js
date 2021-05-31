@@ -4,8 +4,8 @@ import Screen from "../component/screen"
 
 export default ({navigation}) => {
     return (
-        <Screen styles={styles.container}>
-            <Text style={styles.title}>Route screen is underdevelopment</Text>
+        <Screen style={styles.container}>
+            <Text style={styles.title}>Message Screen</Text>
         </Screen>
         
     )
@@ -31,6 +31,6 @@ const styles = StyleSheet.create({
       flexDirection:"column",
     //   backgroundColor: '#F0F3BD',
       alignItems: 'center',
-      justifyContent: 'flex-end',
+      justifyContent: 'center',
     },
   });

@@ -18,7 +18,7 @@ export default ({navigation}) =>{
             (user) => navigation.dispatch(CommonActions.reset({
                 index: 0,
                 routes: [{
-                  name: "Home",
+                  name: "Setup",
                 //   params: { name: user.displayName }
                 }]
               })),
@@ -41,7 +41,7 @@ export default ({navigation}) =>{
             </Button>
 
             <View style={{ justifyContent:"center", alignItems:"center"}}>
-                <Text style = {styles.title}> TrekTogether</Text>
+                <Text style = {styles.title}> Create new account</Text>
                 <TextInput 
                 label="Email"
                 placeholder="johndoe@gmail.com"
@@ -99,8 +99,8 @@ const styles = StyleSheet.create({
         color:"#05668D"
     },
     signupBtn: {
-        width:"90%",
-        borderRadius:25,
+        // width:"90%",
+        // borderRadius:25,
         height:50,
         alignItems:"center",
         justifyContent:"center",

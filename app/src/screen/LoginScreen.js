@@ -1,12 +1,13 @@
 import React ,{useState} from 'react';
 import {Button, TextInput} from "react-native-paper";
-import { StyleSheet,Text, View, Pressable} from 'react-native';
-import { CommonActions } from "@react-navigation/native";
+import { StyleSheet,Text, View, Pressable, Image} from 'react-native';
+import { CommonActions } from "@react-navigation/native"
 
 
 import Screen from "../component/screen"
 import * as Auth from "../../api/auth"
-
+import image from "../../assets/orbital.jpg"
+import image2 from "../../assets/stolen_icon.jpg"
 
 
 export default ({ navigation }) =>{
@@ -30,7 +31,9 @@ export default ({ navigation }) =>{
   }
   return (
     <Screen style={styles.container}  >
+        
         <View style={{justifyContent:"center", alignItems:"center"}}>
+        <Image source={image2} style={{ width: 305, height: 300 }}/>
           <Text style = {styles.title}>TrekTogether</Text>
 
           <TextInput 
@@ -65,23 +68,30 @@ export default ({ navigation }) =>{
           >Log In
           </Button>
 
-          <Text style={styles.forgotPassword}>Forgot password?</Text>
+          <View style= {{flexDirection:"row", justifyContent:"center"}}>
+          <Pressable onPress={() => {}}>
+                <Text 
+                style={styles.forgotPassword}
+                onPress={() => navigation.navigate("Signup")}>
+                  Forgot password?
+                  </Text>
+          </Pressable>
+          </View>
+          
 
           
             <View style= {{flexDirection:"row", justifyContent:"center"}}>
-              <Text style={{fontSize:16}}>Don't have an account?  </Text>
-              <Pressable onPress={() => {}}>
-                <Text 
-                style={{fontSize:16, textDecorationLine: "underline"}} 
-                onPress={() => navigation.navigate("Signup")}>
-                  Sign Up
-                  </Text>
-              </Pressable>
-          </View>
+                <Text style={{fontSize:16}}>Don't have an account?  </Text>
+                <Pressable onPress={() => {}}>
+                  <Text 
+                  style={{fontSize:16, textDecorationLine: "underline"}} 
+                  onPress={() => navigation.navigate("Signup")}>
+                    Sign Up
+                    </Text>
+                </Pressable>
+            </View>
           </View>  
           {/* <Text style={styles.otherLogin}>- Or log in with -</Text>
-
-          
         <View style= {{borderWidth: 5, borderColor: "red",flexDirection:"row", justifyContent:"center"}}>
           <Button 
             mode="contained" 
@@ -89,17 +99,14 @@ export default ({ navigation }) =>{
             compact="true"
             >Facebook
             </Button> 
-
           <Text>  </Text>
-          
           <Button 
             mode="contained" 
             //color="red"
             compact="true"
             >Google
           </Button> 
-        </View> */}
-        
+        </View> */} 
     </Screen>
   );
 }
@@ -107,17 +114,17 @@ export default ({ navigation }) =>{
 const styles = StyleSheet.create({
     container: {
       flex:1,
-      // backgroundColor: '#F0F3BD',  
-      justifyContent:"flex-start"
+      backgroundColor: 'white',  
+      justifyContent:"center"
     },
     title: {
-      fontSize: 30,
-      paddingTop: 30,
+      fontSize: 40,
+      // paddingTop: 30,
       paddingBottom: 30,
       color:"#05668D"
     },
     loginBtn: {
-      // width:"90%",
+      width:"35%",
       // borderRadius:25,
       height:50,
       alignItems:"center",
@@ -126,8 +133,8 @@ const styles = StyleSheet.create({
       // backgroundColor:"#02C39A",
     },
     forgotPassword: {
-      marginBottom: 40,
-      marginTop: 10,
+      marginBottom: 50,
+      marginTop: 20,
       fontStyle:"italic",
       fontSize: 16,
       textDecorationLine: "underline",

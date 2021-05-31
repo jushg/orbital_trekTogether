@@ -24,9 +24,9 @@ export default({navigation}) => {
     }
     return (
         <Screen style={styles.container}>
-            <Text style={styles.title}>This HomeScreen is under development</Text>
-            <Button onPress={() => navigation.navigate('Test')}>Test</Button>
-            <Button onPress={() => navigation.navigate('Setting')}>Setting</Button>
+            <Text style={styles.title}>Home Screen</Text>
+            <Button onPress={() => navigation.navigate('Test')}>Test Screen</Button>
+            <Button onPress={() => navigation.navigate('Setting')}>Setting Screen</Button>
             <Button onPress={handleLogout}>Log Out</Button>
         </Screen>
         

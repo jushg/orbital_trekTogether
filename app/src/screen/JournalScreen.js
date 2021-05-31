@@ -1,12 +1,11 @@
 import React ,{useState} from 'react';
-import {Button, TextInput} from "react-native-paper";
 import { StyleSheet,Text, View, Pressable} from 'react-native';
 import Screen from "../component/screen"
 
 export default ({navigation}) => {
     return (
         <Screen style={styles.container}>
-            <Text style={styles.title}>Buddy Matching</Text>
+            <Text style={styles.title}>Journal Screen</Text>
         </Screen>
         
     )

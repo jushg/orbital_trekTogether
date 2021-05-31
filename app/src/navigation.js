@@ -8,10 +8,15 @@ import WelcomeScreen from "./screen/WelcomeScreen"
 import SignupScreen from "./screen/SignupScreen"
 import SettingScreen from "./screen/SettingScreen"
 import HomeScreen from "./screen/HomeScreen"
-import RouteScreen from "./screen/RouteScreen"
+import ExploreScreen from "./screen/ExploreScreen"
 import MatchScreen from "./screen/MatchScreen"
-import TestScreen from "./screen/TestScreen"
 import MainScreen from "./screen/MainScreen"
+import SetupScreen from "./screen/SetupScreen"
+import JournalScreen from "./screen/JournalScreen"
+import MessageMainScreen from "./screen/MessageMainScreen"
+
+
+import TestScreen from "./screen/TestScreen"
 
 const HomeStack = createStackNavigator();
 
@@ -41,6 +46,7 @@ export const AuthScreenStack = () => {
             <AuthStack.Screen name="Signup" key = "signup" component = {SignupScreen}/>
             <AuthStack.Screen name="Home" key = "home" component = {HomeScreenStack}/>
             <AuthStack.Screen name="Main" key = "main" component = {MainScreen}/>
+            <AuthStack.Screen name="Setup" key = "setup" component = {SetupScreen}/>
         </AuthStack.Navigator>
     )
 }
@@ -55,32 +61,52 @@ export const HomeScreenTab = () => {
             // barStyle={{ backgroundColor: 'tomato' }}
         >
             <HomeTab.Screen
+            name="Journal"
+            component={JournalScreen}
+            options={{
+                tabBarLabel: 'Journal',
+                tabBarIcon: ({ color }) => (
+                <MaterialCommunityIcons name="notebook-outline" color={color} size={26} />
+                ),
+            }}
+            />
+            <HomeTab.Screen
+            name="Explore"
+            component={ExploreScreen}
+            options={{
+                tabBarLabel: 'Explore',
+                tabBarIcon: ({ color }) => (
+                <MaterialCommunityIcons name="map-marker-circle" color={color} size={26} />
+                ),
+            }}
+            />
+            <HomeTab.Screen
             name="Home"
             component={HomeScreen}
             options={{
-                tabBarLabel: 'Homes',
+                tabBarLabel: 'Home',
                 tabBarIcon: ({ color }) => (
                 <MaterialCommunityIcons name="home" color={color} size={26} />
                 ),
             }}
             />
             <HomeTab.Screen
-            name="Route"
-            component={RouteScreen}
+            name="Buddy"
+            component={MatchScreen}
             options={{
-                tabBarLabel: 'Routes',
+                tabBarLabel: 'Buddy',
                 tabBarIcon: ({ color }) => (
-                <MaterialCommunityIcons name="bell" color={color} size={26} />
+                <MaterialCommunityIcons name="account-group" color={color} size={26} />
                 ),
             }}
             />
             <HomeTab.Screen
-            name="Match"
-            component={MatchScreen}
+            name="Message"
+            component={MessageMainScreen}
             options={{
-                tabBarLabel: 'Matches',
+                tabBarLabel: 'Message',
                 tabBarIcon: ({ color }) => (
-                <MaterialCommunityIcons name="account" color={color} size={26} />
+                <MaterialCommunityIcons name="message" color={color} size={26} />
                 ),
             }}
             />
