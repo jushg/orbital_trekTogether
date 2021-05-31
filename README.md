@@ -1,5 +1,8 @@
 # TrekTogether
-[![runs with expo](https://img.shields.io/badge/Runs%20with%20Expo-4630EB.svg?style=flat&logo=EXPO&labelColor=f3f3f3&logoColor=000)]
+
+[![runs with expo](https://img.shields.io/badge/Runs%20with%20Expo-4630EB.svg?style=flat&logo=EXPO&labelColor=f3f3f3&logoColor=000)(https://expo.io/@jushg/trek-together)]
+
+
 Orbital Summer 2021  
 Ngo Ngoc Phuong Uyen &amp; Hoang Trong Tan
 
