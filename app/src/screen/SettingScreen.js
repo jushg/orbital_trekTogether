@@ -1,14 +1,35 @@
-import React  from 'react';
-import {Button} from "react-native-paper";
-import { StyleSheet,Text, View, StatusBar  } from 'react-native';
+import React,{useState}  from 'react'
+import {Button, Checkbox} from "react-native-paper"
+import { StyleSheet,Text, View, StatusBar  } from 'react-native'
 
 import Screen from "../component/screen"
+
+//https://callstack.github.io/react-native-paper/checkbox.html
+//https://callstack.github.io/react-native-paper/switch.html
+//https://callstack.github.io/react-native-paper/toggle-button.html
 export default ({navigation}) => {
+    const [checked1, setChecked1] = useState(false) //example
+    const [checked2, setChecked2] = useState(false) //example
+
     return (       
         <Screen style={styles.container}>
             <Text style={styles.title}>Setting Screen</Text>
             <Text>Change your user preferences and app settings here</Text>
-            <Button onPress={() => navigation.navigate('Home')}>Home</Button>
+            <Checkbox.Item
+            label="Item 1"
+            status={checked1 ? 'checked' : 'unchecked'}
+            onPress={() => {
+                setChecked1(!checked1);
+            }}
+            />
+            <Checkbox.Item
+            label="Item 2"
+            status={checked2 ? 'checked' : 'unchecked'}
+            onPress={() => {
+                setChecked2(!checked2);
+            }}
+            />
+            <Button onPress={() => navigation.navigate('Home')}>Back to Profile</Button>
         </Screen>
     )
 }

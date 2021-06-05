@@ -4,7 +4,7 @@ import { NavigationContainer, DarkTheme as NavigationDarkTheme, DefaultTheme as 
 
 
 import {AuthScreenStack, MainScreenTab} from "./src/navigation"
-import SetupScreen from "./src/screen/SetupScreen"
+import TestScreen from "./src/screen/SettingScreen"
 
 
 const CombinedDefaultTheme = {
@@ -21,7 +21,7 @@ export default function App() {
     <PaperProvider theme={CombinedDefaultTheme}>
       <NavigationContainer theme={CombinedDefaultTheme}>
         {/* <AuthScreenStack/> */}
-        <SetupScreen/>
+        <TestScreen/>
       </NavigationContainer>
     </PaperProvider>
   );

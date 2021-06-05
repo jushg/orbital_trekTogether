@@ -1,8 +1,11 @@
-import React ,{useState} from 'react';
-import {Button, TextInput} from "react-native-paper";
-import { StyleSheet,Text, View, Pressable} from 'react-native';
+import React ,{useState} from 'react'
+import {Button, TextInput} from "react-native-paper"
+import { StyleSheet,Text, View, Pressable} from 'react-native'
+
+
 import Screen from "../component/screen"
 
+//https://callstack.github.io/react-native-paper/avatar-image.html
 export default ({navigation}) => {
     return (
         <Screen style={styles.container}>

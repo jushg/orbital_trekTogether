@@ -7,7 +7,7 @@ import Screen from "../component/screen"
 import Carousel from "../component/carousel"
 import image from "../../assets/new_icon.png"
 
-
+//https://callstack.github.io/react-native-paper/chip.html
 export default ({navigation}) => {
     return (
       <Screen style={styles.container}>

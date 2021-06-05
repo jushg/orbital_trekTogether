@@ -2,6 +2,9 @@ import React from "react"
 import { StatusBar,FlatList,ScrollView ,StyleSheet } from 'react-native';
 import {SafeAreaView} from "react-native-safe-area-context"
 
+
+
+// In order to use Flatlist need to pass in renderItem & data props
 export default (props) =>{
     // return (
     //         <SafeAreaView style = {{paddingTop : StatusBar.currentHeight, ...props.style}}>

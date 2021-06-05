@@ -1,12 +1,24 @@
-import React ,{useState} from 'react';
-import { StyleSheet,Text, View, Pressable} from 'react-native';
+import React ,{useState} from 'react'
+import { StyleSheet,Text, View, Pressable} from 'react-native'
+import {Searchbar} from "react-native-paper"
+
 import Screen from "../component/screen"
 
 export default ({navigation}) => {
+    const [searchQuery, setSearchQuery] = React.useState(''); //Example
+
+    const onChangeSearch = query => setSearchQuery(query); // Example
+
     return (
         <Screen style={styles.container}>
             <Text style={styles.title}>Explore and Plan</Text>
+            <Searchbar
+            placeholder="Search destination"
+            onChangeText={onChangeSearch}
+            value={searchQuery}
+            /> 
             <Text>Search for routes and plan new trips here</Text> 
+            
         </Screen>
         
     )
@@ -32,6 +44,6 @@ const styles = StyleSheet.create({
       flexDirection:"column",
     //   backgroundColor: '#F0F3BD',
       alignItems: 'center',
-      justifyContent: 'center',
+      justifyContent: 'flex-start',
     },
   });

@@ -6,6 +6,7 @@ import { CommonActions } from "@react-navigation/native";
 import Screen from "../component/screen"
 import * as Auth from "../../api/auth"
 
+//https://callstack.github.io/react-native-paper/avatar-image.html
 
 export default({navigation}) => {
     const handleLogout = () => {
@@ -24,10 +25,20 @@ export default({navigation}) => {
     }
     return (
         <Screen style={styles.container}>
+            
+            
+            <View style={{flexDirection:"row", justifyContent:"space-around"}}>
             <Text style={styles.title}>Home Screen</Text>
-            <Text>Your user profile is here</Text>
-            <Button onPress={() => navigation.navigate('Test')}>Test Screen</Button>
-            <Button onPress={() => navigation.navigate('Setting')}>Setting Screen</Button>
+            <Button 
+            onPress={() => navigation.navigate('Setting')}
+            icon="cog"
+            color="black"
+            compact="true"
+            >
+            </Button>
+            </View>
+            
+            
             <Button onPress={handleLogout}>Log Out</Button>
         </Screen>
         
@@ -37,7 +48,7 @@ export default({navigation}) => {
 const styles = StyleSheet.create({
     title: {
         fontSize: 30,
-        paddingTop: 30,
+        paddingTop: 0,
         color:"#05668D"
     },
     button: {
@@ -53,7 +64,7 @@ const styles = StyleSheet.create({
       flex: 1,
       flexDirection:"column",
     //   backgroundColor: '#F0F3BD',
-      alignItems: 'center',
-      justifyContent: 'center',
+    //   alignItems: 'center',
+      justifyContent: 'flex-start',
     },
   });
