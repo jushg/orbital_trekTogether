@@ -6,6 +6,7 @@ export default ({navigation}) => {
     return (
         <Screen style={styles.container}>
             <Text style={styles.title}>Explore and Plan</Text>
+            <Text>Search for routes and plan new trips here</Text> 
         </Screen>
         
     )

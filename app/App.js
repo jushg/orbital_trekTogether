@@ -20,8 +20,8 @@ export default function App() {
   return (
     <PaperProvider theme={CombinedDefaultTheme}>
       <NavigationContainer theme={CombinedDefaultTheme}>
-        <AuthScreenStack/>
-        {/* <SetupScreen/> */}
+        {/* <AuthScreenStack/> */}
+        <SetupScreen/>
       </NavigationContainer>
     </PaperProvider>
   );

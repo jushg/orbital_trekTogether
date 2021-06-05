@@ -6,8 +6,7 @@ import { CommonActions } from "@react-navigation/native"
 
 import Screen from "../component/screen"
 import * as Auth from "../../api/auth"
-import image from "../../assets/orbital.jpg"
-import image2 from "../../assets/stolen_icon.jpg"
+import image from "../../assets/new_icon.png"
 
 
 export default ({ navigation }) =>{
@@ -30,11 +29,11 @@ export default ({ navigation }) =>{
     )
   }
   return (
-    <Screen style={styles.container}  >
+    <Screen style={styles.container} scrollable >
         
         <View style={{justifyContent:"center", alignItems:"center"}}>
-        <Image source={image2} style={{ width: 305, height: 300 }}/>
-          <Text style = {styles.title}>TrekTogether</Text>
+        <Image source={image} style={{ width: 305, height: 300 }}/>
+          {/* <Text style = {styles.title}>TrekTogether</Text> */}
 
           <TextInput 
           label="Email"
@@ -115,7 +114,7 @@ const styles = StyleSheet.create({
     container: {
       flex:1,
       backgroundColor: 'white',  
-      justifyContent:"center"
+      justifyContent:"flex-start"
     },
     title: {
       fontSize: 40,

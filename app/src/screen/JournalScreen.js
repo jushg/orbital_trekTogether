@@ -6,6 +6,7 @@ export default ({navigation}) => {
     return (
         <Screen style={styles.container}>
             <Text style={styles.title}>Journal Screen</Text>
+            <Text>View your past trips with a journal entry for each trip</Text>
         </Screen>
         
     )

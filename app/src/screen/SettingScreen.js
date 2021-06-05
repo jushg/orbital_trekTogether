@@ -4,13 +4,12 @@ import { StyleSheet,Text, View, StatusBar  } from 'react-native';
 
 import Screen from "../component/screen"
 export default ({navigation}) => {
-    return (
-        
+    return (       
         <Screen style={styles.container}>
             <Text style={styles.title}>Setting Screen</Text>
+            <Text>Change your user preferences and app settings here</Text>
             <Button onPress={() => navigation.navigate('Home')}>Home</Button>
         </Screen>
-        
     )
 }
 

@@ -9,7 +9,7 @@ export default ({navigation}) => {
     return (
         
         <Screen styles={styles.container}>
-            <Text style={styles.title}>This Screen is use for testing purpose</Text>
+            <Text style={styles.title}>This Screen is used for testing purpose</Text>
             <Button onPress={() => navigation.navigate('Home')}>Home</Button>
         </Screen>
         

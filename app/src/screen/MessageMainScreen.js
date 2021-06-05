@@ -6,6 +6,7 @@ export default ({navigation}) => {
     return (
         <Screen style={styles.container}>
             <Text style={styles.title}>Message Screen</Text>
+            <Text> This is a screen to chat with your buddies</Text>
         </Screen>
         
     )

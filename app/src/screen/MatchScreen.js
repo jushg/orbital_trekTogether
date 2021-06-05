@@ -7,6 +7,7 @@ export default ({navigation}) => {
     return (
         <Screen style={styles.container}>
             <Text style={styles.title}>Buddy Matching</Text>
+            <Text>Your potential buddy's profile will appear here</Text>
         </Screen>
         
     )

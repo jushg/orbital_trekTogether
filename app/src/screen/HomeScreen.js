@@ -25,6 +25,7 @@ export default({navigation}) => {
     return (
         <Screen style={styles.container}>
             <Text style={styles.title}>Home Screen</Text>
+            <Text>Your user profile is here</Text>
             <Button onPress={() => navigation.navigate('Test')}>Test Screen</Button>
             <Button onPress={() => navigation.navigate('Setting')}>Setting Screen</Button>
             <Button onPress={handleLogout}>Log Out</Button>

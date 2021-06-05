@@ -1,10 +1,11 @@
 import React, { useState } from "react"
-import {StyleSheet,Text, View} from "react-native"
+import {StyleSheet,Text, View, Image} from "react-native"
 import {Button, TextInput} from "react-native-paper"
 import { CommonActions } from "@react-navigation/native";
 
 import Screen from "../component/screen"
 import * as Auth from "../../api/auth"
+import image from "../../assets/new_icon.png"
 
 export default ({navigation}) =>{
     const [email,setEmail] = useState("");
@@ -29,7 +30,7 @@ export default ({navigation}) =>{
     }
 
     return (
-        <Screen style ={styles.container}>          
+        <Screen style ={styles.container} scrollable>          
             <Button 
             mode="flat" 
             icon="arrow-left"
@@ -41,6 +42,7 @@ export default ({navigation}) =>{
             </Button>
 
             <View style={{ justifyContent:"center", alignItems:"center"}}>
+                <Image source={image} style={{ width: 305, height: 220 }}/>
                 <Text style = {styles.title}> Create new account</Text>
                 <TextInput 
                 label="Email"
@@ -94,7 +96,7 @@ export default ({navigation}) =>{
 const styles = StyleSheet.create({
     title: {
         fontSize: 30,
-        paddingTop: 30,
+        paddingTop: 20,
         paddingBottom: 30,
         color:"#05668D"
     },
@@ -111,7 +113,7 @@ const styles = StyleSheet.create({
         flex:1,
         flexDirection:"column",
         // backgroundColor: '#F0F3BD',
-        justifyContent:"flex-start"
+        justifyContent:"center"
     },
   });
 
