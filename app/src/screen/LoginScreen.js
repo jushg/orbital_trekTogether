@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, TextInpu } from "react-native-paper";
+import { Button, TextInput } from "react-native-paper";
 import { StyleSheet, Text, View, Pressable, Image } from 'react-native';
 import { CommonActions } from "@react-navigation/native"
 

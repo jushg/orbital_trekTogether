@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
-import { StyleSheet, Text, View, Pressable } from 'react-native'
+import { StyleSheet, Text, View, Pressable, Dimensions } from 'react-native'
 import { Searchbar } from "react-native-paper"
+import MapView from "react-native-maps"
 
 import Screen from "../component/screen"
 
@@ -18,7 +19,8 @@ export default ({navigation}) => {
           value={searchQuery}
         />
         <Text>Search for routes and plan new trips here</Text>
-            
+        <MapView style={styles.map} />
+
       </Screen>
         
     )
@@ -45,5 +47,11 @@ const styles = StyleSheet.create({
     // backgroundColor: '#F0F3BD',
     alignItems: 'center',
     justifyContent: 'flex-start',
+  },
+  map: {
+    // width: Dimensions.get('window').width,
+    // height: Dimensions.get('window').height,
+    width:"100%",
+    height:"100%"
   },
 });
