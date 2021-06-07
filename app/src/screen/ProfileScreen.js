@@ -9,7 +9,7 @@ import Screen from "../component/screen"
 
 export default ({navigation}) => {
   return (
-    <Screen style={styles.container}>
+    <Screen scrollable style={styles.container}>
         
        
         <View style={{flexDirection:"row", justifyContent:"space-between"}}> 
@@ -22,9 +22,9 @@ export default ({navigation}) => {
             compact="true"
           />
         </View>
-        <View  style={{ alignItems:"center"}}>
-          <Avatar.Image size={80} source={require('../../assets/ava1.png')} />
-          <Text>Welcome User</Text>
+        <View  style={{flexDirection: "row", alignItems:"center", paddingVertical: 15}}>
+          <Avatar.Image size={90} source={require('../../assets/ava1.png')} />
+          <Text style={{paddingHorizontal: 10, fontSize: 25}}>Welcome, User</Text>
         </View>
         
         {/*<Text> </Text>*/}
@@ -65,33 +65,31 @@ export default ({navigation}) => {
         
 
         <Text> </Text>
-        <Text>Your next trips</Text>
+        <Text>Upcoming trips</Text>
         <View style={{height:"30%"}}>
-        <ScrollView>
           <List.Item
           title="1"
           description="2"
           left={props => <List.Icon {...props} icon="parking" />}
-        />
+          />
 
-        <List.Item
+          <List.Item
           title="3"
           description="4"
           left={props => <List.Icon {...props} icon="account" />}
-        />
+          />
 
-        <List.Item
+          <List.Item
           title="5"
           description="6"
           left={props => <List.Icon {...props} icon="account" />}
-        />
+          />
 
-        <List.Item
+          <List.Item
           title="7"
           description="8"
           left={props => <List.Icon {...props} icon="account" />}
-        />
-        </ScrollView>
+          />
         </View>
 
     </Screen>
