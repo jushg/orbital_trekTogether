@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Avatar, List } from "react-native-paper";
+import { IconButton, Avatar, List } from "react-native-paper";
 import { StyleSheet, Text, View, ScrollView } from 'react-native';
 import { CommonActions } from "@react-navigation/native";
 
@@ -12,41 +12,50 @@ export default ({navigation}) => {
     <Screen scrollable style={styles.container}>
         
        
-        <View style={{flexDirection:"row", justifyContent:"space-between"}}> 
-           <Text style={styles.title}>Home Screen</Text>
-          
-          <Button
-            onPress={() => navigation.navigate('Setting')}
-            icon="cog"
-            color="black"
-            compact="true"
-          />
-        </View>
+        {/*<View style={{flexDirection:"row", justifyContent:"space-between"}}> */}
+        {/*   <Text style={styles.title}>Home Screen</Text>*/}
+        {/*  */}
+        {/*  <Button*/}
+        {/*    onPress={() => navigation.navigate('Setting')}*/}
+        {/*    icon="cog"*/}
+        {/*    color="black"*/}
+        {/*    compact="true"*/}
+        {/*  />*/}
+        {/*</View>*/}
+
+      <View style={{flexDirection: "row", justifyContent: "space-between"}}>
         <View  style={{flexDirection: "row", alignItems:"center", paddingVertical: 15}}>
           <Avatar.Image size={90} source={require('../../assets/ava1.png')} />
           <Text style={{paddingHorizontal: 10, fontSize: 25}}>Welcome, User</Text>
         </View>
-        
-        {/*<Text> </Text>*/}
-        <View  style={{flexDirection:"row", justifyContent:"space-between"}}>
-          <View  style={{flex:1, alignItems:"center"}}>
-            <Text>Your Trips this month</Text>
-            <Text> 3</Text>
-          </View>
-          <View  style={{flex:1, alignItems:"center"}}>
-            <Text>Your Trips this month</Text>
-            <Text> 3</Text>
-          </View>
-          <View  style={{flex:1, alignItems:"center"}}>
-            <Text>Your Trips this month</Text>
-            <Text> 3</Text>
-          </View>
-        </View>
+
+        <IconButton
+          onPress={() => navigation.navigate('Setting')}
+          icon="cog"
+          color="black"
+          size={28}
+        />
+      </View>
+
+        {/*<View  style={{flexDirection:"row", justifyContent:"space-between"}}>*/}
+        {/*  <View  style={{flex:1, alignItems:"center"}}>*/}
+        {/*    <Text>Your Trips this month</Text>*/}
+        {/*    <Text> 3</Text>*/}
+        {/*  </View>*/}
+        {/*  <View  style={{flex:1, alignItems:"center"}}>*/}
+        {/*    <Text>Your Trips this month</Text>*/}
+        {/*    <Text> 3</Text>*/}
+        {/*  </View>*/}
+        {/*  <View  style={{flex:1, alignItems:"center"}}>*/}
+        {/*    <Text>Your Trips this month</Text>*/}
+        {/*    <Text> 3</Text>*/}
+        {/*  </View>*/}
+        {/*</View>*/}
         
 
         {/*<Text> </Text>*/}
 
-        <Text>New Buddies</Text>
+        <Text style={{fontSize: 20}}>New Buddies</Text>
         <View style={{height:"15%"}}>
           <ScrollView horizontal={true} contentContainerStyle={{
             alignItems:"center",
@@ -75,30 +84,36 @@ export default ({navigation}) => {
         
 
         <Text> </Text>
-        <Text>Upcoming trips</Text>
+        <Text style={{fontSize: 20}}>Upcoming trips</Text>
         <View style={{height:"30%"}}>
           <List.Item
-          title="1"
-          description="2"
+            title="Bedok Reservoir"
+            description="6 Jun 2021, 7am - Buddy: Freddy"
+            left={props => <List.Icon {...props} icon="account" />}
+          />
+
+          <List.Item
+          title="MacRitchie Reservoir"
+          description="12 Jun 2021, 3pm - Personal trip"
           left={props => <List.Icon {...props} icon="parking" />}
           />
 
           <List.Item
-          title="3"
-          description="4"
+          title="Chestnut Nature Park"
+          description="20 Jun 2021, 2.30pm - Buddy: Deacy"
           left={props => <List.Icon {...props} icon="account" />}
           />
 
           <List.Item
-          title="5"
-          description="6"
+          title="Bukit Timah Nature Reserve"
+          description="1 Jul 2021, 10am - Buddy: Roger"
           left={props => <List.Icon {...props} icon="account" />}
           />
 
           <List.Item
-          title="7"
-          description="8"
-          left={props => <List.Icon {...props} icon="account" />}
+            title="The Southern Ridges"
+            description="3 Jul 2021, 10am - Buddy: Brian"
+            left={props => <List.Icon {...props} icon="account" />}
           />
         </View>
 
