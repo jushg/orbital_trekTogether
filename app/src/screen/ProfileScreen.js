@@ -4,25 +4,10 @@ import { StyleSheet, Text, View, ScrollView } from 'react-native';
 import { CommonActions } from "@react-navigation/native";
 
 import Screen from "../component/screen"
-import * as Auth from "../../api/auth"
 
 //https://callstack.github.io/react-native-paper/avatar-image.html
 
 export default ({navigation}) => {
-  const handleLogout = () => {
-    Auth.logout(
-      () => navigation.dispatch(CommonActions.reset({
-      index: 0,
-      routes: [{
-        name: "Login",
-        // params: { name: user.displayName }
-      }]
-    })),
-      (error) => {
-        return console.error(error)
-      }
-    )
-  }
   return (
     <Screen style={styles.container}>
         
@@ -38,32 +23,36 @@ export default ({navigation}) => {
           />
         </View>
         <View  style={{ alignItems:"center"}}>
-        <Avatar.Image size={80} source={require('../../assets/ava1.png')} />
-        <Text>Welcome User</Text>
-          </View>
+          <Avatar.Image size={80} source={require('../../assets/ava1.png')} />
+          <Text>Welcome User</Text>
+        </View>
         
-        <Text> </Text>
+        {/*<Text> </Text>*/}
         <View  style={{flexDirection:"row", justifyContent:"space-between"}}>
           <View  style={{flex:1, alignItems:"center"}}>
-          <Text>Your Trips this month</Text>
-          <Text> 3</Text>
+            <Text>Your Trips this month</Text>
+            <Text> 3</Text>
           </View>
           <View  style={{flex:1, alignItems:"center"}}>
-          <Text>Your Trips this month</Text>
-          <Text> 3</Text>
+            <Text>Your Trips this month</Text>
+            <Text> 3</Text>
           </View>
           <View  style={{flex:1, alignItems:"center"}}>
-          <Text>Your Trips this month</Text>
-          <Text> 3</Text>
+            <Text>Your Trips this month</Text>
+            <Text> 3</Text>
           </View>
         </View>
         
 
-        <Text> </Text>
+        {/*<Text> </Text>*/}
 
         <Text>New Buddies</Text>
         <View style={{height:"15%"}}>
-          <ScrollView horizontal={true} contentContainerStyle={{alignItems:"center", justifyContent:"space-evenly"}}>
+          <ScrollView horizontal={true} contentContainerStyle={{
+            alignItems:"center",
+            justifyContent:"space-evenly",
+            paddingHorizontal:10}}>
+          {/* Consider wrapping each avatar in a View to achieve spacing */}
           <Avatar.Image size={80} source={require('../../assets/ava2.png')} />
           <Avatar.Image size={80} source={require('../../assets/ava2.png')} />
           <Avatar.Image size={80} source={require('../../assets/ava2.png')} />
@@ -104,8 +93,7 @@ export default ({navigation}) => {
         />
         </ScrollView>
         </View>
-        
-      <Button onPress={handleLogout} style={styles.button}>Log Out</Button>
+
     </Screen>
 
   )
