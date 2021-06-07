@@ -1,27 +1,48 @@
 import React, { useState } from 'react'
-import { StyleSheet, Text, View, Pressable } from 'react-native'
-import { List, Searchbar } from "react-native-paper"
+import {StyleSheet, Text, View, Pressable } from 'react-native';
+import { Button, Divider, List, Menu, Provider, Searchbar} from "react-native-paper";
+
+// https://callstack.github.io/react-native-paper/menu.html
 
 import Screen from "../component/screen"
 
 export default ({navigation}) => {
-  const [searchQuery, setSearchQuery] = React.useState(''); //Example
-
+  const [searchQuery, setSearchQuery] = useState(''); //Example
   const onChangeSearch = query => setSearchQuery(query); // Example
 
+  const [visible, setVisible] = useState(false);
+  const openMenu = () => setVisible(true);
+  const closeMenu = () => setVisible(false);
+  const sortNewest = () => {console.log("sortNewest")};
+  const sortOldest = () => {};
+
   return (
-    <Screen style={styles.container} scrollable>
-      <Text style={styles.title}>Journal Screen</Text>
-      <Searchbar
-        placeholder="Search Trip"
-        onChangeText={onChangeSearch}
-        value={searchQuery}
-      />
-      <Text>View your past trips with a journal entry for each trip</Text>
+    <Screen scrollable style={styles.container}>
+      <Text style={styles.title}>Journals</Text>
+      {/*<Searchbar*/}
+      {/*  placeholder="Search Trip"*/}
+      {/*  onChangeText={onChangeSearch}*/}
+      {/*  value={searchQuery}*/}
+      {/*/>*/}
+
+      {/*<Text>View your past trips with a journal entry for each trip</Text>*/}
+
+      {/*<Provider>*/}
+        <View style={{flexDirection: 'row-reverse', flex: 1}}>
+          <Menu
+            visible={visible}
+            onDismiss={closeMenu}
+            anchor={<Button onPress={openMenu}>Order by</Button>}
+            style={{paddingTop: 30}}>
+            <Menu.Item onPress={sortNewest} title="Newest" />
+            <Menu.Item onPress={sortOldest} title="Oldest" />
+          </Menu>
+        </View>
+      {/*</Provider>*/}
 
       <List.Item
-        title="Macritchie Reservoir"
-        description="nice trip, but it rain"
+        title="MacRitchie Reservoir"
+        description="nice trip, but it rained"
         left={props => <List.Icon {...props} icon="image-filter-hdr" />}
       />
 
@@ -54,6 +75,7 @@ export default ({navigation}) => {
 
 const styles = StyleSheet.create({
   title: {
+    flex: 1,
     fontSize: 30,
     paddingTop: 30,
     color:"#05668D"
@@ -71,7 +93,6 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection:"column",
     // backgroundColor: '#F0F3BD',
-    alignItems: 'center',
     justifyContent: 'flex-start'
   },
 });
