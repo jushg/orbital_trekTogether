@@ -12,25 +12,25 @@ export default ({navigation}) => {
 
     return (
       <Screen style={styles.container}>
-        <Text style={styles.title}>Explore and Plan</Text>
+
+        {/*<Text>Search for routes and plan new trips here</Text>*/}
+        <MapView style={styles.map} />
+        <Text style={{position: "absolute", ...styles.title}}>Explore and Plan</Text>
         <Searchbar
-          placeholder="Search destination"
+          style={{position: "absolute", top: 70, left: 5, right: 5}}
+          placeholder="Search destination..."
           onChangeText={onChangeSearch}
           value={searchQuery}
         />
-        <Text>Search for routes and plan new trips here</Text>
-        <MapView style={styles.map} />
-
       </Screen>
-        
     )
-}
+};
 
 const styles = StyleSheet.create({
   title: {
     fontSize: 30,
     paddingTop: 30,
-    color:"#05668D"
+    // color:"#05668D"
   },
   button: {
     width:"70%",
@@ -53,5 +53,5 @@ const styles = StyleSheet.create({
     // height: Dimensions.get('window').height,
     width:"100%",
     height:"100%"
-  },
+  }
 });
