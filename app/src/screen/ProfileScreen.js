@@ -50,16 +50,26 @@ export default ({navigation}) => {
         <View style={{height:"15%"}}>
           <ScrollView horizontal={true} contentContainerStyle={{
             alignItems:"center",
-            justifyContent:"space-evenly",
-            paddingHorizontal:10}}>
-          {/* Consider wrapping each avatar in a View to achieve spacing */}
-          <Avatar.Image size={80} source={require('../../assets/ava2.png')} />
-          <Avatar.Image size={80} source={require('../../assets/ava2.png')} />
-          <Avatar.Image size={80} source={require('../../assets/ava2.png')} />
-          <Avatar.Image size={80} source={require('../../assets/ava2.png')} />
-          <Avatar.Image size={80} source={require('../../assets/ava2.png')} />
-          <Avatar.Image size={80} source={require('../../assets/ava2.png')} />
-          <Avatar.Image size={80} source={require('../../assets/ava2.png')} />
+            justifyContent:"space-evenly"}}>
+          {/* Wrap each avatar in a View to achieve spacing */}
+            <View style={{paddingHorizontal: 2}}>
+              <Avatar.Image size={80} source={require('../../assets/ava2.png')} />
+            </View>
+            <View style={{paddingHorizontal: 2}}>
+              <Avatar.Image size={80} source={require('../../assets/ava2.png')} />
+            </View>
+            <View style={{paddingHorizontal: 2}}>
+              <Avatar.Image size={80} source={require('../../assets/ava2.png')} />
+            </View>
+            <View style={{paddingHorizontal: 2}}>
+              <Avatar.Image size={80} source={require('../../assets/ava2.png')} />
+            </View>
+            <View style={{paddingHorizontal: 2}}>
+              <Avatar.Image size={80} source={require('../../assets/ava2.png')} />
+            </View>
+            <View style={{paddingHorizontal: 2}}>
+              <Avatar.Image size={80} source={require('../../assets/ava2.png')} />
+            </View>
           </ScrollView>
         </View>
         
