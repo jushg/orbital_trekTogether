@@ -1,6 +1,6 @@
 import React, {useState}  from 'react';
 import { StyleSheet,Text, Image, View, ScrollView} from 'react-native'
-import {Button, TextInput} from "react-native-paper"
+import {Button, TextInput, ToggleButton} from "react-native-paper"
 import { CommonActions } from "@react-navigation/native";
 
 import Screen from "../component/screen"
@@ -10,15 +10,15 @@ import Screen from "../component/screen"
 
 export default ({navigation}) => {
   const [age,setAge] = useState("")
-  const [job,setJob] = useState("")
+  const [level,setLevel] = useState("1")
   const [intro,setIntro] = useState("")
   const [hobby,setHobby] = useState("")
   const [place,setPlace] = useState("")
   const [time,setTime] = useState("")
   return (
-    <Screen style={styles.container}>
+    <Screen style={styles.container} >
  
-      <Image source={require("../../assets/stolen_icon.jpg")} style={{width: "90%", height:"45%"}}/>
+      
       <TextInput
         label="Age"
         placeholder="21"
@@ -29,6 +29,23 @@ export default ({navigation}) => {
         style={{marginBottom:10, width:"95%"}}
         // left={<TextInput.Icon name="email"/>}
         />
+      <ToggleButton.Row onValueChange={value => setLevel(value)} value={level}>
+          <ToggleButton icon="roman-numeral-1" value="1" />
+          <ToggleButton icon="roman-numeral-2" value="2" />
+          <ToggleButton icon="roman-numeral-3" value="3" />
+      </ToggleButton.Row>
+
+      <TextInput
+        label="Intro"
+        placeholder="Tell us something about you"
+        keyboardType="default"
+        mode="contained"
+        value={age}
+        onChangeText={setIntro}
+        style={{marginBottom:10, width:"95%"}}
+        // left={<TextInput.Icon name="email"/>}
+      />
+      
       <Button
         mode="contained"
         onPress={ () => navigation.dispatch(CommonActions.reset({
@@ -41,7 +58,7 @@ export default ({navigation}) => {
             )
         }
         style={styles.button}
-      >Get Started
+      >Finish
       </Button>
     </Screen>
   )
