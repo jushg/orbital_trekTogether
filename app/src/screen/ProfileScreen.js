@@ -11,11 +11,14 @@ export default ({navigation}) => {
   
   const renderTrip = ({item}) => {
     return (
-      <List.Item
+      <View>
+        <List.Item
             title="Bedok Reservoir"
             description="6 Jun 2021, 7am - Buddy: Freddy"
             left={props => <List.Icon {...props} icon="account" />}
           />
+      </View>
+      
     )
   }
   const renderBuddy = ({item}) => {
@@ -98,6 +101,7 @@ export default ({navigation}) => {
           <FlatList
           data={['1', '2', '3', '4', '5', '6', '7',"8"]}
           renderItem={renderBuddy}
+          keyExtractor={item => item}
           horizontal={true}
           pagingEnabled/>
         </View>
@@ -108,7 +112,8 @@ export default ({navigation}) => {
         <View style={{flex: 3.5}}>
           <FlatList
           data={['1', '2', '3', '4', '5', '6', '7',"8"]}
-          renderItem={renderTrip}/>
+          renderItem={renderTrip}
+          keyExtractor={item => item}/>
           {/* <List.Item
             title="Bedok Reservoir"
             description="6 Jun 2021, 7am - Buddy: Freddy"
