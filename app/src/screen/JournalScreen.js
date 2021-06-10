@@ -15,6 +15,18 @@ export default ({navigation}) => {
   const closeMenu = () => setVisible(false);
   const sortNewest = () => {console.log("sortNewest")};
   const sortOldest = () => {};
+  //This item include subject, time, place, destination, partner, description
+  const renderList = ({item}) => {
+    return (
+      <View>
+        <List.Item
+        title={item.subject}
+        description={item.description}
+        left={props => <List.Icon {...props} icon="image-filter-hdr" />}
+      />
+      </View>
+    )
+  }
 
   return (
     <Screen scrollable style={styles.container}>

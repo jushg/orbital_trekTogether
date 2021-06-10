@@ -4,6 +4,7 @@ import { List, Searchbar } from "react-native-paper"
 
 //https://callstack.github.io/react-native-paper/list-item.html
 //https://callstack.github.io/react-native-paper/searchbar.html
+//https://docs.expo.io/versions/latest/sdk/permissions/
 
 import Screen from "../component/screen"
 
@@ -11,6 +12,18 @@ export default ({navigation}) => {
   const [searchQuery, setSearchQuery] = React.useState(''); //Example
 
   const onChangeSearch = query => setSearchQuery(query); // Example
+  //This item include (partnerID, last message, time stamp)
+  const renderList = ({item}) => {
+    return (
+      <View>
+        <List.Item
+        title={item.subject}
+        description={item.description}
+        left={props => <List.Icon {...props} icon="image-filter-hdr" />}
+      />
+      </View>
+    )
+  }
 
   return (
     <Screen scrollable style={styles.container}>

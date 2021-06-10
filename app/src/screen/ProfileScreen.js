@@ -1,15 +1,32 @@
 import React from 'react';
 import { IconButton, Avatar, List } from "react-native-paper";
-import { StyleSheet, Text, View, ScrollView } from 'react-native';
-import { CommonActions } from "@react-navigation/native";
+import { StyleSheet, Text, View, ScrollView, FlatList } from 'react-native';
 
 import Screen from "../component/screen"
 
 //https://callstack.github.io/react-native-paper/avatar-image.html
 
 export default ({navigation}) => {
+  
+  
+  const renderTrip = ({item}) => {
+    return (
+      <List.Item
+            title="Bedok Reservoir"
+            description="6 Jun 2021, 7am - Buddy: Freddy"
+            left={props => <List.Icon {...props} icon="account" />}
+          />
+    )
+  }
+  const renderBuddy = ({item}) => {
+      return (
+        <View style={{paddingHorizontal: 2}}>
+          <Avatar.Image size={80} source={require('../../assets/ava6.jpg')} />
+        </View>
+      )
+  }
   return (
-    <Screen scrollable style={styles.container}>
+    <Screen style={styles.container}>
         
        
         {/*<View style={{flexDirection:"row", justifyContent:"space-between"}}> */}
@@ -23,7 +40,7 @@ export default ({navigation}) => {
         {/*  />*/}
         {/*</View>*/}
 
-      <View style={{flexDirection: "row", justifyContent: "space-between"}}>
+      <View style={{flex: 2,flexDirection: "row", justifyContent: "space-between"}}>
         <View  style={{flexDirection: "row", alignItems:"center", paddingVertical: 15}}>
           <Avatar.Image size={90} source={require('../../assets/ava1.png')} />
           <Text style={{paddingHorizontal: 10, fontSize: 25}}>Welcome, User</Text>
@@ -51,42 +68,48 @@ export default ({navigation}) => {
         {/*    <Text> 3</Text>*/}
         {/*  </View>*/}
         {/*</View>*/}
-        
-
-        {/*<Text> </Text>*/}
+      
 
         <Text style={{fontSize: 20}}>New Buddies</Text>
-        <View style={{height:"15%"}}>
-          <ScrollView horizontal={true} contentContainerStyle={{
+        <View style={{flex: 1}}>
+          {/* <ScrollView horizontal={true} contentContainerStyle={{
             alignItems:"center",
             justifyContent:"space-evenly"}}>
-          {/* Wrap each avatar in a View to achieve spacing */}
+          
             <View style={{paddingHorizontal: 2}}>
-              <Avatar.Image size={80} source={require('../../assets/ava2.png')} />
+              <Avatar.Image size={80} source={require('../../assets/ava6.jpg')} />
+            </View>
+            <View style={{paddingHorizontal: 2}}>
+              <Avatar.Image size={80} source={require('../../assets/ava3.jpg')} />
+            </View>
+            <View style={{paddingHorizontal: 2}}>
+              <Avatar.Image size={80} source={require('../../assets/ava4.png')} />
+            </View>
+            <View style={{paddingHorizontal: 2}}>
+              <Avatar.Image size={80} source={require('../../assets/ava1.jpg')} />
+            </View>
+            <View style={{paddingHorizontal: 2}}>
+              <Avatar.Image size={80} source={require('../../assets/ava5.jpg')} />
             </View>
             <View style={{paddingHorizontal: 2}}>
               <Avatar.Image size={80} source={require('../../assets/ava2.png')} />
             </View>
-            <View style={{paddingHorizontal: 2}}>
-              <Avatar.Image size={80} source={require('../../assets/ava2.png')} />
-            </View>
-            <View style={{paddingHorizontal: 2}}>
-              <Avatar.Image size={80} source={require('../../assets/ava2.png')} />
-            </View>
-            <View style={{paddingHorizontal: 2}}>
-              <Avatar.Image size={80} source={require('../../assets/ava2.png')} />
-            </View>
-            <View style={{paddingHorizontal: 2}}>
-              <Avatar.Image size={80} source={require('../../assets/ava2.png')} />
-            </View>
-          </ScrollView>
+          </ScrollView> */}
+          <FlatList
+          data={['1', '2', '3', '4', '5', '6', '7',"8"]}
+          renderItem={renderBuddy}
+          horizontal={true}
+          pagingEnabled/>
         </View>
         
 
         <Text> </Text>
         <Text style={{fontSize: 20}}>Upcoming trips</Text>
-        <View style={{height:"30%"}}>
-          <List.Item
+        <View style={{flex: 3.5}}>
+          <FlatList
+          data={['1', '2', '3', '4', '5', '6', '7',"8"]}
+          renderItem={renderTrip}/>
+          {/* <List.Item
             title="Bedok Reservoir"
             description="6 Jun 2021, 7am - Buddy: Freddy"
             left={props => <List.Icon {...props} icon="account" />}
@@ -114,7 +137,7 @@ export default ({navigation}) => {
             title="The Southern Ridges"
             description="3 Jul 2021, 10am - Buddy: Brian"
             left={props => <List.Icon {...props} icon="account" />}
-          />
+          /> */}
         </View>
 
     </Screen>
@@ -139,6 +162,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection:"column",
-    justifyContent: 'space-between',
+    justifyContent: 'flex-start',
   },
 });

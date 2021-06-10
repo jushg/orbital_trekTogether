@@ -1,46 +1,60 @@
-import React from 'react';
-import { Button } from "react-native-paper";
-import { StyleSheet, Text } from 'react-native';
+import React  from 'react';
+import { StyleSheet,Text, Image } from 'react-native'
+import {Button } from "react-native-paper"
+import { CommonActions } from "@react-navigation/native";
 
 import Screen from "../component/screen"
 
 
-export default ({ navigation }) => {
-  return (
-    <Screen style = {styles.container}>
-      <Text style = {styles.title}> TrekTogether</Text>
-      <Text>Discover Singapore 2021</Text>
+//https://callstack.github.io/react-native-paper/chip.html
 
+export default ({navigation}) => {
+  return (
+    <Screen style={styles.container}>
+      {/* <Image source={image} style={{ width: 305, height: 300 }}/>
+      <Text style={styles.title}>Setup Screen</Text>
+      <Text>Input your name, age, gender, contact, </Text>
+      <Text> hobbies, free times, destinations</Text> */}
+      <Image source={require("../../assets/stolen_icon.jpg")} style={{width: "90%", height:"45%"}}/>
+       <Text style = {styles.title}>Welcome [USER] </Text>
+      {/* <Text>Discover Singapore 2021</Text> */}
       <Button
         mode="contained"
-        onPress={() => navigation.navigate('Setup')}
+        onPress={ () => navigation.dispatch(CommonActions.reset({
+            index: 0,
+            routes: [{
+              name: "Setup",
+              // params: { name: user.displayName }
+              }]
+            })
+            )
+        }
         style={styles.button}
-      >Get Started
+      >Start your journey here
       </Button>
-
     </Screen>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
   title: {
     fontSize: 30,
-    paddingTop: 30,
+    paddingTop: 0,
     color:"#05668D"
   },
   button: {
-    width:"70%",
-    borderRadius:25,
+    // width:"70%",
+    // borderRadius:25,
     height:50,
     alignItems:"center",
     justifyContent:"center",
-    marginTop:20,
-    backgroundColor:"#028090",
+    marginTop:10,
+    // backgroundColor:"#028090",
   },
   container: {
     flex: 1,
     flexDirection:"column",
-    alignItems: 'center',
+    alignItems: "center",
     justifyContent: 'center',
   },
 });

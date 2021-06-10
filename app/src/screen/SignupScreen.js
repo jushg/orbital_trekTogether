@@ -19,7 +19,7 @@ export default ({navigation}) =>{
       (user) => navigation.dispatch(CommonActions.reset({
         index: 0,
         routes: [{
-          name: "Setup",
+          name: "Welcome",
           // params: { name: user.displayName }
         }]
       })),

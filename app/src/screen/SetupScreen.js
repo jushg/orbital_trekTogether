@@ -1,21 +1,26 @@
-import React  from 'react';
+import React, {useState}  from 'react';
 import { StyleSheet,Text, Image, View, ScrollView} from 'react-native'
-import {Button} from "react-native-paper"
+import {Button, TextInput} from "react-native-paper"
 import { CommonActions } from "@react-navigation/native";
 
 import Screen from "../component/screen"
-import Carousel from "../component/carousel"
-import image from "../../assets/new_icon.png"
 
+//This screen is use for setup user personal info
 //https://callstack.github.io/react-native-paper/chip.html
 
 export default ({navigation}) => {
+  const [age,setAge] = useState("")
+  const [job,setJob] = useState("")
+  const [intro,setIntro] = useState("")
+  const [hobby,setHobby] = useState("")
+  const [place,setPlace] = useState("")
+  const [time,setTime] = useState("")
   return (
     <Screen style={styles.container}>
-      <Image source={image} style={{ width: 305, height: 300 }}/>
-      <Text style={styles.title}>Setup Screen</Text>
-      <Text>Input your name, age, gender, contact, </Text>
-      <Text> hobbies, free times, destinations</Text>
+ 
+      <Image source={require("../../assets/stolen_icon.jpg")} style={{width: "90%", height:"45%"}}/>
+       <Text style = {styles.title}>Welcome to TrekTogether</Text>
+      <Text>Discover Singapore 2021</Text>
       <Button
         mode="contained"
         onPress={ () => navigation.dispatch(CommonActions.reset({
@@ -28,7 +33,7 @@ export default ({navigation}) => {
             )
         }
         style={styles.button}
-      >Finish
+      >Get Started
       </Button>
     </Screen>
   )
@@ -37,7 +42,7 @@ export default ({navigation}) => {
 const styles = StyleSheet.create({
   title: {
     fontSize: 30,
-    paddingTop: 5,
+    paddingTop: 0,
     color:"#05668D"
   },
   button: {
@@ -46,7 +51,7 @@ const styles = StyleSheet.create({
     height:50,
     alignItems:"center",
     justifyContent:"center",
-    marginTop:20,
+    marginTop:10,
     // backgroundColor:"#028090",
   },
   container: {
