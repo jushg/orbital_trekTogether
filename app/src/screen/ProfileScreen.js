@@ -71,33 +71,10 @@ export default ({navigation}) => {
         {/*    <Text> 3</Text>*/}
         {/*  </View>*/}
         {/*</View>*/}
-      
+    
 
         <Text style={{fontSize: 20}}>New Buddies</Text>
         <View style={{flex: 1}}>
-          {/* <ScrollView horizontal={true} contentContainerStyle={{
-            alignItems:"center",
-            justifyContent:"space-evenly"}}>
-          
-            <View style={{paddingHorizontal: 2}}>
-              <Avatar.Image size={80} source={require('../../assets/ava6.jpg')} />
-            </View>
-            <View style={{paddingHorizontal: 2}}>
-              <Avatar.Image size={80} source={require('../../assets/ava3.jpg')} />
-            </View>
-            <View style={{paddingHorizontal: 2}}>
-              <Avatar.Image size={80} source={require('../../assets/ava4.png')} />
-            </View>
-            <View style={{paddingHorizontal: 2}}>
-              <Avatar.Image size={80} source={require('../../assets/ava1.jpg')} />
-            </View>
-            <View style={{paddingHorizontal: 2}}>
-              <Avatar.Image size={80} source={require('../../assets/ava5.jpg')} />
-            </View>
-            <View style={{paddingHorizontal: 2}}>
-              <Avatar.Image size={80} source={require('../../assets/ava2.png')} />
-            </View>
-          </ScrollView> */}
           <FlatList
           data={['1', '2', '3', '4', '5', '6', '7',"8"]}
           renderItem={renderBuddy}

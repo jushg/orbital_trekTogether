@@ -19,8 +19,16 @@ export default ({navigation}) => {
     <Screen style={styles.container}>
  
       <Image source={require("../../assets/stolen_icon.jpg")} style={{width: "90%", height:"45%"}}/>
-       <Text style = {styles.title}>Welcome to TrekTogether</Text>
-      <Text>Discover Singapore 2021</Text>
+      <TextInput
+        label="Age"
+        placeholder="21"
+        keyboardType="numeric"
+        mode="contained"
+        value={age}
+        onChangeText={setAge}
+        style={{marginBottom:10, width:"95%"}}
+        // left={<TextInput.Icon name="email"/>}
+        />
       <Button
         mode="contained"
         onPress={ () => navigation.dispatch(CommonActions.reset({

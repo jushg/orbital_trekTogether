@@ -6,18 +6,11 @@ import { CommonActions } from "@react-navigation/native";
 import Screen from "../component/screen"
 
 
-//https://callstack.github.io/react-native-paper/chip.html
-
 export default ({navigation}) => {
   return (
     <Screen style={styles.container}>
-      {/* <Image source={image} style={{ width: 305, height: 300 }}/>
-      <Text style={styles.title}>Setup Screen</Text>
-      <Text>Input your name, age, gender, contact, </Text>
-      <Text> hobbies, free times, destinations</Text> */}
       <Image source={require("../../assets/stolen_icon.jpg")} style={{width: "90%", height:"45%"}}/>
        <Text style = {styles.title}>Welcome [USER] </Text>
-      {/* <Text>Discover Singapore 2021</Text> */}
       <Button
         mode="contained"
         onPress={ () => navigation.dispatch(CommonActions.reset({

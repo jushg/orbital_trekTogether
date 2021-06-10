@@ -1,9 +1,7 @@
 import React, { useState } from 'react'
-import { StyleSheet, Text, FlatList } from 'react-native'
+import { StyleSheet, Text, FlatList, View } from 'react-native'
 import { List, Searchbar } from "react-native-paper"
 
-//https://callstack.github.io/react-native-paper/list-item.html
-//https://callstack.github.io/react-native-paper/searchbar.html
 //https://docs.expo.io/versions/latest/sdk/permissions/
 
 import Screen from "../component/screen"
@@ -16,53 +14,33 @@ export default ({navigation}) => {
   const renderList = ({item}) => {
     return (
       <View>
-        <List.Item
-        title={item.subject}
-        description={item.description}
-        left={props => <List.Icon {...props} icon="image-filter-hdr" />}
+       <List.Item
+        title="Nguyen EE"
+        description="You: Hello!"
+        left={props => <List.Icon {...props} icon="account" />}
       />
       </View>
     )
   }
 
   return (
-    <Screen scrollable style={styles.container}>
+    <Screen style={styles.container}>
       <Text style={styles.title}>Your buddies</Text>
-      <Text> This is a screen to chat with your buddies</Text>
+      <View style={{alignItems:"center"}}>
       <Searchbar
-        placeholder="Search Name"
+        placeholder="Search Buddy"
         onChangeText={onChangeSearch}
         value={searchQuery}
+        style={{marginBottom:10, width:"95%"}}
       />
-      {/* Example of a search bar
-           To Do: Implement a mapping function for list.item
-      */}
-
-      <List.Item
-        title="Nguyen EE"
-        description="You: Hello!"
-        left={props => <List.Icon {...props} icon="account" />}
-      />
-      <List.Item
-        title="Khoa CHE"
-        description="Khoa: Bye"
-        left={props => <List.Icon {...props} icon="account" />}
-      />
-      <List.Item
-        title="Cuong PFM"
-        description="Cuong: Mala ?"
-        left={props => <List.Icon {...props} icon="account" />}
-      />
-      <List.Item
-        title="Vinh CS"
-        description="You: Wjbu ko?"
-        left={props => <List.Icon {...props} icon="account" />}
-      />
-      <List.Item
-        title="Mai BZA"
-        description="You: Bye"
-        left={props => <List.Icon {...props} icon="account" />}
-      />
+      </View>
+      <View style={{flex: 10 }}>
+        <FlatList
+        data={['1', '2', '3', '4', '5', '6', '7', '8', '9']}
+        renderItem={renderList}
+        keyExtractor={item => item}
+        />
+      </View>
 
 
     </Screen>
@@ -73,7 +51,7 @@ export default ({navigation}) => {
 const styles = StyleSheet.create({
   title: {
     fontSize: 30,
-    paddingTop: 30,
+    paddingTop: 10,
     color:"#05668D"
   },
   button: {

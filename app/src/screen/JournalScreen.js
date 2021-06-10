@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import {StyleSheet, Text, View, FlatList } from 'react-native';
-import { Button, Divider, List, Menu, Provider, Searchbar} from "react-native-paper";
+import { Button, List, Menu, Searchbar} from "react-native-paper";
 
 // https://callstack.github.io/react-native-paper/menu.html
 
@@ -30,16 +30,16 @@ export default ({navigation}) => {
 
   return (
     <Screen style={styles.container}>
+      
       <Text style={styles.title}>Journals</Text>
+      <View style={{alignItems:"center"}}>
       <Searchbar
-      placeholder="Search Trip"
-      onChangeText={onChangeSearch}
-      value={searchQuery}
+        placeholder="Search Trip"
+        onChangeText={onChangeSearch}
+        value={searchQuery}
+        style={{marginBottom:10, width:"95%"}}
       />
-
-      {/*<Text>View your past trips with a journal entry for each trip</Text>*/}
-
-     
+      </View>
       <View style={{flexDirection: 'row', justifyContent:"space-between", flex: 1}}>
             <Text style={{fontSize: 20, color:"#05668D", paddingTop: 10,}}> Your History</Text>
             <Menu
@@ -67,13 +67,13 @@ const styles = StyleSheet.create({
   title: {
     flex: 1,
     fontSize: 30,
-    paddingTop: 30,
+    paddingTop: 10,
     color:"#05668D"
   },
   container: {
     flex: 1,
     flexDirection:"column",
     // backgroundColor: '#F0F3BD',
-    justifyContent: 'center'
+    justifyContent: 'flex-start'
   },
 });
