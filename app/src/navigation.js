@@ -15,7 +15,7 @@ import SetupScreen from "./screen/SetupScreen"
 import JournalScreen from "./screen/JournalScreen"
 import MessageMainScreen from "./screen/MessageMainScreen"
 
-
+import * as Auth from "../api/auth"
 import TestScreen from "./screen/TestScreen"
 
 const HomeStack = createStackNavigator();
@@ -45,6 +45,16 @@ export const AuthScreenStack = () => {
   )
 }
 
+const MainStack = createStackNavigator();
+
+export const MainScreenStack = () => {
+  
+  return (
+    <MainScreenStack.Navigator>
+      {}
+    </MainScreenStack.Navigator>
+  )
+}
 const HomeTab = createMaterialBottomTabNavigator();
 
 export const HomeScreenTab = () => {

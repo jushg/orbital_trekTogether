@@ -32,6 +32,11 @@ export const logout = async(onSuccess, onError) => {
     onError(error)
   }
 }
+
+export const getCurrentUser = () => {
+  return auth.currentUser
+}
+
 export const setOnAuthStateChanged = (onUserAuthenticated, onUserNotFound) =>
   auth.onAuthStateChanged((user) => {
     if (user) {
