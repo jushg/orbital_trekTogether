@@ -1,8 +1,9 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { createStackNavigator } from "@react-navigation/stack";
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import { useSelector } from 'react-redux';
 
 import LoginScreen from "./screen/LoginScreen"
 import WelcomeScreen from "./screen/WelcomeScreen"
@@ -39,12 +40,12 @@ const AuthStack = createStackNavigator();
 
 export const AuthScreenStack = () => {
   return (
-    <AuthStack.Navigator initialRouteName={"Signup"} headerMode="none">
+    <AuthStack.Navigator initialRouteName={"Login"} headerMode="none">
       <AuthStack.Screen name="Welcome" key = "welcome" component = {WelcomeScreen}/>
       <AuthStack.Screen name="Login" key = "login" component = {LoginScreen}/>
       <AuthStack.Screen name="Signup" key = "signup" component = {SignupScreen}/>
-      <AuthStack.Screen name="Home" key = "home" component = {HomeScreenStack}/>
-      <AuthStack.Screen name="Main" key = "main" component = {MainScreen}/>
+      {/* <AuthStack.Screen name="Home" key = "home" component = {HomeScreenStack}/>
+      <AuthStack.Screen name="Main" key = "main" component = {MainScreen}/> */}
       <AuthStack.Screen name="Setup" key = "setup" component = {SetupScreen}/>
     </AuthStack.Navigator>
   )
@@ -53,16 +54,19 @@ export const AuthScreenStack = () => {
 const MainStack = createStackNavigator();
 
 export const MainScreenStack = () => {
-  // const [user]
+  const [user,setUser] = useState("");
+  Auth.setOnAuthStateChanged(
+    (user) => setUser(user),
+    () => setUser(""))
   return (
-    <MainScreenStack.Navigator>
-      {user == null ? (
-        <AuthScreenStack/>
+    <MainStack.Navigator headerMode="none">
+      {user == "" ? (
+      <MainStack.Screen name="auth" component = {AuthScreenStack}/>
       ):(
-        <HomeScreenStack/>
+      <MainStack.Screen name="home" component = {HomeScreenTab}/>
       )
       }
-    </MainScreenStack.Navigator>
+    </MainStack.Navigator>
   )
 }
 const HomeTab = createMaterialBottomTabNavigator();

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Button, TextInput } from "react-native-paper";
 import { StyleSheet, Text, View, Pressable, Image } from 'react-native';
 import { CommonActions } from "@react-navigation/native"
-
+import { useDispatch } from 'react-redux';
 
 import Screen from "../component/screen"
 import * as Auth from "../../api/auth"
@@ -15,19 +15,26 @@ export default ({ navigation }) => {
   const [password,setPassword] = useState("");
   const [passwordVisible,setPasswordVisible] = useState(true);
   
+  // const handleLoginEmail = () =>{
+  //   Auth.loginEmail(
+  //     {email,password},
+  //     (user) => navigation.dispatch(CommonActions.reset({
+  //       index: 0,
+  //       routes: [{
+  //         name: "Home",
+  //         // params: { name: user.displayName }
+  //       }]
+  //     })),
+  //     (error) => {
+  //       return console.error(error)
+  //     }
+  //   )
+  // }
   const handleLoginEmail = () =>{
     Auth.loginEmail(
       {email,password},
-      (user) => navigation.dispatch(CommonActions.reset({
-        index: 0,
-        routes: [{
-          name: "Home",
-          // params: { name: user.displayName }
-        }]
-      })),
-      (error) => {
-        return console.error(error)
-      }
+      (user) => useDispatch(AuthCommons.signedIn(user)),
+      (error) => {return console.error(error)}
     )
   }
   return (

@@ -5,12 +5,12 @@ import { PersistGate } from "redux-persist/integration/react";
 import { NavigationContainer,  DefaultTheme as NavigationDefaultTheme,} from "@react-navigation/native";
 
 //import testing screen here
-import {AuthScreenStack, DashboardScreenTab, HomeScreenTab} from "./src/navigation"
+import {AuthScreenStack, DashboardScreenTab, MainScreenStack} from "./src/navigation"
 import TestScreen from "./src/screen/LoginScreen"
 
 //import permanent object here
 import LoadingScreen  from './src/screen/LoadingScreen';
-import {getPersistor,getStore} from "./store/store"
+// import {getPersistor,getStore} from "./store/store"
 
 
 const CombinedDefaultTheme = {
@@ -24,21 +24,18 @@ const CombinedDefaultTheme = {
 
 
 export default function App() {
-  const store = getStore();
-  const persistor = getPersistor();
+  // const store = getStore();
+  // const persistor = getPersistor();
+  // <ReduxProvider store={store}>
+  //       <PersistGate persistor={persistor} loading={LoadingScreen}>
   return (
-      <ReduxProvider store={store}>
-        <PersistGate persistor={persistor} loading={LoadingScreen}>
+      
         <PaperProvider theme={CombinedDefaultTheme}>
           <NavigationContainer theme={CombinedDefaultTheme}>
             {/* <AuthScreenStack/> */}
-            {/* <HomeScreenTab/> */}
-            <TestScreen/>
+            <MainScreenStack/>
+            {/* <DashboardScreenTab/> */}
           </NavigationContainer>
         </PaperProvider>
-        </PersistGate>
-      </ReduxProvider>
-        
-      
   );
 }
