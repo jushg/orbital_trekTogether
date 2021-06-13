@@ -30,7 +30,7 @@ export default ({navigation}) =>{
   }
 
     return (
-      <Screen style ={styles.container} scrollable>
+      <Screen style ={styles.container} >
         <Button
           mode="flat"
           icon="arrow-left"
@@ -78,7 +78,6 @@ export default ({navigation}) =>{
           style={{marginBottom:10, width:"95%"}}
           autoCapitalize="none"
           />
-
           <Button
           mode="contained"
           style={styles.signupBtn}
@@ -100,19 +99,15 @@ const styles = StyleSheet.create({
     color:"#05668D"
   },
   signupBtn: {
-    // width:"90%",
-    // borderRadius:25,
     height:50,
     alignItems:"center",
     justifyContent:"center",
     marginTop:20,
-    // backgroundColor:"#02C39A",
   },
   container: {
     flex:1,
     flexDirection:"column",
-    // backgroundColor: '#F0F3BD',
-    justifyContent:"center"
+    justifyContent:"flex-start"
   },
 });
 

@@ -4,32 +4,32 @@ import { createSelector } from 'reselect'
 const authSlice = createSlice({
     name: 'auth',
     initialState: {
-        isLoading: true,
+        // isLoading: true,
         isSignout: false,
         userID: null,
     },
     reducers:{
-        signedIn: (state,{ payload }) => {
+        signIn: (state,{ payload }) => {
             state.isSignout = true
             state.userID = payload.uid
         },
-        signedOut: state => {
+        signOut: state => {
             state.isSignout = false
             state.userID = null
         },
-        restoredToken: (state,{ payload }) => {
-            state.isLoading = false
-            state.userID = payload.uid
-        }
+        // restoredToken: (state,{ payload }) => {
+        //     state.isLoading = false
+        //     state.userID = payload.uid
+        // }
 
     }
 })
 
-const { signedIn, signedOut, restoredToken } = authSlice.actions
+const { signIn, signOut } = authSlice.actions
 
-export const signIn = (user) => signedIn({user})
-export const signOut = () => signedOut()
-export const restoreToken = (user) => restoredToken({user})
+export const signedIn = (user) => signIn({user})
+export const signedOut = () => signOut()
+// export const restoreToken = (user) => restoredToken({user})
 
 export const getUserID = createSelector(
     (state) => state.auth,

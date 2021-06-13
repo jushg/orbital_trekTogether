@@ -1,13 +1,28 @@
-import { configureStore, combineReducers } from '@reduxjs/toolkit'
-import authReducer, { authSlice } from '../src/feature/auth'
+import { configureStore } from '@reduxjs/toolkit'
+import { persistStore, persistReducer } from "redux-persist";
+import { AsyncStorage }                 from '@react-native-async-storage/async-storage'
 
 //directory of all reducer
-const rootReducer = combineReducers ({
-  auth: authSlice
+import { rootReducer } from './index';
 
-})
+const persistConfig = {
+  key: "root",
+  storage: AsyncStorage
+};
 
-export default configureStore({
-  reducer: rootReducer
+const persistedReducer = persistReducer(persistConfig, rootReducer);
+
+const store = configureStore({
+  reducer: persistedReducer
   }
 )
+
+const persistor = persistStore(store);
+
+const getPersistor = () => persistor;
+const getStore = () => store;
+
+export {
+    getStore,
+    getPersistor
+};

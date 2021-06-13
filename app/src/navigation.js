@@ -1,6 +1,7 @@
 import React from 'react';
 import { createStackNavigator } from "@react-navigation/stack";
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import LoginScreen from "./screen/LoginScreen"
@@ -12,11 +13,16 @@ import ExploreScreen from "./screen/ExploreScreen"
 import MatchScreen from "./screen/MatchScreen"
 import MainScreen from "./screen/MainScreen"
 import SetupScreen from "./screen/SetupScreen"
-import JournalScreen from "./screen/JournalScreen"
+
+
+import PastScreen from "./screen/PastScreen"
+import FutureScreen from './screen/FutureScreen'
+
 import MessageMainScreen from "./screen/MessageMainScreen"
 
 import * as Auth from "../api/auth"
-import TestScreen from "./screen/TestScreen"
+
+
 
 const HomeStack = createStackNavigator();
 
@@ -24,7 +30,6 @@ export const HomeScreenStack = () => {
   return (
     <HomeStack.Navigator initialRouteName={"Home"} headerMode="none">
       <HomeStack.Screen name="Home" key = "home" component = {HomeScreenTab}/>
-      <HomeStack.Screen name="Test" key = "test" component = {TestScreen}/>
       <HomeStack.Screen name="Setting" key = "setting" component = {SettingScreen}/>
     </HomeStack.Navigator>
   )
@@ -34,7 +39,7 @@ const AuthStack = createStackNavigator();
 
 export const AuthScreenStack = () => {
   return (
-    <AuthStack.Navigator initialRouteName={"Main"} headerMode="none">
+    <AuthStack.Navigator initialRouteName={"Signup"} headerMode="none">
       <AuthStack.Screen name="Welcome" key = "welcome" component = {WelcomeScreen}/>
       <AuthStack.Screen name="Login" key = "login" component = {LoginScreen}/>
       <AuthStack.Screen name="Signup" key = "signup" component = {SignupScreen}/>
@@ -48,10 +53,15 @@ export const AuthScreenStack = () => {
 const MainStack = createStackNavigator();
 
 export const MainScreenStack = () => {
-  
+  // const [user]
   return (
     <MainScreenStack.Navigator>
-      {}
+      {user == null ? (
+        <AuthScreenStack/>
+      ):(
+        <HomeScreenStack/>
+      )
+      }
     </MainScreenStack.Navigator>
   )
 }
@@ -61,10 +71,11 @@ export const HomeScreenTab = () => {
   return (
     <HomeTab.Navigator
       initialRouteName="Home"
+      
       // activeColor="#e91e63"
       // barStyle={{ backgroundColor: 'tomato' }}
     >
-      <HomeTab.Screen
+      {/* <HomeTab.Screen
         name="Journal"
         component={JournalScreen}
         options={{
@@ -73,8 +84,8 @@ export const HomeScreenTab = () => {
             <MaterialCommunityIcons name="notebook-outline" color={color} size={26} />
           ),
         }}
-      />
-      <HomeTab.Screen
+      /> */}
+      {/* <HomeTab.Screen
         name="Explore"
         component={ExploreScreen}
         options={{
@@ -83,10 +94,10 @@ export const HomeScreenTab = () => {
             <MaterialCommunityIcons name="map-marker-circle" color={color} size={26} />
           ),
         }}
-      />
+      /> */}
       <HomeTab.Screen
         name="Home"
-        component={HomeScreen}
+        component={DashboardScreenTab}
         options={{
           tabBarLabel: 'Home',
           tabBarIcon: ({ color }) => (
@@ -117,3 +128,28 @@ export const HomeScreenTab = () => {
     </HomeTab.Navigator>
   );
 }
+
+
+//Need proper SafeAreaView Implementation
+const DashboardTab = createMaterialTopTabNavigator();
+
+export const DashboardScreenTab = () => {
+  return (
+    <DashboardTab.Navigator
+      style={{paddingTop: 30}}
+    >
+      <DashboardTab.Screen 
+        name="Future" 
+        component={FutureScreen}
+        options={{
+          tabBarLabel: 'Your plan'
+        }}/>
+      <DashboardTab.Screen 
+        name="Past" 
+        component={PastScreen}
+        options={{
+          tabBarLabel: 'Your journal'
+        }}/>
+    </DashboardTab.Navigator>
+  )
+} 

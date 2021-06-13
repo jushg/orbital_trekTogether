@@ -73,7 +73,7 @@ export default ({navigation}) => {
         {/*</View>*/}
     
 
-        <Text style={{fontSize: 20}}>New Buddies</Text>
+        <Text style={{fontSize: 20, color:"#05668D", paddingTop: 10,}}>New Buddies</Text>
         <View style={{flex: 1}}>
           <FlatList
           data={['1', '2', '3', '4', '5', '6', '7',"8"]}
@@ -83,7 +83,7 @@ export default ({navigation}) => {
           pagingEnabled/>
         </View>
         
-
+        <Text style={{fontSize: 20, color:"#05668D", paddingTop: 10,}}>New Buddies</Text>
         <Text> </Text>
         <Text style={{fontSize: 20}}>Upcoming trips</Text>
         <View style={{flex: 3.5}}>

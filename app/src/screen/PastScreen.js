@@ -30,17 +30,15 @@ export default ({navigation}) => {
 
   return (
     <Screen style={styles.container}>
-      
-      <Text style={styles.title}>Journals</Text>
       <View style={{alignItems:"center"}}>
-      <Searchbar
-        placeholder="Search Trip"
-        onChangeText={onChangeSearch}
-        value={searchQuery}
-        style={{marginBottom:10, width:"95%"}}
-      />
+        <Searchbar
+          placeholder="Search Trip"
+          onChangeText={onChangeSearch}
+          value={searchQuery}
+          style={{marginBottom:10, width:"95%"}}
+        />
       </View>
-      <View style={{flexDirection: 'row', justifyContent:"space-between", flex: 1}}>
+      <View style={{flexDirection: 'row', justifyContent:"space-between"}}>
             <Text style={{fontSize: 20, color:"#05668D", paddingTop: 10,}}> Your History</Text>
             <Menu
               visible={visible}
@@ -52,7 +50,7 @@ export default ({navigation}) => {
             </Menu>
       </View>  
   
-      <View style={{flex: 10 }}>
+      <View >
         <FlatList
         data={['1', '2', '3', '4', '5', '6', '7', '8', '9']}
         renderItem={renderList}
@@ -73,7 +71,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection:"column",
-    // backgroundColor: '#F0F3BD',
     justifyContent: 'flex-start'
   },
 });

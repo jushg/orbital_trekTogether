@@ -6,6 +6,7 @@ import { CommonActions } from "@react-navigation/native"
 
 import Screen from "../component/screen"
 import * as Auth from "../../api/auth"
+import * as AuthCommons from "../feature/auth"
 import image from "../../assets/new_icon.png"
 
 
@@ -13,6 +14,7 @@ export default ({ navigation }) => {
   const [email,setEmail] = useState("");
   const [password,setPassword] = useState("");
   const [passwordVisible,setPasswordVisible] = useState(true);
+  
   const handleLoginEmail = () =>{
     Auth.loginEmail(
       {email,password},
@@ -29,7 +31,7 @@ export default ({ navigation }) => {
     )
   }
   return (
-    <Screen style={styles.container} scrollable >
+    <Screen style={styles.container} >
         
       <View style={{justifyContent:"center", alignItems:"center"}}>
       <Image source={image} style={{ width: 305, height: 300 }}/>
@@ -114,12 +116,10 @@ export default ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex:1,
-    backgroundColor: 'white',
     justifyContent:"flex-start"
   },
   title: {
     fontSize: 40,
-    // paddingTop: 30,
     paddingBottom: 30,
     color:"#05668D"
   },
@@ -129,8 +129,7 @@ const styles = StyleSheet.create({
     height:50,
     alignItems:"center",
     justifyContent:"center",
-    marginTop:10,
-    // backgroundColor:"#02C39A",
+    marginTop:10
   },
   forgotPassword: {
     marginBottom: 50,
