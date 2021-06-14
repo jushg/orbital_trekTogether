@@ -1,8 +1,12 @@
 import React, {useState} from 'react';
-import { List, Searchbar } from "react-native-paper";
+import { List, Searchbar, Button } from "react-native-paper";
 import { StyleSheet, Text, View, FlatList } from 'react-native';
+import {CommonActions} from "@react-navigation/native";
+
 
 import Screen from "../component/screen"
+import * as Auth from "../../api/auth"
+
 
 export default ({navigation}) => {
     const [searchQuery, setSearchQuery] = useState(''); //Example
@@ -19,7 +23,14 @@ export default ({navigation}) => {
         </View>    
         )
     }
- 
+    const handleLogout = () => {
+      Auth.logout(
+        () => {return console.log("logout")},
+        (error) => {
+          return console.error(error)
+        }
+      )
+    }
   return (
     <Screen style={styles.container}>
         <View style={{alignItems:"center"}}>
@@ -29,6 +40,7 @@ export default ({navigation}) => {
             value={searchQuery}
             style={{marginBottom:10, width:"95%"}}
             />
+            <Button onPress={handleLogout} style={styles.button}>Log Out</Button>
         </View>
         <Text style={{fontSize: 20}}>Upcoming trips</Text>
         <View >

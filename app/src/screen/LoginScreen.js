@@ -15,28 +15,29 @@ export default ({ navigation }) => {
   const [password,setPassword] = useState("");
   const [passwordVisible,setPasswordVisible] = useState(true);
   
-  // const handleLoginEmail = () =>{
-  //   Auth.loginEmail(
-  //     {email,password},
-  //     (user) => navigation.dispatch(CommonActions.reset({
-  //       index: 0,
-  //       routes: [{
-  //         name: "Home",
-  //         // params: { name: user.displayName }
-  //       }]
-  //     })),
-  //     (error) => {
-  //       return console.error(error)
-  //     }
-  //   )
-  // }
   const handleLoginEmail = () =>{
     Auth.loginEmail(
       {email,password},
-      (user) => useDispatch(AuthCommons.signedIn(user)),
-      (error) => {return console.error(error)}
+      // (user) => navigation.dispatch(CommonActions.reset({
+      //   index: 0,
+      //   routes: [{
+      //     name: "Home",
+      //     // params: { name: user.displayName }
+      //   }]
+      // })),
+      (user) => {return console.log(user.displayName + " has log in")},
+      (error) => {
+        return console.error(error)
+      }
     )
   }
+  // const handleLoginEmail = () =>{
+  //   Auth.loginEmail(
+  //     {email,password},
+  //     (user) => useDispatch(AuthCommons.signedIn(user)),
+  //     (error) => {return console.error(error)}
+  //   )
+  // }
   return (
     <Screen style={styles.container} >
         
