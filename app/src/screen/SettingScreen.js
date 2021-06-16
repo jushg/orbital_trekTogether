@@ -4,7 +4,6 @@ import { StyleSheet,Text, View, StatusBar } from 'react-native'
 
 import Screen from "../component/screen"
 import * as Auth from "../../api/auth"
-import {CommonActions} from "@react-navigation/native";
 
 //https://callstack.github.io/react-native-paper/checkbox.html
 //https://callstack.github.io/react-native-paper/switch.html
@@ -16,13 +15,7 @@ export default ({navigation}) => {
 
   const handleLogout = () => {
     Auth.logout(
-      () => navigation.dispatch(CommonActions.reset({
-        index: 0,
-        routes: [{
-          name: "Login",
-          // params: { name: user.displayName }
-        }]
-      })),
+      () => {return console.log("logout")},
       (error) => {
         return console.error(error)
       }
@@ -47,7 +40,7 @@ export default ({navigation}) => {
           setChecked2(!checked2);
         }}
       />
-      <Button onPress={() => navigation.navigate('Home')}>Back to Profile</Button>
+      {/* <Button onPress={() => navigation.navigate('Home')}>Back to Profile</Button> */}
       <Button onPress={handleLogout} style={styles.button}>Log Out</Button>
     </Screen>
   )

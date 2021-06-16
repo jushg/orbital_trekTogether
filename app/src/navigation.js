@@ -3,18 +3,18 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { useSelector } from 'react-redux';
+// import { useSelector } from 'react-redux';
 
 import LoginScreen from "./screen/LoginScreen"
 import WelcomeScreen from "./screen/WelcomeScreen"
 import SignupScreen from "./screen/SignupScreen"
 import SettingScreen from "./screen/SettingScreen"
-import HomeScreen from "./screen/ProfileScreen"
-import ExploreScreen from "./screen/ExploreScreen"
+// import HomeScreen from "./unused_screen/ProfileScreen"
+// import ExploreScreen from "./unused_screen/ExploreScreen"
 import MatchScreen from "./screen/MatchScreen"
-import MainScreen from "./screen/MainScreen"
+// import MainScreen from "./unused_screen/MainScreen"
 import SetupScreen from "./screen/SetupScreen"
-
+import LoadingScreen from './screen/LoadingScreen';
 
 import PastScreen from "./screen/PastScreen"
 import FutureScreen from './screen/FutureScreen'
@@ -23,7 +23,7 @@ import MessageMainScreen from "./screen/MessageMainScreen"
 
 import * as Auth from "../api/auth"
 
-
+import HeaderDashboard from "./component/header"
 
 const HomeStack = createStackNavigator();
 
@@ -55,21 +55,22 @@ const MainStack = createStackNavigator();
 
 export const MainScreenStack = () => {
   
-  const [user,setUser] = useState("");
+  const [user,setUser] = useState("loading");
   useEffect(() => {
     return Auth.setOnAuthStateChanged(
       (user) => setUser(user),
-      () => setUser(""),
+      () => setUser("none"),
     );
   }, []);
   return (
     <MainStack.Navigator headerMode="none">
-      {user == "" ? (
+      {user == "none" ? (
       <MainStack.Screen name="auth" component = {AuthScreenStack}/>
+      ): user == "loading" ?(
+        <MainStack.Screen name="loading" component = {LoadingScreen}/>
       ):(
       <MainStack.Screen name="home" component = {HomeScreenTab}/>
-      )
-      }
+      )}
     </MainStack.Navigator>
   )
 }
@@ -105,7 +106,7 @@ export const HomeScreenTab = () => {
       /> */}
       <HomeTab.Screen
         name="Home"
-        component={DashboardScreenTab}
+        component={DashboardScreenStack}
         options={{
           tabBarLabel: 'Home',
           tabBarIcon: ({ color }) => (
@@ -144,7 +145,7 @@ const DashboardTab = createMaterialTopTabNavigator();
 export const DashboardScreenTab = () => {
   return (
     <DashboardTab.Navigator
-      style={{paddingTop: 30}}
+      // style={{paddingTop: 30}}
     >
       <DashboardTab.Screen 
         name="Future" 
@@ -161,3 +162,41 @@ export const DashboardScreenTab = () => {
     </DashboardTab.Navigator>
   )
 } 
+
+const DashboardStack = createStackNavigator();
+
+export const DashboardScreenStack = () => {
+  
+  return (
+    <DashboardStack.Navigator>
+      <DashboardStack.Screen 
+      name="dashboard" 
+      component={DashboardScreenTab}
+      options={({route, navigation}) => ({
+        // title: "Dashboard",
+        // 
+        header: ({ scene, previous, navigation }) => {
+          const { options } = scene.descriptor;
+          const title =
+            options.headerTitle !== undefined
+              ? options.headerTitle
+              : options.title !== undefined
+              ? options.title
+              : scene.route.name;
+          
+          return (
+            <HeaderDashboard navigation={navigation} screenname="setting"/>
+          )
+        },
+        // headerTintColor: 'lightblue',
+        // headerTitleStyle: {
+        //   fontWeight: 'bold',
+        //   borderBottomWidth:0,
+        //   alignSelf: 'center'
+        // }
+      })}/>
+      <DashboardStack.Screen name="setting" component={SettingScreen}/>
+    </DashboardStack.Navigator>
+  )
+}
+

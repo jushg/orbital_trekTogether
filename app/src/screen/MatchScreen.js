@@ -6,7 +6,6 @@ import { StyleSheet, Text, View, Pressable } from 'react-native'
 
 import Screen from "../component/screen"
 
-//https://callstack.github.io/react-native-paper/avatar-image.html
 export default ({navigation}) => {
   
   //This item include (User Info)
@@ -15,6 +14,12 @@ export default ({navigation}) => {
       <View style={styles.card}>
         <Avatar.Image size={90} source={require('../../assets/ava1.png')} />
         <Text style={{paddingHorizontal: 10, fontSize: 25}}>User</Text>
+        <View>
+          <Text>Say something nice ...</Text>
+        </View>
+        <View>
+          <Text>Preferred Place and Time</Text>
+        </View>
       </View>
     )
   }
@@ -28,12 +33,8 @@ export default ({navigation}) => {
             cardIndex={0}
             backgroundColor={'#4FD0E9'}
             stackSize= {3}>
-             {/* <Button
-                onPress={() => {console.log('oulala')}}
-                title="Press me">
-                You can press me
-            </Button> */}
         </Swiper>
+        
        
     </Screen>
   ) 
