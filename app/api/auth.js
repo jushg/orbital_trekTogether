@@ -1,6 +1,7 @@
 import firebase from "./firebase"
 
 const auth = firebase.auth()
+const db = firebase.firestore();
 
 export const createAccount = async ({email, username, password}, onSuccess, onError) => {
   try {
@@ -8,6 +9,12 @@ export const createAccount = async ({email, username, password}, onSuccess, onEr
     if (user) {
       await user.updateProfile({displayName: username})
       await user.sendEmailVerification()
+      // create user doc in Firestore
+      await db.collection("users").doc(user.uid).set({
+        name: username,
+        email: email,
+        isProfileCompleted: false
+      });
       return onSuccess(user)
     }
   } catch (error) {
