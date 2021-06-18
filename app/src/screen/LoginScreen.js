@@ -18,14 +18,14 @@ export default ({ navigation }) => {
   const handleLoginEmail = () =>{
     Auth.loginEmail(
       {email,password},
-      // (user) => navigation.dispatch(CommonActions.reset({
-      //   index: 0,
-      //   routes: [{
-      //     name: "Home",
-      //     // params: { name: user.displayName }
-      //   }]
-      // })),
-      (user) => {return console.log(user.displayName + " has log in")},
+      (user) => navigation.dispatch(CommonActions.reset({
+        index: 0,
+        routes: [{
+          name: "Home",
+          // params: { name: user.displayName }
+        }]
+      })),
+      // (user) => {return console.log(user.displayName + " has log in")},
       (error) => {
         return console.error(error)
       }

@@ -1,6 +1,6 @@
 import React, { useState }  from 'react'
-import { Button, Checkbox } from "react-native-paper"
-import { StyleSheet,Text, View, StatusBar } from 'react-native'
+import { Button, Checkbox, Avatar } from "react-native-paper"
+import { StyleSheet,Text } from 'react-native'
 
 import Screen from "../component/screen"
 import * as Auth from "../../api/auth"
@@ -25,7 +25,9 @@ export default ({navigation}) => {
   return (
     <Screen style={styles.container}>
       <Text style={styles.title}>Setting Screen</Text>
-      <Text>Change your user preferences and app settings here</Text>
+      <Avatar.Image size={90} source={require('../../assets/ava1.png')} />
+      <Text>Hello User</Text>
+      <Button>Change Your Profile</Button>
       <Checkbox.Item
         label="Item 1"
         status={checked1 ? 'checked' : 'unchecked'}

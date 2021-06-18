@@ -1,10 +1,11 @@
-import React, {useState}  from 'react';
+import React, {useState, useContext}  from 'react';
 import { StyleSheet,Text, Image, View, ScrollView} from 'react-native'
 import {Button, Checkbox, RadioButton, TextInput, Chip, ToggleButton} from "react-native-paper";
 import { CommonActions } from "@react-navigation/native";
 
 import Screen from "../component/screen"
 import * as Setup from "../../api/setup";
+import {UserContext} from "../feature/auth"
 
 //This screen is use for setup user personal info
 //https://callstack.github.io/react-native-paper/chip.html
@@ -19,6 +20,8 @@ export default ({navigation}) => {
   // const [mon, setMon] = useState(false);
   const daysInWeek = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
 
+  const userAPI = useContext(UserContext);
+
   const handleSetUpProfile = () => {
     Setup.setUpProfile(
       {age, level, place, date},
@@ -28,7 +31,12 @@ export default ({navigation}) => {
       //       name: "Home",
       //     }]
       //   })),
-      () => {console.log("Success")},
+      () => {
+        console.log("Success")
+        console.log(userAPI.user)
+        userAPI.changeUserState;
+        console.log(userAPI.user)
+      },
       (error) => {console.log(error)}
     )
   };

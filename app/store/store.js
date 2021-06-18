@@ -7,7 +7,7 @@ import { rootReducer } from './index';
 
 const persistConfig = {
   key: "root",
-  storage: storage
+  storage: AsyncStorage
 };
 
 const store = configureStore({

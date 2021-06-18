@@ -6,7 +6,7 @@ import { NavigationContainer,  DefaultTheme as NavigationDefaultTheme,} from "@r
 
 //import testing screen here
 import {AuthScreenStack, DashboardScreenTab, MainScreenStack} from "./src/navigation"
-import TestScreen from "./src/screen/LoginScreen"
+import TestScreen from "./src/screen/SetupScreen"
 
 //import permanent object here
 import LoadingScreen  from './src/screen/LoadingScreen';
@@ -35,6 +35,7 @@ export default function App() {
             {/* <AuthScreenStack/> */}
             <MainScreenStack/>
             {/* <DashboardScreenTab/> */}
+            {/* <TestScreen/> */}
           </NavigationContainer>
         </PaperProvider>
   );

@@ -91,35 +91,6 @@ export default ({navigation}) => {
           data={['1', '2', '3', '4', '5', '6', '7',"8"]}
           renderItem={renderTrip}
           keyExtractor={item => item}/>
-          {/* <List.Item
-            title="Bedok Reservoir"
-            description="6 Jun 2021, 7am - Buddy: Freddy"
-            left={props => <List.Icon {...props} icon="account" />}
-          />
-
-          <List.Item
-          title="MacRitchie Reservoir"
-          description="12 Jun 2021, 3pm - Personal trip"
-          left={props => <List.Icon {...props} icon="parking" />}
-          />
-
-          <List.Item
-          title="Chestnut Nature Park"
-          description="20 Jun 2021, 2.30pm - Buddy: Deacy"
-          left={props => <List.Icon {...props} icon="account" />}
-          />
-
-          <List.Item
-          title="Bukit Timah Nature Reserve"
-          description="1 Jul 2021, 10am - Buddy: Roger"
-          left={props => <List.Icon {...props} icon="account" />}
-          />
-
-          <List.Item
-            title="The Southern Ridges"
-            description="3 Jul 2021, 10am - Buddy: Brian"
-            left={props => <List.Icon {...props} icon="account" />}
-          /> */}
         </View>
 
     </Screen>

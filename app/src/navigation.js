@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, createContext} from 'react';
 import { createStackNavigator } from "@react-navigation/stack";
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
@@ -12,7 +12,7 @@ import SettingScreen from "./screen/SettingScreen"
 // import HomeScreen from "./unused_screen/ProfileScreen"
 // import ExploreScreen from "./unused_screen/ExploreScreen"
 import MatchScreen from "./screen/MatchScreen"
-// import MainScreen from "./unused_screen/MainScreen"
+import MainScreen from "./unused_screen/MainScreen"
 import SetupScreen from "./screen/SetupScreen"
 import LoadingScreen from './screen/LoadingScreen';
 
@@ -24,6 +24,7 @@ import MessageMainScreen from "./screen/MessageMainScreen"
 import * as Auth from "../api/auth"
 
 import HeaderDashboard from "./component/header"
+import { UserContext } from './feature/auth';
 
 const HomeStack = createStackNavigator();
 
@@ -44,7 +45,7 @@ export const AuthScreenStack = () => {
       <AuthStack.Screen name="Welcome" key = "welcome" component = {WelcomeScreen}/>
       <AuthStack.Screen name="Login" key = "login" component = {LoginScreen}/>
       <AuthStack.Screen name="Signup" key = "signup" component = {SignupScreen}/>
-      {/* <AuthStack.Screen name="Home" key = "home" component = {HomeScreenStack}/>
+      {/* <AuthStack.Screen name="Home" key = "home" component = {HomeScreenTab}/>
       <AuthStack.Screen name="Main" key = "main" component = {MainScreen}/> */}
       <AuthStack.Screen name="Setup" key = "setup" component = {SetupScreen}/>
     </AuthStack.Navigator>
@@ -56,22 +57,29 @@ const MainStack = createStackNavigator();
 export const MainScreenStack = () => {
   
   const [user,setUser] = useState("loading");
+  const changeUserState = () => {
+    setUser(Auth.getCurrentUser())
+  }
+  
   useEffect(() => {
     return Auth.setOnAuthStateChanged(
       (user) => setUser(user),
-      () => setUser("none"),
+      () => setUser(null),
     );
   }, []);
   return (
-    <MainStack.Navigator headerMode="none">
-      {user == "none" ? (
-      <MainStack.Screen name="auth" component = {AuthScreenStack}/>
-      ): user == "loading" ?(
-        <MainStack.Screen name="loading" component = {LoadingScreen}/>
-      ):(
-      <MainStack.Screen name="home" component = {HomeScreenTab}/>
-      )}
-    </MainStack.Navigator>
+    <UserContext.Provider value={{user, changeUserState}}>
+        <MainStack.Navigator headerMode="none">
+        {user == null ? (
+        <MainStack.Screen name="auth" component = {AuthScreenStack}/>
+        ): user == "loading" ?(
+          <MainStack.Screen name="loading" component = {LoadingScreen}/>
+        ):(
+        <MainStack.Screen name="home" component = {HomeScreenTab}/>
+        )}
+      </MainStack.Navigator>
+    </UserContext.Provider>
+    
   )
 }
 const HomeTab = createMaterialBottomTabNavigator();

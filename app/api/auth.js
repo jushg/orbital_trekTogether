@@ -45,9 +45,13 @@ export const getCurrentUser = () => {
 }
 
 export const setOnAuthStateChanged = (onUserAuthenticated, onUserNotFound) =>
-  auth.onAuthStateChanged((user) => {
+  auth.onAuthStateChanged( async (user) => {
     if (user) {
-      return onUserAuthenticated(user);
+      const userData = await db.collection("users").doc(user.uid).get();
+      if (userData.data().isProfileCompleted) {
+        return onUserAuthenticated(user);
+      }
+      else console.log("Need to setup the profile")
     } else {
       return onUserNotFound(user);
     }
@@ -55,4 +59,3 @@ export const setOnAuthStateChanged = (onUserAuthenticated, onUserNotFound) =>
 );
 
 
-   
