@@ -10,14 +10,14 @@ export const setUpProfile =
     const user = firebase.auth().currentUser;
     if (user) {
       const uid = user.uid;
-      // parse string inputs into arrays
+      // parse inputs !!
       await db.collection("users").doc(uid).set({
         isProfileCompleted: true,
-        age: age,
+        age: Math.floor(parseInt(age)),
         level: level === "Beginner" ? 1 : level === "Intermediate" ? 2 : 3,
         // intro: intro,
         // hobby: hobby,
-        place: place.split(", "),
+        place: place.split(",").map(place => place.trim()),
         date: date
       }, {merge: true});
       // finish setting up profile

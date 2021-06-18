@@ -16,17 +16,19 @@ export default ({navigation}) => {
   // const [hobby, setHobby] = useState("");
   const [place, setPlace] = useState("");
   const [date, setDate] = useState([false, false, false, false, false, false, false]);
+  // const [mon, setMon] = useState(false);
   const daysInWeek = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
 
   const handleSetUpProfile = () => {
     Setup.setUpProfile(
       {age, level, place, date},
-      (user) => navigation.dispatch(CommonActions.reset({
-          index: 0,
-          routes: [{
-            name: "Home",
-          }]
-        })),
+      // (user) => navigation.dispatch(CommonActions.reset({
+      //     index: 0,
+      //     routes: [{
+      //       name: "Home",
+      //     }]
+      //   })),
+      () => {console.log("Success")},
       (error) => {console.log(error)}
     )
   };
@@ -41,13 +43,7 @@ export default ({navigation}) => {
         keyboardType="numeric"
         mode="contained"
         value={age}
-        onChangeText={() => {
-          const regex = /^[0-9\b]+$/;
-          // if value is not blank, then test the regex
-          if (age === '' && regex.test(age)) {
-            setAge(age);
-          }
-        }}
+        onChangeText={setAge}
         style={{marginBottom:10, width:"95%"}}
         // left={<TextInput.Icon name="email"/>}
         />
@@ -58,19 +54,22 @@ export default ({navigation}) => {
       {/*    <ToggleButton icon="roman-numeral-3" value="3" />*/}
       {/*</ToggleButton.Row>*/}
 
-      <RadioButton
+      <RadioButton.Item
+        label="Beginner"
         value="Beginner"
-        status={ checked === 'Beginner' ? 'checked' : 'unchecked' }
+        status={ level === 'Beginner' ? 'checked' : 'unchecked' }
         onPress={() => setLevel('Beginner')}
       />
-      <RadioButton
+      <RadioButton.Item
+        label="Intermediate"
         value="Intermediate"
-        status={ checked === 'Intermediate' ? 'checked' : 'unchecked' }
+        status={ level === 'Intermediate' ? 'checked' : 'unchecked' }
         onPress={() => setLevel('Intermediate')}
       />
-      <RadioButton
+      <RadioButton.Item
+        label="Advanced"
         value="Advanced"
-        status={ checked === 'Advanced' ? 'checked' : 'unchecked' }
+        status={ level === 'Advanced' ? 'checked' : 'unchecked' }
         onPress={() => setLevel('Advanced')}
       />
 
@@ -96,18 +95,27 @@ export default ({navigation}) => {
       />
 
       {/*  Pick dates */}
-        {daysInWeek.map(item => {
+        {daysInWeek.map((item, index) => {
             return (
               <View style={{
                 margin: 5,
                 flexWrap: 'wrap',
               }}>
                 <Chip
+                  key={index}
                   mode="outlined" // changing display mode, default is flat
                   height={30} //give desirable height to chip
-                  textStyle={{ color:'white', fontSize: 15 }} //label properties
-                  style={{ backgroundColor: "blue" }}
-                  onPress={() => console.log('Clicked chip '+ item)}>
+                  // textStyle={{ color:'white', fontSize: 15 }} //label properties
+                  // style={{ backgroundColor: "blue" }}
+                  selected={date[index]}
+                  selectedColor="blue"
+                  onPress={() => {
+                    let newDate = [...date];
+                    newDate[index] = !newDate[index];
+                    setDate(newDate);
+                    console.log('Clicked chip '+ item)
+                  }}
+                >
                   { item }
                 </Chip>
               </View>
@@ -115,63 +123,26 @@ export default ({navigation}) => {
           })
         }
 
-
-        <Checkbox.Item
-        label="Mon"
-        status={date[0] ? 'checked' : 'unchecked'}
-        onPress={() => {
-          setDate(() => {date[0] = !date[0]});
-        }}
-        mode="android"
-      />
-        <Checkbox.Item
-          label="Tue"
-          status={date[1] ? 'checked' : 'unchecked'}
-          onPress={() => {
-            setDate(() => {date[1] = !date[1]});
-          }}
-          mode="android"
-        />
-        <Checkbox.Item
-          label="Wed"
-          status={date[2] ? 'checked' : 'unchecked'}
-          onPress={() => {
-            setDate(() => {date[2] = !date[2]});
-          }}
-          mode="android"
-        />
-        <Checkbox.Item
-          label="Thu"
-          status={date[3] ? 'checked' : 'unchecked'}
-          onPress={() => {
-            setDate(() => {date[3] = !date[3]});
-          }}
-          mode="android"
-        />
-        <Checkbox.Item
-          label="Fri"
-          status={date[4] ? 'checked' : 'unchecked'}
-          onPress={() => {
-            setDate(() => {date[4] = !date[4]});
-          }}
-          mode="android"
-        />
-        <Checkbox.Item
-          label="Sat"
-          status={date[5] ? 'checked' : 'unchecked'}
-          onPress={() => {
-            setDate(() => {date[5] = !date[5]});
-          }}
-          mode="android"
-        />
-        <Checkbox.Item
-          label="Sun"
-          status={date[6] ? 'checked' : 'unchecked'}
-          onPress={() => {
-            setDate(() => {date[6] = !date[6]});
-          }}
-          mode="android"
-        />
+        {/*{daysInWeek.map((item, index) => {*/}
+        {/*  return (*/}
+        {/*    // <View style={{*/}
+        {/*    //   margin: 5,*/}
+        {/*    //   flexWrap: 'wrap',*/}
+        {/*    // }}>*/}
+        {/*      <Checkbox.Item*/}
+        {/*        label={daysInWeek[index]}*/}
+        {/*        status={date[index] ? 'checked' : 'unchecked'}*/}
+        {/*        onPress={() => {*/}
+        {/*          let newDate = [...date];*/}
+        {/*          newDate[index] = !newDate[index];*/}
+        {/*          setDate(newDate);*/}
+        {/*        }}*/}
+        {/*        mode="android"*/}
+        {/*      />*/}
+        {/*    // </View>*/}
+        {/*  );*/}
+        {/*})*/}
+        {/*}*/}
 
       <Button
         mode="contained"
@@ -211,7 +182,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection:"column",
-    alignItems: "center",
-    justifyContent: 'center',
+    // alignItems: "center",
+    // justifyContent: 'center',
   },
 });
