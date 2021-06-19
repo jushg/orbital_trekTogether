@@ -29,7 +29,7 @@ export default ({navigation}) => {
         console.log("Success")
         console.log(userAPI.user)
         userAPI.changeUserState();
-        console.log(userAPI.user)
+        setTimeout(() => console.log(userAPI.user), 5000);
       },
       (error) => {console.log(error)}
     )
