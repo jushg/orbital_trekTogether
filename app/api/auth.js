@@ -47,11 +47,22 @@ export const getCurrentUser = () => {
 export const setOnAuthStateChanged = (onUserAuthenticated, onUserNotFound) =>
   auth.onAuthStateChanged( async (user) => {
     if (user) {
-      const userData = await db.collection("users").doc(user.uid).get();
-      if (userData.data().isProfileCompleted) {
-        return onUserAuthenticated(user);
+      try {
+        console.log(user.uid);
+        let userData; // let count=0;
+        // Firestore takes some time to create a new user document (check count variable!)
+        do {
+          userData = await db.collection("users").doc(user.uid).get();
+          // count++;
+        } while (!userData.exists);
+        if (userData.data().isProfileCompleted) {
+          return onUserAuthenticated(user);
+        } else {
+          return onUserNotFound(user);
+        }
+      } catch (error) {
+        console.log(error);
       }
-      else console.log("Need to setup the profile")
     } else {
       return onUserNotFound(user);
     }

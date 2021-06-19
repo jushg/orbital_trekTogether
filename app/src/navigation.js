@@ -58,12 +58,12 @@ export const MainScreenStack = () => {
   
   const [user,setUser] = useState("loading");
   const changeUserState = () => {
-    setUser(Auth.getCurrentUser())
+    setUser(Auth.getCurrentUser().uid)
   }
   
   useEffect(() => {
     return Auth.setOnAuthStateChanged(
-      (user) => setUser(user),
+      (user) => setUser(user.uid),
       () => setUser(null),
     );
   }, []);
@@ -72,7 +72,7 @@ export const MainScreenStack = () => {
         <MainStack.Navigator headerMode="none">
         {user == null ? (
         <MainStack.Screen name="auth" component = {AuthScreenStack}/>
-        ): user == "loading" ?(
+        ): user === "loading" ?(
           <MainStack.Screen name="loading" component = {LoadingScreen}/>
         ):(
         <MainStack.Screen name="home" component = {HomeScreenTab}/>

@@ -1,6 +1,6 @@
 import React, {useState, useContext}  from 'react';
 import { StyleSheet,Text, Image, View, ScrollView} from 'react-native'
-import {Button, Checkbox, RadioButton, TextInput, Chip, ToggleButton} from "react-native-paper";
+import {Button, RadioButton, TextInput, Chip } from "react-native-paper";
 import { CommonActions } from "@react-navigation/native";
 
 import Screen from "../component/screen"
@@ -25,16 +25,10 @@ export default ({navigation}) => {
   const handleSetUpProfile = () => {
     Setup.setUpProfile(
       {age, level, place, date},
-      // (user) => navigation.dispatch(CommonActions.reset({
-      //     index: 0,
-      //     routes: [{
-      //       name: "Home",
-      //     }]
-      //   })),
       () => {
         console.log("Success")
         console.log(userAPI.user)
-        userAPI.changeUserState;
+        userAPI.changeUserState();
         console.log(userAPI.user)
       },
       (error) => {console.log(error)}
@@ -55,12 +49,6 @@ export default ({navigation}) => {
         style={{marginBottom:10, width:"95%"}}
         // left={<TextInput.Icon name="email"/>}
         />
-
-      {/*<ToggleButton.Row onValueChange={value => setLevel(value)} value={level}>*/}
-      {/*    <ToggleButton icon="roman-numeral-1" value="1" />*/}
-      {/*    <ToggleButton icon="roman-numeral-2" value="2" />*/}
-      {/*    <ToggleButton icon="roman-numeral-3" value="3" />*/}
-      {/*</ToggleButton.Row>*/}
 
       <RadioButton.Item
         label="Beginner"
@@ -130,27 +118,6 @@ export default ({navigation}) => {
             );
           })
         }
-
-        {/*{daysInWeek.map((item, index) => {*/}
-        {/*  return (*/}
-        {/*    // <View style={{*/}
-        {/*    //   margin: 5,*/}
-        {/*    //   flexWrap: 'wrap',*/}
-        {/*    // }}>*/}
-        {/*      <Checkbox.Item*/}
-        {/*        label={daysInWeek[index]}*/}
-        {/*        status={date[index] ? 'checked' : 'unchecked'}*/}
-        {/*        onPress={() => {*/}
-        {/*          let newDate = [...date];*/}
-        {/*          newDate[index] = !newDate[index];*/}
-        {/*          setDate(newDate);*/}
-        {/*        }}*/}
-        {/*        mode="android"*/}
-        {/*      />*/}
-        {/*    // </View>*/}
-        {/*  );*/}
-        {/*})*/}
-        {/*}*/}
 
       <Button
         mode="contained"

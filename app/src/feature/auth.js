@@ -40,8 +40,11 @@
 
 import { createContext } from "react";
 import { getCurrentUser } from "../../api/auth";
-export const UserContext = createContext({
-    user: "loading",
-    changeUserState: () => {user = getCurrentUser()}
-}
+export const UserContext = createContext(
+  // {
+  //   user: "loading",
+  //   changeUserState: () => {},
+  //   }
 );
+
+
