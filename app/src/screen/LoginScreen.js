@@ -8,6 +8,7 @@ import Screen from "../component/screen"
 import * as Auth from "../../api/auth"
 import * as AuthCommons from "../feature/auth"
 import image from "../../assets/new_icon.png"
+import {showMessage} from "react-native-flash-message";
 
 
 export default ({ navigation }) => {
@@ -37,7 +38,11 @@ export default ({ navigation }) => {
       },
       // (user) => {return console.log(user.displayName + " has log in")},
       (error) => {
-        return console.error(error)
+        console.error(error);
+        showMessage({
+          "message": "Unable to log in.\nEmail or Password may be incorrect.",
+          type: "danger", icon: "auto", floating: true
+        });
       }
     )
   }
