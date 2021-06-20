@@ -20,22 +20,23 @@ import PastScreen from "./screen/PastScreen"
 import FutureScreen from './screen/FutureScreen'
 
 import MessageMainScreen from "./screen/MessageMainScreen"
+import ChatScreen from './screen/ChatScreen';
 
 import * as Auth from "../api/auth"
 
 import HeaderDashboard from "./component/header"
 import { UserContext } from './feature/auth';
 
-// const HomeStack = createStackNavigator();
+const MessageStack = createStackNavigator();
 
-// export const HomeScreenStack = () => {
-//   return (
-//     <HomeStack.Navigator initialRouteName={"Home"} headerMode="none">
-//       <HomeStack.Screen name="Home" key = "home" component = {HomeScreenTab}/>
-//       <HomeStack.Screen name="Setting" key = "setting" component = {SettingScreen}/>
-//     </HomeStack.Navigator>
-//   )
-// }
+export const MessageScreenStack = () => {
+  return (
+    <MessageStack.Navigator initialRouteName={"mainchat"} headerMode="none">
+      <MessageStack.Screen name="Mainchat" key = "mainchat" component = {MessageMainScreen}/>
+      <MessageStack.Screen name="Chat" key = "chat" component = {ChatScreen}/>
+    </MessageStack.Navigator>
+  )
+}
 
 const AuthStack = createStackNavigator();
 
@@ -134,7 +135,7 @@ export const HomeScreenTab = () => {
       />
       <HomeTab.Screen
         name="Message"
-        component={MessageMainScreen}
+        component={MessageScreenStack}
         options={{
           tabBarLabel: 'Message',
           tabBarIcon: ({ color }) => (

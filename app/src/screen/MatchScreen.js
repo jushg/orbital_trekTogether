@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Button, Avatar } from "react-native-paper"
+import { Button, Avatar, Title, Paragraph } from "react-native-paper"
 import Swiper from "react-native-deck-swiper"
 import { StyleSheet, Text, View, Pressable } from 'react-native'
 
@@ -11,15 +11,17 @@ export default ({navigation}) => {
   //This item include (User Info)
   const renderCard = ({item}) => {
     return(
-      <View style={styles.card}>
+      <View style={styles.card}>      
         <Avatar.Image size={90} source={require('../../assets/ava1.png')} />
-        <Text style={{paddingHorizontal: 10, fontSize: 25}}>User</Text>
-        <View>
-          <Text>Say something nice ...</Text>
-        </View>
-        <View>
-          <Text>Preferred Place and Time</Text>
-        </View>
+        
+        <Text style={{ fontSize:20 }}>User, Age</Text>
+        <Text>Beginner</Text>
+        <View style={{alignItems:"baseline", alignSelf:"stretch", paddingHorizontal: 10}}>
+          <Paragraph>Say something nice ...</Paragraph>
+          <Title>Preferred Destination</Title>
+
+          <Title>Availability</Title>
+        </View>      
       </View>
     )
   }
@@ -31,10 +33,16 @@ export default ({navigation}) => {
             onSwiped={(cardIndex) => {console.log(cardIndex)}}
             onSwipedAll={() => {console.log('onSwipedAll')}}
             cardIndex={0}
-            backgroundColor={'#4FD0E9'}
+            backgroundColor={'lightblue'}
             stackSize= {3}>
         </Swiper>
-        
+      {/* <Avatar.Image size={90} source={require('../../assets/ava1.png')} />
+        <Text style={{paddingHorizontal: 10, fontSize: 25}}>User</Text>
+        <View style={{alignItems:"baseline"}}>
+        <Text>Say something nice ...</Text>
+       
+        <Text>Preferred Place and Time</Text>
+        </View> */}
        
     </Screen>
   ) 
