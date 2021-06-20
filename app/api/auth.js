@@ -44,6 +44,10 @@ export const getCurrentUser = () => {
   return auth.currentUser
 }
 
+export const isProfileCompleted = async (user) => {
+  const userData = await db.collection("users").doc(user.uid).get();
+  return userData.data().isProfileCompleted;
+}
 export const setOnAuthStateChanged = (onUserAuthenticated, onUserNotFound) =>
   auth.onAuthStateChanged( async (user) => {
     if (user) {
