@@ -2,6 +2,7 @@ import React, {useState, useContext}  from 'react';
 import { StyleSheet,Text, Image, View, ScrollView} from 'react-native'
 import {Button, RadioButton, TextInput, Chip } from "react-native-paper";
 import { CommonActions } from "@react-navigation/native";
+import { showMessage } from "react-native-flash-message";
 
 import Screen from "../component/screen"
 import * as Setup from "../../api/setup";
@@ -31,7 +32,14 @@ export default ({navigation}) => {
         userAPI.changeUserState();
         setTimeout(() => console.log(userAPI.user), 5000);
       },
-      (error) => {console.log(error)}
+      (error) => {showMessage({
+        message: error,
+        type: "warning",
+        duration: 1500,
+        floating: true,
+        icon: "auto"
+      });
+      }
     )
   };
 

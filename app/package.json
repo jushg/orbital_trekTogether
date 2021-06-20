@@ -27,6 +27,7 @@
     "react-native": "https://github.com/expo/react-native/archive/sdk-41.0.0.tar.gz",
     "react-native-deck-swiper": "^2.0.5",
     "react-native-dotenv": "^2.5.5",
+    "react-native-flash-message": "^0.1.23",
     "react-native-gesture-handler": "~1.10.2",
     "react-native-maps": "0.27.1",
     "react-native-paper": "^4.9.1",
