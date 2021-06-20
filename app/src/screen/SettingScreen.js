@@ -26,7 +26,7 @@ export default ({navigation}) => {
     <Screen style={styles.container}>
       <Text style={styles.title}>Setting Screen</Text>
       <Avatar.Image size={90} source={require('../../assets/ava1.png')} />
-      <Text>Hello User</Text>
+      <Text>{Auth.getCurrentUser().displayName}</Text>
       <Button>Change Your Profile</Button>
       <Checkbox.Item
         label="Item 1"

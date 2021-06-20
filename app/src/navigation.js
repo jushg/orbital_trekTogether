@@ -1,4 +1,4 @@
-import React, {useState, useEffect, createContext} from 'react';
+import React, {useState, useEffect } from 'react';
 import { createStackNavigator } from "@react-navigation/stack";
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
@@ -12,7 +12,7 @@ import SettingScreen from "./screen/SettingScreen"
 // import HomeScreen from "./unused_screen/ProfileScreen"
 // import ExploreScreen from "./unused_screen/ExploreScreen"
 import MatchScreen from "./screen/MatchScreen"
-import MainScreen from "./unused_screen/MainScreen"
+// import MainScreen from "./unused_screen/MainScreen"
 import SetupScreen from "./screen/SetupScreen"
 import LoadingScreen from './screen/LoadingScreen';
 
@@ -26,16 +26,16 @@ import * as Auth from "../api/auth"
 import HeaderDashboard from "./component/header"
 import { UserContext } from './feature/auth';
 
-const HomeStack = createStackNavigator();
+// const HomeStack = createStackNavigator();
 
-export const HomeScreenStack = () => {
-  return (
-    <HomeStack.Navigator initialRouteName={"Home"} headerMode="none">
-      <HomeStack.Screen name="Home" key = "home" component = {HomeScreenTab}/>
-      <HomeStack.Screen name="Setting" key = "setting" component = {SettingScreen}/>
-    </HomeStack.Navigator>
-  )
-}
+// export const HomeScreenStack = () => {
+//   return (
+//     <HomeStack.Navigator initialRouteName={"Home"} headerMode="none">
+//       <HomeStack.Screen name="Home" key = "home" component = {HomeScreenTab}/>
+//       <HomeStack.Screen name="Setting" key = "setting" component = {SettingScreen}/>
+//     </HomeStack.Navigator>
+//   )
+// }
 
 const AuthStack = createStackNavigator();
 

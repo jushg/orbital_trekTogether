@@ -39,12 +39,6 @@
 // export default authSlice.reducer
 
 import { createContext } from "react";
-import { getCurrentUser } from "../../api/auth";
-export const UserContext = createContext(
-  // {
-  //   user: "loading",
-  //   changeUserState: () => {},
-  //   }
-);
+export const UserContext = createContext();
 
 

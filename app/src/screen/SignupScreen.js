@@ -20,7 +20,6 @@ export default ({navigation}) =>{
         index: 0,
         routes: [{
           name: "Welcome",
-          // params: { name: user.displayName }
         }]
       })),
       (error) => {

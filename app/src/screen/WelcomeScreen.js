@@ -4,26 +4,25 @@ import {Button } from "react-native-paper"
 import { CommonActions } from "@react-navigation/native";
 
 import Screen from "../component/screen"
-
+import { getCurrentUser } from '../../api/auth';
 
 export default ({navigation}) => {
   return (
     <Screen style={styles.container}>
       <Image source={require("../../assets/stolen_icon.jpg")} style={{width: "90%", height:"45%"}}/>
-       <Text style = {styles.title}>Welcome [USER] </Text>
+       <Text style = {styles.title}>Welcome {getCurrentUser().displayName} </Text>
       <Button
         mode="contained"
         onPress={ () => navigation.dispatch(CommonActions.reset({
             index: 0,
             routes: [{
-              name: "Setup",
-              // params: { name: user.displayName }
+              name: "Setup"
               }]
             })
             )
         }
         style={styles.button}
-      >Start your journey here
+      >Let's get you ready
       </Button>
     </Screen>
   )
