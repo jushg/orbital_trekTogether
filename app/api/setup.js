@@ -10,27 +10,27 @@ export const setUpProfile = async ({age, level, place, date, avatar}, onSuccess,
       const uid = user.uid;
       // parse inputs
       if (avatar == null) return onError("Please add a profile picture");
-      // const response = await fetch(avatar.uri);
-      // const blob = await response.blob();
-      const fileRef = firebase.storage().ref().child(uid + "/avatar/");
-      fileRef.put(avatar.uri);
-      const avatarUrl = await fileRef.getDownloadURL();
 
       age = Math.floor(parseInt(age));
       if (Number.isNaN(age)) return onError("Age must be a positive number");
-
       if (level === '') return onError("Please choose one level");
-      level = level === "Beginner" ? 1 : level === "Intermediate" ? 2 : 3;
-
       if (place === '') return onError("Please input some destination");
+      if (date.every(day => day === false)) return onError("Please choose at least one free day");
+
+      level = level === "Beginner" ? 1 : level === "Intermediate" ? 2 : 3;
       place = place.split(",").map(place => place.trim()).filter(place => place !== "");
 
-      if (date.every(day => day === false)) return onError("Please choose at least one free day");
+      const response = await fetch(avatar.uri);
+      const blob = await response.blob();
+      const fileRef = firebase.storage().ref().child(
+          uid + "/" + avatar.uri.substr(avatar.uri.indexOf('ImagePicker/'))
+      );
+      await fileRef.put(blob);
+      const avatarUrl = await fileRef.getDownloadURL();
 
       // inputs have passed validation
       await db.collection("users").doc(uid).set({
         isProfileCompleted: true,
-        avatar: avatarUrl,
         age: age,
         level: level,
         // intro: intro,
@@ -38,12 +38,15 @@ export const setUpProfile = async ({age, level, place, date, avatar}, onSuccess,
         place: place,
         date: date,
       }, {merge: true});
+
+      await user.updateProfile({photoURL: avatarUrl});
+
       // finish setting up profile
       return onSuccess(user);
     } else {
       return onError("No user found!");
     }
   } catch (error) {
-    return onError(error);
+    return console.log(error);
   }
 };

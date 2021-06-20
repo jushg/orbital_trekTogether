@@ -1,9 +1,10 @@
-import React, { useState }  from 'react'
+import React, {useContext, useState} from 'react';
 import { Button, Checkbox, Avatar } from "react-native-paper"
 import { StyleSheet,Text } from 'react-native'
 
 import Screen from "../component/screen"
 import * as Auth from "../../api/auth"
+import {UserContext} from "../feature/auth";
 
 //https://callstack.github.io/react-native-paper/checkbox.html
 //https://callstack.github.io/react-native-paper/switch.html
@@ -22,10 +23,16 @@ export default ({navigation}) => {
     )
   }
 
+  // const userApi = useContext(UserContext);
+
   return (
     <Screen style={styles.container}>
       <Text style={styles.title}>Setting Screen</Text>
-      <Avatar.Image size={90} source={require('../../assets/ava1.png')} />
+      <Avatar.Image
+        size={90}
+        // source={require('../../assets/ava1.png')}
+        source={{ uri: Auth.getCurrentUser().photoURL }}
+      />
       <Text>{Auth.getCurrentUser().displayName}</Text>
       <Button>Change Your Profile</Button>
       <Checkbox.Item
