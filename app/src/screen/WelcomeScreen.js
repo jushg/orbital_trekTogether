@@ -4,7 +4,7 @@ import {Button } from "react-native-paper"
 import { CommonActions } from "@react-navigation/native";
 
 import Screen from "../component/screen"
-import { getCurrentUser } from '../../api/auth';
+import { getCurrentUser } from '../../utils/auth';
 
 export default ({navigation}) => {
   return (

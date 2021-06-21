@@ -5,7 +5,7 @@ import { CommonActions } from "@react-navigation/native"
 import { useDispatch } from 'react-redux';
 
 import Screen from "../component/screen"
-import * as Auth from "../../api/auth"
+import * as Auth from "../../utils/auth"
 import * as AuthCommons from "../feature/auth"
 import image from "../../assets/new_icon.png"
 import {showMessage} from "react-native-flash-message";

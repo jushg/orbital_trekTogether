@@ -28,6 +28,7 @@ export default ({navigation}) => {
   return (
     <Screen style={styles.container}>
         <Swiper
+          // cards={getMatches}
             cards={['1', '2', '3', '4', '5', '6', '7']}
             renderCard={renderCard}
             onSwiped={(cardIndex) => {console.log(cardIndex)}}

@@ -4,7 +4,7 @@ import { Button, TextInput } from "react-native-paper"
 import { CommonActions } from "@react-navigation/native";
 
 import Screen from "../component/screen"
-import * as Auth from "../../api/auth"
+import * as Auth from "../../utils/auth"
 import image from "../../assets/new_icon.png"
 
 export default ({navigation}) =>{
