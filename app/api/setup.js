@@ -8,7 +8,7 @@ export const setUpProfile = async ({age, level, place, date, avatar}, onSuccess,
     const user = firebase.auth().currentUser;
     if (user) {
       const uid = user.uid;
-      // parse inputs
+      // validate inputs
       if (avatar == null) return onError("Please add a profile picture");
 
       age = Math.floor(parseInt(age));
@@ -17,6 +17,7 @@ export const setUpProfile = async ({age, level, place, date, avatar}, onSuccess,
       if (place === '') return onError("Please input some destination");
       if (date.every(day => day === false)) return onError("Please choose at least one free day");
 
+      // inputs have passed validation, so parse them
       level = level === "Beginner" ? 1 : level === "Intermediate" ? 2 : 3;
       place = place.split(",").map(place => place.trim()).filter(place => place !== "");
 
@@ -25,10 +26,10 @@ export const setUpProfile = async ({age, level, place, date, avatar}, onSuccess,
       const fileRef = firebase.storage().ref().child(
           uid + "/" + avatar.uri.substr(avatar.uri.indexOf('ImagePicker/'))
       );
-      await fileRef.put(blob);
-      const avatarUrl = await fileRef.getDownloadURL();
+      await fileRef.put(blob);    // put avatar blob to Cloud Storage
+      const avatarUrl = await fileRef.getDownloadURL();     // downloadURL to put in user profile
 
-      // inputs have passed validation
+      // put data in Firestore
       await db.collection("users").doc(uid).set({
         isProfileCompleted: true,
         age: age,
@@ -38,10 +39,8 @@ export const setUpProfile = async ({age, level, place, date, avatar}, onSuccess,
         place: place,
         date: date,
       }, {merge: true});
-
+      // update user instance's default photoURL attribute
       await user.updateProfile({photoURL: avatarUrl});
-
-      // finish setting up profile
       return onSuccess(user);
     } else {
       return onError("No user found!");
