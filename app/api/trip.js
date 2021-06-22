@@ -1,5 +1,7 @@
 import firebase from "firebase";
 
+const db = firebase.firestore();
+
 export const addTrip =
     async ({partner, notes, place, date}, onSuccess, onError) => {
   try {

@@ -51,23 +51,27 @@ export const isProfileCompleted = async (user) => {
 export const setOnAuthStateChanged = (onUserAuthenticated, onUserNotFound) =>
   auth.onAuthStateChanged( async (user) => {
     if (user) {
-      try {
-        console.log(user.uid);
-        let userData; // let count=0;
-        // Firestore takes some time to create a new user document (check count variable!)
-        do {
-          userData = await db.collection("users").doc(user.uid).get();
-          // count++;
-        } while (!userData.exists);
-        if (userData.data().isProfileCompleted) {
-          return onUserAuthenticated(user);
-        } else {
-          return onUserNotFound(user);
-        }
-      } catch (error) {
-        console.log(error);
+      // try {
+      //   console.log(user.uid);
+      //   let userData; // let count=0;
+      //   // Firestore takes some time to create a new user document (check count variable!)
+      //   do {
+      //     userData = await db.collection("users").doc(user.uid).get();
+      //     // count++;
+      //   } while (!userData.exists);
+      //   if (userData.data().isProfileCompleted) {
+      //     return onUserAuthenticated(user);
+      //   } else {
+      //     return onUserNotFound(user);
+      //   }
+      // } catch (error) {
+      //   console.log(error);}
+      if(user.photoURL) {
+        return onUserAuthenticated(user)
       }
-    } else {
+      return onUserNotFound(user);
+      }
+    else {
       return onUserNotFound(user);
     }
   }

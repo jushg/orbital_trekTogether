@@ -5,7 +5,7 @@ import {SafeAreaView } from "react-native-safe-area-context"
 export default (props) => {
   return (
     <SafeAreaView style={{
-      paddingTop: StatusBar.currentHeight ? StatusBar.currentHeight : 0,
+      paddingTop: StatusBar.currentHeight ? props.disableTop ? 0: StatusBar.currentHeight : 0,
       ...props.style
     }} {...props}>
         {props.children}

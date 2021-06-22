@@ -9,11 +9,8 @@ import AddScreen from "../component/modal"
 // import * as Auth from "../../api/auth"
 import { addTrip } from '../../api/trip';
 
-
 export default ({navigation}) => {
-  const [searchQuery, setSearchQuery] = useState(''); //Example
-  const onChangeSearch = query => setSearchQuery(query); // Example
-
+  
   const renderTrip = ({item}) => {
       return (
       <View>
@@ -26,7 +23,7 @@ export default ({navigation}) => {
       )
   }
 
-  // Example for Modal
+  // Use for add new trip
   const [modalVisible, setModalVisible] = useState(false);
   const [partner,setPartner] = useState("");
   const [place,setPlace] = useState("");
@@ -42,20 +39,27 @@ export default ({navigation}) => {
       (err) =>{console.error(err)} 
       )
   }
+  // Use to search for trip
+  const [searchQuery, setSearchQuery] = useState(''); 
+  const renderSearchBar = () => {
+    return (
+      <View style={{alignItems:"baseline"}}>
+        <Searchbar
+        placeholder="Search by date"
+        onChangeText={setSearchQuery}
+        value={searchQuery}
+        style={{marginBottom:10}}
+        />
+      </View>
+   
+    )
+  }
   return (
     
 
     <Screen style={styles.container}>
-      <View style={{alignItems:"center"}}>
-          <Searchbar
-          placeholder="Search Trip"
-          onChangeText={onChangeSearch}
-          value={searchQuery}
-          style={{marginBottom:10, width:"95%"}}
-          />
-          
-      </View>
-      <Text style={{fontSize: 20, color:"#05668D", paddingTop: 10,}}>Upcoming trips</Text>
+      {/* 
+      <Text style={{fontSize: 20, color:"#05668D", paddingTop: 10,}}>Upcoming trips</Text> */}
       
       <AddScreen visible={modalVisible}  dismissable={false} onDismiss={hideModal}>
         <View style={styles.modal}>
@@ -104,9 +108,11 @@ export default ({navigation}) => {
       
       <View style={{flex:1}}>
           <FlatList
-          data={['1', '2', '3', '4', '5', '6', '7',"8"]}
-          renderItem={renderTrip}
-          keyExtractor={item => item}/>
+            data={['1', '2', '3', '4', '5', '6', '7',"8"]}
+            renderItem={renderTrip}
+            keyExtractor={item => item}
+            ListHeaderComponent={renderSearchBar}
+          />
           <FAB
             style={styles.fab}
             icon="plus"

@@ -19,15 +19,8 @@ export default ({ navigation }) => {
   const handleLoginEmail = () =>{
     Auth.loginEmail(
       {email,password},
-      // (user) => navigation.dispatch(CommonActions.reset({
-      //   index: 0,
-      //   routes: [{
-      //     name: "Setup",
-      //     // params: { name: user.displayName }
-      //   }]
-      // })),
       (user) => {
-        !Auth.isProfileCompleted(user)
+        user.photoURL
           ? navigation.dispatch(CommonActions.reset({
             index: 0,
             routes: [{

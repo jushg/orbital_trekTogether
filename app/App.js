@@ -7,7 +7,7 @@ import FlashMessage from "react-native-flash-message";
 
 //import testing screen here
 import {AuthScreenStack, DashboardScreenTab, MainScreenStack} from "./src/navigation"
-import TestScreen from "./src/screen/FutureScreen"
+import TestScreen from "./src/screen/SetupScreen"
 
 //import permanent object here
 // import LoadingScreen  from './src/screen/LoadingScreen';
@@ -35,7 +35,6 @@ export default function App() {
           <NavigationContainer theme={CombinedDefaultTheme}>
             <MainScreenStack/>
             <FlashMessage position="top" />
-            {/* <DashboardScreenTab/> */}
             {/* <TestScreen/> */}
           </NavigationContainer>
         </PaperProvider>
