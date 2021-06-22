@@ -4,7 +4,7 @@ import { CommonActions } from "@react-navigation/native";
 
 import Screen from "../component/screen";
 
-import * as Authentication from "../../api/auth";
+import * as Authentication from "../../utils/auth";
 
 export default ({ navigation }) => {
   useEffect(() => {

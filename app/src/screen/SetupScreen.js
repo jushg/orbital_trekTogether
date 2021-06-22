@@ -6,7 +6,7 @@ import { showMessage } from "react-native-flash-message";
 import * as ImagePicker from "expo-image-picker";
 
 import Screen from "../component/screen"
-import * as Setup from "../../api/setup";
+import * as Setup from "../../utils/setup";
 import {UserContext} from "../feature/auth"
 
 //This screen is use for setup user personal info

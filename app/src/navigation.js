@@ -19,7 +19,7 @@ import FutureScreen from './screen/FutureScreen'
 import MessageMainScreen from "./screen/MessageMainScreen"
 import ChatScreen from './screen/ChatScreen';
 
-import * as Auth from "../api/auth"
+import * as Auth from "../utils/auth"
 
 import HeaderDashboard from "./component/header"
 import { UserContext } from './feature/auth';

@@ -7,7 +7,7 @@ import {CommonActions} from "@react-navigation/native";
 import Screen from "../component/screen"
 import AddScreen from "../component/modal"
 // import * as Auth from "../../api/auth"
-import { addTrip } from '../../api/trip';
+import { addTrip } from '../../utils/trip';
 
 export default ({navigation}) => {
   

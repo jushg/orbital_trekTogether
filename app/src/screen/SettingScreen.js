@@ -3,7 +3,7 @@ import { Button, Checkbox, Avatar } from "react-native-paper"
 import { StyleSheet,Text } from 'react-native'
 
 import Screen from "../component/screen"
-import * as Auth from "../../api/auth"
+import * as Auth from "../../utils/auth"
 import {UserContext} from "../feature/auth";
 
 //https://callstack.github.io/react-native-paper/checkbox.html
