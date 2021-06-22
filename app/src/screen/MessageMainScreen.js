@@ -17,13 +17,12 @@ export default ({navigation}) => {
           title="User 1"
           description="You: Hello!"
           left={props => <List.Icon {...props} icon="account" />}
-          onPress={ () => navigation.dispatch(CommonActions.reset({
-            index: 0,
-            routes: [{
-              name: "Chat",
-              // params: { name: user.displayName }
-            }]
-          }))}
+          onPress={ () => navigation.dispatch(CommonActions.navigate({
+            name: 'Chat',
+            //use this to pass in the name of other user
+            params: {user: 'Love is in the air'},
+            })
+          )}
         />
       </View>
     )

@@ -1,6 +1,6 @@
 import React, {useState, useContext}  from 'react';
 import { StyleSheet,Text, Image, View, ScrollView} from 'react-native'
-import {Button, RadioButton, TextInput, Chip, Avatar } from "react-native-paper";
+import {Button, RadioButton, TextInput, Chip, Avatar, Headline } from "react-native-paper";
 import { CommonActions } from "@react-navigation/native";
 import { showMessage } from "react-native-flash-message";
 import * as ImagePicker from "expo-image-picker";
@@ -27,7 +27,7 @@ export default ({navigation}) => {
   const handleSetUpProfile = async () => {
      Setup.setUpProfile({age, level, place, date, avatar},
       () => {
-        console.log("Success")
+        // console.log("Success")
         // console.log(userAPI.user)
         userAPI.changeUserState();
         // setTimeout(() => console.log(userAPI.user), 5000);
@@ -68,7 +68,8 @@ export default ({navigation}) => {
     <Screen style={styles.container} >
       <ScrollView style={{paddingHorizontal: 15}}>
 
-        <Text style={styles.title}>Set up your Profile</Text>
+        {/* <Text style={styles.title}>Set up your Profile</Text> */}
+        
         <View style={{alignItems: "center"}}>
           <Avatar.Image
             size={105}
@@ -83,7 +84,8 @@ export default ({navigation}) => {
             Add profile picture
           </Button>
         </View>
-
+        
+        <Headline style={styles.title}>Age</Headline>
         <TextInput
           label="Age"
           placeholder="25"
@@ -91,11 +93,12 @@ export default ({navigation}) => {
           mode="contained"
           value={age}
           onChangeText={setAge}
-          style={{marginBottom:10, width:"95%"}}
+          // style={{marginBottom:10, width:"95%"}}
           // left={<TextInput.Icon name="email"/>}
-        />
-
-        <RadioButton.Item
+        /> 
+        <View style={{justifyContent:"center"}} >
+        <Headline style={styles.title}>Level</Headline>
+        {/* <RadioButton.Item
           label="Beginner"
           value="Beginner"
           status={ level === 'Beginner' ? 'checked' : 'unchecked' }
@@ -112,7 +115,14 @@ export default ({navigation}) => {
           value="Advanced"
           status={ level === 'Advanced' ? 'checked' : 'unchecked' }
           onPress={() => setLevel('Advanced')}
-        />
+        /> */}
+          <RadioButton.Group onValueChange={newLevel => setLevel(newLevel)} value={level}>
+            <RadioButton.Item label="Beginner" value="Beginner" color="lightblue" />
+            <RadioButton.Item label="Intermediate" value="Intermediate" color="blue" />
+            <RadioButton.Item label="Advanced" value="Advanced" color="darkblue"/>
+          </RadioButton.Group>
+        </View>    
+        
 
         {/*<TextInput*/}
         {/*  label="Intro"*/}
@@ -124,7 +134,7 @@ export default ({navigation}) => {
         {/*  style={{marginBottom:10, width:"95%"}}*/}
         {/*  // left={<TextInput.Icon name="email"/>}*/}
         {/*/>*/}
-
+        <Headline style={styles.title}>Preferred Destination</Headline>
         <TextInput
           label="Place"
           placeholder="MacRitchie Reservoir, ..."
@@ -136,12 +146,14 @@ export default ({navigation}) => {
         />
 
         {/*  Pick dates */}
-          {daysInWeek.map((item, index) => {
+        <Headline style={styles.title}>Availability</Headline>
+        <View style={{flex: 1}}>
+        {daysInWeek.map((item, index) => {
               return (
-                <View style={{
-                  margin: 5,
-                  flexWrap: 'wrap',
-                }} key={index}>
+                <View 
+                style={{ margin: 5,flexWrap: 'wrap'}} 
+                key={index}
+                >
                   <Chip
                     key={index}
                     mode="outlined" // changing display mode, default is flat
@@ -149,47 +161,43 @@ export default ({navigation}) => {
                     textStyle={{ color:'black', fontSize: 15 }} //label properties
                     // style={{ backgroundColor: "gray" }}
                     selected={date[index]}
-                    selectedColor="green"
+                    selectedColor="darkblue"
                     onPress={() => {
                       let newDate = [...date];
                       newDate[index] = !newDate[index];
                       setDate(newDate);
                       console.log('Clicked chip '+ item)
-                    }}
-                  >
-                    { item }
+                    }}> { item }
                   </Chip>
                 </View>
               );
             })
           }
-
-          <Button mode="contained" onPress={handleSetUpProfile} style={styles.button}>
+        </View>
+        <View style={{alignItems:"center"}}>
+          <Button mode="contained" onPress={handleSetUpProfile} style={[styles.button,{width: "40%"}]}>
             Finish
           </Button>
-
+        </View>
       </ScrollView>
     </Screen>
   )
 }
 
 const styles = StyleSheet.create({
-  title: {
-    fontSize: 30,
-    paddingTop: 0,
-    color:"#05668D"
+  title: {  
+    paddingTop: 15,
+    paddingBottom: 5
   },
   button: {
     // width:"70%",
-    // borderRadius:25,
-    alignItems:"center",
-    justifyContent:"center",
-    marginVertical:10
+    borderRadius:25,
+    marginVertical:20
   },
   container: {
-    flex: 1,
-    flexDirection:"column",
+    // flex: 1,
+    // flexDirection:"column",
     // alignItems: "center",
-    // justifyContent: 'center',
+    justifyContent: 'flex-start',
   },
 });

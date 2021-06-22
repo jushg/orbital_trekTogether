@@ -1,26 +1,31 @@
 import React, {useState, useEffect } from 'react';
-import { createStackNavigator } from "@react-navigation/stack";
+import { createStackNavigator} from "@react-navigation/stack";
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
 
+//Auth Stack Screen
 import LoginScreen from "./screen/LoginScreen"
 import WelcomeScreen from "./screen/WelcomeScreen"
 import SignupScreen from "./screen/SignupScreen"
 import SettingScreen from "./screen/SettingScreen"
-import MatchScreen from "./screen/MatchScreen"
 import SetupScreen from "./screen/SetupScreen"
+
+//Match feature Screen
+import MatchScreen from "./screen/MatchScreen"
+
+//Loading Screen
 import LoadingScreen from './screen/LoadingScreen';
 
+//Dashboard Screen
 import PastScreen from "./screen/PastScreen"
 import FutureScreen from './screen/FutureScreen'
 
+//Chat feature Screens
 import MessageMainScreen from "./screen/MessageMainScreen"
 import ChatScreen from './screen/ChatScreen';
 
 import * as Auth from "../utils/auth"
-
 import HeaderDashboard from "./component/header"
 import { UserContext } from './feature/auth';
 
@@ -45,12 +50,19 @@ export const MainScreenStack = () => {
         {user == null ? (
         <MainStack.Screen name="Auth" component = {AuthScreenStack} options={{headerShown:false}}/>
         ): user === "loading" ?(
-          <MainStack.Screen name="loading" component = {LoadingScreen}/>
+          <MainStack.Screen name="loading" component = {LoadingScreen} options={{headerShown:false}}/>
         ):(
           <>
             <MainStack.Screen name="Home" component = {HomeScreenTab} options={{headerShown:false}}/>
             <MainStack.Screen name="Setting" component={SettingScreen}/>
-            <MainStack.Screen name="Chat" component = {ChatScreen}/>
+            <MainStack.Screen 
+            name="Chat" 
+            component = {ChatScreen}
+            options={({ navigation, route }) => ({
+              headerTitle: route.params.user,
+            })
+            }
+            />
           </>
         )}
       </MainStack.Navigator>
@@ -63,11 +75,11 @@ const AuthStack = createStackNavigator();
 
 export const AuthScreenStack = () => {
   return (
-    <AuthStack.Navigator initialRouteName={"Login"} headerMode="none">
-      <AuthStack.Screen name="Welcome" key = "welcome" component = {WelcomeScreen}/>
-      <AuthStack.Screen name="Login" key = "login" component = {LoginScreen}/>
-      <AuthStack.Screen name="Signup" key = "signup" component = {SignupScreen}/>
-      <AuthStack.Screen name="Setup" key = "setup" component = {SetupScreen}/>
+    <AuthStack.Navigator initialRouteName={"Login"} >
+      <AuthStack.Screen name="Welcome" key = "welcome" component = {WelcomeScreen} options={{headerShown:false}}/>
+      <AuthStack.Screen name="Login" key = "login" component = {LoginScreen} options={{headerShown:false}}/>
+      <AuthStack.Screen name="Sign Up" key = "signup" component = {SignupScreen}/>
+      <AuthStack.Screen name="Setup" key = "setup" component = {SetupScreen} options={{headerShown:false}}/>
     </AuthStack.Navigator>
   )
 }

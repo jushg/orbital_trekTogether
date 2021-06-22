@@ -30,7 +30,7 @@ export default ({navigation}) =>{
 
     return (
       <Screen style ={styles.container} >
-        <Button
+        {/* <Button
           mode="flat"
           icon="arrow-left"
           color="black"
@@ -38,7 +38,7 @@ export default ({navigation}) =>{
           style={{marginBottom:10, width:"20%"}}
           onPress={() => navigation.navigate('Login')}>
           Back
-        </Button>
+        </Button> */}
 
         <View style={{ justifyContent:"center", alignItems:"center"}}>
           <Image source={image} style={{ width: 305, height: 220 }}/>
@@ -98,6 +98,7 @@ const styles = StyleSheet.create({
     color:"#05668D"
   },
   signupBtn: {
+    width:"35%",
     height:50,
     alignItems:"center",
     justifyContent:"center",
@@ -106,6 +107,7 @@ const styles = StyleSheet.create({
   container: {
     flex:1,
     flexDirection:"column",
+    backgroundColor:"white",
     justifyContent:"flex-start"
   },
 });

@@ -30,7 +30,6 @@ export default ({navigation}) => {
       <Text style={styles.title}>Setting Screen</Text>
       <Avatar.Image
         size={90}
-        // source={require('../../assets/ava1.png')}
         source={{ uri: Auth.getCurrentUser().photoURL }}
       />
       <Text>{Auth.getCurrentUser().displayName}</Text>
@@ -49,7 +48,6 @@ export default ({navigation}) => {
           setChecked2(!checked2);
         }}
       />
-      {/* <Button onPress={() => navigation.navigate('Home')}>Back to Profile</Button> */}
       <Button onPress={handleLogout} style={styles.button}>Log Out</Button>
     </Screen>
   )
@@ -62,18 +60,15 @@ const styles = StyleSheet.create({
     color:"#05668D"
   },
   button: {
-    width:"70%",
     borderRadius:25,
     height:50,
     alignItems:"center",
     justifyContent:"center",
     marginTop:20,
-    // backgroundColor:"#028090",
   },
   container: {
     flex: 1,
     flexDirection:"column",
-    // backgroundColor: '#F0F3BD',
     alignItems: 'center',
     justifyContent: 'center',
   },

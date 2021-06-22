@@ -38,8 +38,7 @@ export default ({navigation}) => {
           style={{marginBottom:10, width:"95%"}}
         />
       </View>
-      <View style={{flexDirection: 'row', justifyContent:"space-between"}}>
-            <Text style={{fontSize: 20, color:"#05668D", paddingTop: 10,}}> Your History</Text>
+      <View style={{flexDirection: 'row', justifyContent:"flex-end"}}>
             <Menu
               visible={visible}
               onDismiss={closeMenu}

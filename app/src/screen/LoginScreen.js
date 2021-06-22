@@ -20,16 +20,15 @@ export default ({ navigation }) => {
     Auth.loginEmail(
       {email,password},
       (user) => {
-        user.photoURL
-          ? navigation.dispatch(CommonActions.reset({
-            index: 0,
-            routes: [{
-              name: "Setup",  // params: { name: user.displayName }
-            }]
-          }))
-          : console.log(user.displayName + " has logged in")
+        user.photoURL ? 
+        console.log(user.displayName + " has logged in") 
+        : navigation.dispatch(CommonActions.reset({
+          index: 0,
+          routes: [{
+            name: "Setup",  // params: { name: user.displayName }
+          }]
+        }))  
       },
-      // (user) => {return console.log(user.displayName + " has log in")},
       (error) => {
         console.error(error);
         showMessage({
@@ -89,7 +88,7 @@ export default ({ navigation }) => {
           <Pressable onPress={() => {}}>
             <Text
               style={styles.forgotPassword}
-              onPress={() => navigation.navigate("Signup")}>
+              onPress={() => navigation.navigate("Sign Up")}>
               Forgot password?
             </Text>
           </Pressable>
@@ -102,7 +101,7 @@ export default ({ navigation }) => {
           <Pressable onPress={() => {}}>
             <Text
               style={{fontSize:16, textDecorationLine: "underline"}}
-              onPress={() => navigation.navigate("Signup")}>
+              onPress={() => navigation.navigate("Sign Up")}>
               Sign Up
             </Text>
           </Pressable>
