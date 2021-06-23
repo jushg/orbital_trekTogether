@@ -1,52 +1,63 @@
-import React, { useState } from 'react'
-import { Button, Avatar, Title, Paragraph } from "react-native-paper"
+import React, {useContext, useEffect, useState} from 'react';
+import { Button, Avatar, Title, Paragraph, ActivityIndicator } from "react-native-paper"
 import Swiper from "react-native-deck-swiper"
 import { StyleSheet, Text, View, Pressable } from 'react-native'
 
 
 import Screen from "../component/screen"
 import { getAllPotentialBuddies } from "../../utils/computeBuddy";
+import {UserContext} from "../feature/auth";
+
 
 export default ({navigation}) => {
   
   //This item include (User Info)
-  const renderCard = ({item}) => {
+  const renderCard = (doc) => {
+    const data = doc.data();
+    console.log("Item is " + data.email);
     return(
       <View style={styles.card}>
         <Avatar.Image size={90} source={require('../../assets/ava1.png')} />
         
         <Text style={{ fontSize:20 }}>User, Age</Text>
         <Text>Beginner</Text>
+        <Text>{data.email}</Text>
         <View style={{alignItems:"baseline", alignSelf:"stretch", paddingHorizontal: 10}}>
           <Paragraph>Say something nice ...</Paragraph>
           <Title>Preferred Destination</Title>
 
           <Title>Availability</Title>
-        </View>      
+        </View>
       </View>
     )
   }
 
-  const allPotentialBuddies = getAllPotentialBuddies();
-  const getNext10Cards = () => {
-    console.log("getting the next 10 cards...");
-  };
+  const { user, _ } = useContext(UserContext);
+
+  const [buddies, setBuddies] = useState(null);
+  let index = 0;
+
+  useEffect(() => {
+    getAllPotentialBuddies(user)
+      .then(docArray => setBuddies(docArray))
+  }, []);
 
   return (
     <Screen style={styles.container}>
+      {buddies == null ? <ActivityIndicator/> :
         <Swiper
-          // cards={getMatches}
           verticalSwipe={false}
-            cards={['1', '2', '3', '4', '5', '6', '7']}
+            cards={buddies}
+          // cards={['1', '2', '3', '4', '5', '6']}
             renderCard={renderCard}
             onSwiped={(cardIndex) => {console.log(cardIndex)}}
-          onSwipedLeft={}
-          onSwipedRight={}
-            onSwipedAll={getNext10Cards}
+            onSwipedAll={() => {index += 10;}}
             cardIndex={0}
             backgroundColor={'lightblue'}
-            stackSize= {3}>
+            // stackSize= {3}
+        >
         </Swiper>
+      }
       {/* <Avatar.Image size={90} source={require('../../assets/ava1.png')} />
         <Text style={{paddingHorizontal: 10, fontSize: 25}}>User</Text>
         <View style={{alignItems:"baseline"}}>

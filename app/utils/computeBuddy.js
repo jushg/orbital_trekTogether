@@ -1,13 +1,5 @@
 import * as Match from "./match";
 
-let currID, currData;
-try {
-  currID = Match.currUser;
-  currData = Match.getCurrentUserData();
-} catch (e) {
-  console.log(e);
-}
-
 // get all users
 // filter out my current buddies (filter ppl in `pass` or `like` too??? [refer to last 3 comments])
 // compare them with me, putting their score in a dict <uid,score>
@@ -20,8 +12,7 @@ try {
 let scores = new Map();
 
 // calculate compatibility score compared to me
-const computeScore = (doc) => {
-  const buddyData = doc.data();
+const computeScore = (buddyData, currData) => {
   let ageSimilarity, levelSimilarity, placeSimilarity, dateSimilarity;  // min 0, max 1
 
   const ageGap = Math.abs(currData.age - buddyData.age);
@@ -48,33 +39,46 @@ const computeScore = (doc) => {
 }
 
 const formula = (ageSimilarity, levelSimilarity, placeSimilarity, dateSimilarity) => {
-  // Max score = 1 ?
-  const ageWeightage = 0.25;
-  const levelWeightage = 0.2;
-  const placeWeightage = 0.1;
-  const dateWeightage = 0.45;
+  // Max score = 100 ?
+  const ageWeightage = 25;
+  const levelWeightage = 20;
+  const placeWeightage = 10;
+  const dateWeightage = 45;
   return ageSimilarity * ageWeightage + levelSimilarity * levelWeightage
     + placeSimilarity * placeWeightage + dateSimilarity * dateWeightage;
 }
 
-const userComparator = (u1, u2) => { return scores.get(u1.id) - scores.get(u2.id); }
+const userComparator = (u1, u2) => { return scores.get(u2.id) - scores.get(u1.id); }
 
-// an array of documents (not data yet!)
-console.log("getting all users...")
-let potentialBuddies = Match.getAllUsers()
-  .docs
-  .filter(doc => doc.id !== currID
-    && !currData.buddies.includes(doc.id)
-    && !currData.like.includes(doc.id)
-    && !currData.pass.includes(doc.id)
-  )
-  .forEach(doc => {
-    scores.set(doc.id, computeScore(doc));
-    // console.log(`computed score for ${doc.id}`);
-  })
-  .sort(userComparator)
-  // .map(doc => doc.data());
-console.log("finish sorting.")
+const processPotentialBuddies = async (uid) => {
+  const currData = await Match.getUserData(uid);
+  try {
+    console.log("2. getting all users...")
+    // an array of documents (not data yet!)
+    let temp = await Match.getAllUsers();
+
+    console.log(`4. potentialBuddies pre-filter= ${temp.length}`);
+    let potentialBuddies = temp.filter(doc => doc.id !== uid
+        && doc.data().isProfileCompleted
+        && !currData.buddies.includes(doc.id)
+        && !currData.like.includes(doc.id)
+        && !currData.pass.includes(doc.id)
+    )
+    console.log(`5. potentialBuddies post-filter= ${potentialBuddies.length}`);
+
+    potentialBuddies.forEach(doc => {
+      scores.set(doc.id, computeScore(doc.data(), currData));
+    })
+
+    console.log("begin sorting...")
+    potentialBuddies.sort(userComparator)
+    console.log("finish sorting.")
+
+    return potentialBuddies;
+  } catch (err) {
+    console.error("compute/processPotentialBuddies: " + err);
+  }
+}
 
 function shuffleArray(array, from, to) {
   for (let i = to - 1; i > from; i--) {
@@ -85,14 +89,20 @@ function shuffleArray(array, from, to) {
   }
 }
 
-export const getAllPotentialBuddies = () => {
-  // partition of 10 and shuffle
-  console.log("begin shuffling...")
-  let index = 0;
-  while (index < potentialBuddies.length) {
-    shuffleArray(potentialBuddies, index, Math.min(index + 10, potentialBuddies.length));
-    index += 10;
+export const getAllPotentialBuddies = async (user) => {
+  console.log("1. getAllPotentialBuddies of " + user.displayName)
+  try {
+    let potentialBuddies = await processPotentialBuddies(user.uid);
+    // partition of 10 and shuffle
+    console.log("begin shuffling...")
+    let index = 0;
+    while (index < potentialBuddies.length) {
+      shuffleArray(potentialBuddies, index, Math.min(index + 10, potentialBuddies.length));
+      index += 10;
+    }
+    console.log("finish shuffling.")
+    return potentialBuddies;
+  } catch (err) {
+    console.log("compute/getAllPotentialBuddies: " + err);
   }
-  console.log("finish shuffling.")
-  return potentialBuddies;
 }
