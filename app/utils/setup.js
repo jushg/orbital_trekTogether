@@ -38,6 +38,10 @@ export const setUpProfile = async ({age, level, place, date, avatar}, onSuccess,
         // hobby: hobby,
         place: place,
         date: date,
+        trips: [],
+        buddies: [],
+        like: [],
+        pass: []
       }, {merge: true});
       // update user instance's default photoURL attribute
       await user.updateProfile({photoURL: avatarUrl});

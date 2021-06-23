@@ -5,13 +5,14 @@ import { StyleSheet, Text, View, Pressable } from 'react-native'
 
 
 import Screen from "../component/screen"
+import { getAllPotentialBuddies } from "../../utils/computeBuddy";
 
 export default ({navigation}) => {
   
   //This item include (User Info)
   const renderCard = ({item}) => {
     return(
-      <View style={styles.card}>      
+      <View style={styles.card}>
         <Avatar.Image size={90} source={require('../../assets/ava1.png')} />
         
         <Text style={{ fontSize:20 }}>User, Age</Text>
@@ -25,14 +26,23 @@ export default ({navigation}) => {
       </View>
     )
   }
+
+  const allPotentialBuddies = getAllPotentialBuddies();
+  const getNext10Cards = () => {
+    console.log("getting the next 10 cards...");
+  };
+
   return (
     <Screen style={styles.container}>
         <Swiper
           // cards={getMatches}
+          verticalSwipe={false}
             cards={['1', '2', '3', '4', '5', '6', '7']}
             renderCard={renderCard}
             onSwiped={(cardIndex) => {console.log(cardIndex)}}
-            onSwipedAll={() => {console.log('onSwipedAll')}}
+          onSwipedLeft={}
+          onSwipedRight={}
+            onSwipedAll={getNext10Cards}
             cardIndex={0}
             backgroundColor={'lightblue'}
             stackSize= {3}>
