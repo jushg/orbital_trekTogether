@@ -1,6 +1,6 @@
 import firebase from "./firebase";
 
-const db = firebase.firestore();
+const db = firebase.firestore().collection("users");
 
 // push profile data to db
 export const setUpProfile = async ({age, level, place, date, avatar}, onSuccess, onError) => {
@@ -30,8 +30,10 @@ export const setUpProfile = async ({age, level, place, date, avatar}, onSuccess,
       const avatarUrl = await fileRef.getDownloadURL();     // downloadURL to put in user profile
 
       // put data in Firestore
-      await db.collection("users").doc(uid).set({
+      await db.doc(uid).set({
         isProfileCompleted: true,
+        photoURL: avatarUrl,
+        uid: uid,
         age: age,
         level: level,
         // intro: intro,

@@ -22,7 +22,7 @@ import FutureScreen from './screen/FutureScreen'
 import SettingScreen from "./screen/SettingScreen"
 import AddTripScreen from './screen/AddTripScreen';
 //Chat feature Screens
-import MessageMainScreen from "./screen/MessageMainScreen"
+import ChatListScreen from "./screen/ChatListScreen"
 import ChatScreen from './screen/ChatScreen';
 
 import * as Auth from "../utils/auth"
@@ -114,7 +114,7 @@ export const HomeScreenTab = () => {
       />
       <HomeTab.Screen
         name="Message"
-        component={MessageMainScreen}
+        component={ChatListScreen}
         options={
           {
             tabBarLabel: 'Message',
