@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useContext} from 'react';
-import {View,  Platform, Text, StyleSheet} from 'react-native';
+import {View,  Platform, Text, StyleSheet, ScrollView} from 'react-native';
 import { Button, TextInput, Headline, Subheading } from 'react-native-paper';
 import DateTimePicker from '@react-native-community/datetimepicker';
 
@@ -49,13 +49,10 @@ export default () => {
     showMode('date');
   };
 
-  const showTimepicker = () => {
-    showMode('time');
-  };
 
   return (
       <Screen style={styles.container}>
-          {/* <Headline style={styles.title}>Add a new trip </Headline> */}
+        <ScrollView>
           <Subheading style={{paddingVertical:10}}>Partner</Subheading>
           <TextInput
             label="Partner (optional)"
@@ -77,30 +74,30 @@ export default () => {
             style={{marginBottom:10, width:"95%"}}
           />
           <Subheading style={{paddingVertical:10}}>Date:    {date.toLocaleDateString(undefined, options)}</Subheading>
-        <Button onPress={showDatepicker}>Click here to choose the date </Button> 
-        {show && (
-            <DateTimePicker
-            testID="dateTimePicker"
-            value={date}
-            mode={mode}
-            display="default"
-            onChange={onChange}
+          <Button onPress={showDatepicker}>Click here to choose the date </Button> 
+          {show && (
+              <DateTimePicker
+              testID="dateTimePicker"
+              value={date}
+              mode={mode}
+              display="default"
+              onChange={onChange}
+              />
+          )}
+          <Subheading style={{paddingVertical:10}}>Note</Subheading>
+          <TextInput
+              label="Notes"
+              placeholder="Something to note"
+              value={notes}
+              autoCapitalize="words"
+              onChangeText={setNotes}
+              left={<TextInput.Icon name="human-male"/>}
+              style={{marginBottom:10, width:"95%"}}
             />
-        )}
-        <Subheading style={{paddingVertical:10}}>Note</Subheading>
-        <TextInput
-            label="Notes"
-            placeholder="Something to note"
-            value={notes}
-            autoCapitalize="words"
-            onChangeText={setNotes}
-            left={<TextInput.Icon name="human-male"/>}
-            style={{marginBottom:10, width:"95%"}}
-          />
-        <View style={{ flexDirection: "row", justifyContent: "space-around", paddingTop:60}}>
-           <Button onPress={handleAddTrip}>Add</Button>
-           {/* <Button>Cancel</Button> */}
+          <View style={{ flexDirection: "row", justifyContent: "space-around", paddingTop:60}}>
+            <Button onPress={handleAddTrip}>Add</Button>
           </View>
+        </ScrollView>
       </Screen>
     
   );

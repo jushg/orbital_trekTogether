@@ -19,10 +19,13 @@ export default ({navigation}) => {
     return(
       <View style={styles.card}>
         <View style={{justifyContent:"center", alignItems:"center"}}>
-        <Avatar.Image size={90} source={require('../../assets/ava1.png')} />
+        {data.photoURL && <Avatar.Image size={90} source={{uri : data.photoURL} } />}
+        {!data.photoURL && <Avatar.Image size={90} source={require("../../assets/pain.jpg")} />}
         
         <Headline>{data.name}, {data.age}</Headline>
-        <Caption>Level {data.level}</Caption>
+        {data.level == 1 && <Caption style={{fontSize:15}}>Beginner</Caption>}
+        {data.level == 2 && <Caption style={{fontSize:15}}>Intermediate</Caption>}
+        {data.level == 3 && <Caption style={{fontSize:15}}>Advanced</Caption>}
         <View style={{alignItems:"baseline", alignSelf:"stretch"}}>
           <Paragraph>Some nice things to say about myself</Paragraph>
         </View>
@@ -32,35 +35,28 @@ export default ({navigation}) => {
         <View style={{flexDirection:"row", justifyContent:"space-around", alignItems:"flex-start"}}>
           <View style={{flex:1, alignItems:"center"}}>
             <Subheading>Destination</Subheading>
-            <Text>{data.place}</Text>
-            <Text>{data.place}</Text>
-            <Text>{data.place}</Text>
-            <Text>{data.place}</Text>
-            <Text>{data.place}</Text>
-            <Text>{data.place}</Text>
-            <Text>{data.place}</Text>
+            <Paragraph>{data.place}</Paragraph>
+          
             
           </View>
           <View style={styles.verticleLine}></View>
           <View style={{flex:1 , alignItems:"center"}}>
-          {/* <Subheading>Availability</Subheading> */}
           <Subheading>{computeDate(data.date)} free day{computeDate(data.date) > 1 ? "s":" "}</Subheading>
-            {/* <Text>{computeDate(data.date)} free day{computeDate(data.date) > 1 ? "s":" "}</Text> */}
-            {data.date[0] && <Text>Monday</Text>}
-            {data.date[1] && <Text>Tuesday</Text>}
-            {data.date[2] && <Text>Wednesday</Text>}
-            {data.date[3] && <Text>Thursday</Text>}
-            {data.date[4] && <Text>Friday</Text>}
-            {data.date[5] && <Text>Saturday</Text>}
-            {data.date[6] && <Text>Sunday</Text>}
+            {data.date[0] && <Paragraph>Monday</Paragraph>}
+            {data.date[1] && <Paragraph>Tuesday</Paragraph>}
+            {data.date[2] && <Paragraph>Wednesday</Paragraph>}
+            {data.date[3] && <Paragraph>Thursday</Paragraph>}
+            {data.date[4] && <Paragraph>Friday</Paragraph>}
+            {data.date[5] && <Paragraph>Saturday</Paragraph>}
+            {data.date[6] && <Paragraph>Sunday</Paragraph>}
           </View>
         </View>
 
 
         <View style={{flexDirection:"row", justifyContent:"space-between", alignItems:"center", alignSelf:"stretch"}}>
-          <Button icon="arrow-left">Pass</Button>
+          <Button  icon="arrow-left" col>Pass</Button>
          
-          <Button icon="arrow-right" contentStyle={{flexDirection:"row-reverse"}}>Like</Button>
+          <Button icon="arrow-right" contentStyle={{flexDirection:"row-reverse" }}>Like</Button>
         </View>
       </View>
     )
