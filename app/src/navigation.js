@@ -8,19 +8,19 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import LoginScreen from "./screen/LoginScreen"
 import WelcomeScreen from "./screen/WelcomeScreen"
 import SignupScreen from "./screen/SignupScreen"
-import SettingScreen from "./screen/SettingScreen"
 import SetupScreen from "./screen/SetupScreen"
 
 //Match feature Screen
 import MatchScreen from "./screen/MatchScreen"
 
-//Loading Screen
+//Loading ScreenText
 import LoadingScreen from './screen/LoadingScreen';
 
 //Dashboard Screen
 import PastScreen from "./screen/PastScreen"
 import FutureScreen from './screen/FutureScreen'
-
+import SettingScreen from "./screen/SettingScreen"
+import AddTripScreen from './screen/AddTripScreen';
 //Chat feature Screens
 import MessageMainScreen from "./screen/MessageMainScreen"
 import ChatScreen from './screen/ChatScreen';
@@ -55,6 +55,7 @@ export const MainScreenStack = () => {
           <>
             <MainStack.Screen name="Home" component = {HomeScreenTab} options={{headerShown:false}}/>
             <MainStack.Screen name="Setting" component={SettingScreen}/>
+            <MainStack.Screen name="Add Trip" component={AddTripScreen}/>
             <MainStack.Screen 
             name="Chat" 
             component = {ChatScreen}

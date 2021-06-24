@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Button, TextInput } from "react-native-paper";
-import { StyleSheet, Text, View, Pressable, Image } from 'react-native';
+import { StyleSheet, Text, View, Pressable, Image, ScrollView } from 'react-native';
 import { CommonActions } from "@react-navigation/native"
 import { useDispatch } from 'react-redux';
 
@@ -38,16 +38,10 @@ export default ({ navigation }) => {
       }
     )
   }
-  // const handleLoginEmail = () =>{
-  //   Auth.loginEmail(
-  //     {email,password},
-  //     (user) => useDispatch(AuthCommons.signedIn(user)),
-  //     (error) => {return console.error(error)}
-  //   )
-  // }
   return (
     <Screen style={styles.container} >
-        
+      <ScrollView>
+
       <View style={{justifyContent:"center", alignItems:"center"}}>
       <Image source={image} style={{ width: 305, height: 300 }}/>
         {/* <Text style = {styles.title}>TrekTogether</Text> */}
@@ -124,6 +118,8 @@ export default ({ navigation }) => {
             >Google
           </Button> 
         </View> */} 
+              </ScrollView>
+
     </Screen>
   );
 }
@@ -140,7 +136,7 @@ const styles = StyleSheet.create({
   },
   loginBtn: {
     width:"35%",
-    // borderRadius:25,
+    borderRadius:25,
     height:50,
     alignItems:"center",
     justifyContent:"center",

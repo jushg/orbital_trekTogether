@@ -24,21 +24,21 @@ export default ({navigation}) => {
   }
 
   // Use for add new trip
-  const [modalVisible, setModalVisible] = useState(false);
-  const [partner,setPartner] = useState("");
-  const [place,setPlace] = useState("");
-  const [date,setDate] = useState("")
-  const [notes,setNotes] = useState("this is for testing")
+  // const [modalVisible, setModalVisible] = useState(false);
+  // const [partner,setPartner] = useState("");
+  // const [place,setPlace] = useState("");
+  // const [date,setDate] = useState("")
+  // const [notes,setNotes] = useState("this is for testing")
   
-  const showModal = () => setModalVisible(true);
-  const hideModal = () => setModalVisible(false);
-  const handleAddTrip = () => {
-    addTrip(
-      {partner,notes,place,date},
-      () => {console.log("Add trip successfully")},
-      (err) =>{console.error(err)} 
-      )
-  }
+  // const showModal = () => setModalVisible(true);
+  // const hideModal = () => setModalVisible(false);
+  // const handleAddTrip = () => {
+  //   addTrip(
+  //     {partner,notes,place,date},
+  //     () => {console.log("Add trip successfully")},
+  //     (err) =>{console.error(err)} 
+  //     )
+  // }
   // Use to search for trip
   const [searchQuery, setSearchQuery] = useState(''); 
   const renderSearchBar = () => {
@@ -61,7 +61,7 @@ export default ({navigation}) => {
       {/* 
       <Text style={{fontSize: 20, color:"#05668D", paddingTop: 10,}}>Upcoming trips</Text> */}
       
-      <AddScreen visible={modalVisible}  dismissable={false} onDismiss={hideModal}>
+      {/* <AddScreen visible={modalVisible}  dismissable={false} onDismiss={hideModal}>
         <View style={styles.modal}>
           <Text>Add a new trip here</Text>
           <TextInput
@@ -103,7 +103,7 @@ export default ({navigation}) => {
             </Button>
           </View>
         </View>
-      </AddScreen>  
+      </AddScreen>   */}
     
       
       <View style={{flex:1}}>
@@ -116,7 +116,10 @@ export default ({navigation}) => {
           <FAB
             style={styles.fab}
             icon="plus"
-            onPress={showModal}
+            onPress={() =>  navigation.dispatch(CommonActions.navigate({
+              name: 'Add Trip',            
+              })
+            )}
           /> 
       </View>      
     </Screen>

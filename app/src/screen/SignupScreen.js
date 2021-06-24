@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { StyleSheet, Text, View, Image } from "react-native"
+import { StyleSheet, Text, View, Image, ScrollView } from "react-native"
 import { Button, TextInput } from "react-native-paper"
 import { CommonActions } from "@react-navigation/native";
 
@@ -30,19 +30,9 @@ export default ({navigation}) =>{
 
     return (
       <Screen style ={styles.container} >
-        {/* <Button
-          mode="flat"
-          icon="arrow-left"
-          color="black"
-          compact="true"
-          style={{marginBottom:10, width:"20%"}}
-          onPress={() => navigation.navigate('Login')}>
-          Back
-        </Button> */}
-
+        <ScrollView>
         <View style={{ justifyContent:"center", alignItems:"center"}}>
-          <Image source={image} style={{ width: 305, height: 220 }}/>
-          <Text style = {styles.title}> Create new account</Text>
+          <Image source={image} style={{ width: 305, height: 300 }}/>
           <TextInput
           label="Email"
           placeholder="johndoe@gmail.com"
@@ -84,6 +74,7 @@ export default ({navigation}) =>{
           >Sign Up
           </Button>
         </View>
+        </ScrollView>
       </Screen>
     )
 }
@@ -100,6 +91,7 @@ const styles = StyleSheet.create({
   signupBtn: {
     width:"35%",
     height:50,
+    borderRadius:25,
     alignItems:"center",
     justifyContent:"center",
     marginTop:20,
