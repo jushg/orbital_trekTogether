@@ -1,18 +1,25 @@
 import React, {useContext, useEffect, useState} from 'react';
 import { Avatar, Paragraph, ActivityIndicator, Subheading ,Headline, Caption, IconButton, Button } from "react-native-paper"
 import Swiper from "react-native-deck-swiper"
-import { StyleSheet, Text, View} from 'react-native'
-
+import {Image, StyleSheet, Text, View} from 'react-native';
+import { showMessage } from "react-native-flash-message";
 
 import Screen from "../component/screen"
 import { getAllPotentialBuddies } from "../../utils/computeBuddy";
-import { getUserData } from '../../utils/match';
+import * as Match from '../../utils/match';
 import {UserContext} from "../feature/auth";
-
+import firebase from "../../utils/firebase";
 
 export default ({navigation}) => {
-  
-  //This item include (User Info)
+
+  const computeDate = (date) => {
+    let value = 0;
+    for (let index = 0; index < date.length; index++) {
+      if(date[index]) value += 1;
+    }
+    return value;
+  }
+  // doc is not data yet!
   const renderCard = (doc) => {
     const data = doc.data();
     console.log("Item is " + data.email);
@@ -64,46 +71,104 @@ export default ({navigation}) => {
 
   
   const { user } = useContext(UserContext);
-
-
-  const computeDate = (date) => {
-    let value = 0;
-    for (let index = 0; index < date.length; index++) {
-      if(date[index]) value += 1;   
-    }
-    return value;
-  }
-  let index = 0;
-  const [buddies, setBuddies] = useState(null);
+  const [swipedAll, setSwipedAll] = useState(false);
+  const [buddies, setBuddies] = useState(null);   // array of potential buddy DOCUMENTS
 
   useEffect(() => {
     getAllPotentialBuddies(user)
       .then(docArray => setBuddies(docArray))
   }, []);
 
+  function handleSwipeLeft(cardIndex) {
+    const other = buddies[cardIndex];
+    Match.addPassUser(user.uid, other.id).then(result => console.log(result));
+  }
+
+  async function handleSwipeRight(cardIndex) {
+    const other = buddies[cardIndex];
+    const otherData = other.data();
+    if (!otherData.like.includes(user.uid)) {
+      Match.addLikeUser(user.uid, other.id).then(result => console.log(result));
+    } else {    // mutual like
+      await Promise.all([
+        Match.removeLikeUser(other.id, user.uid),
+        Match.addBuddy(user.uid, other.id),
+        Match.addBuddy(other.id, user.uid)
+      ]);
+      // create chat with new buddy
+      const chatCreated = await createChatBetween(user, other);
+      if (chatCreated) {
+        showMessage({
+          message: `It's a match!\nYou and ${otherData.name} are now buddies 🎉 `,
+          type: "success",
+          duration: 4200,
+          floating: true,
+          icon: "auto"
+        });
+      } else {
+        throw new Error("Failed to create new chat");
+      }
+    }
+  }
+
+  const createChatBetween = async (user, newBuddy) => {
+    const [u1, u2] = [user.uid, newBuddy.id];
+    const [n1, n2] = [user.displayName, newBuddy.data().name];
+    let chatID, chatName;
+    if (u1 < u2) {
+      chatID = `${u1}_${u2}`;
+      chatName = `${n1}_${n2}`;
+    } else {
+      chatID = `${u2}_${u1}`;
+      chatName = `${n2}_${n1}`;
+    }
+    const announcement = {    // system message
+      text: "You matched with a new buddy!",
+      createdAt: new Date().getTime(),
+      system: true,
+    };
+    try {
+      // set last message as the system message
+      await firebase.firestore().collection("chats")
+        .doc(chatID)
+        .set({
+          lastMessage: {
+            ...announcement,
+            // user: { _id: newBuddy.id, name: newBuddy.name }
+          },
+          members: [u1, u2],
+          name: chatName
+        });
+      // initialize message history with the system message
+      await firebase.firestore().collection("chats")
+        .doc(chatID)
+        .collection("messages")
+        .add(announcement);
+      return true;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   return (
     <Screen style={styles.container}>
-      {buddies == null ? <ActivityIndicator/> :
-        <Swiper
+      {buddies == null ? <ActivityIndicator/>
+        : (buddies.length === 0 || swipedAll)
+          ? <Image style={{width: 250, height: 270}} source={require("../../assets/business_cat.png")}/>
+          : <Swiper
           verticalSwipe={false}
             cards={buddies}
             renderCard={renderCard}
-            onSwiped={(cardIndex) => {console.log(cardIndex)}}
-            onSwipedAll={() => {index += 10;}}
+            // onSwipedLeft={handleSwipeLeft}
+            onSwipedRight={handleSwipeRight}
+            onSwipedAll={() => setSwipedAll(true)}
             cardIndex={0}
             backgroundColor={'white'}
             stackSize= {3}
         >
         </Swiper>
       }
-      {/* <Avatar.Image size={90} source={require('../../assets/ava1.png')} />
-        <Text style={{paddingHorizontal: 10, fontSize: 25}}>User</Text>
-        <View style={{alignItems:"baseline"}}>
-        <Text>Say something nice ...</Text>
-       
-        <Text>Preferred Place and Time</Text>
-        </View> */}
-       
+
     </Screen>
   ) 
     
