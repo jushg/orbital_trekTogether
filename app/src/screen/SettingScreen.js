@@ -35,14 +35,14 @@ export default ({navigation}) => {
       <Text>{Auth.getCurrentUser().displayName}</Text>
       <Button>Change Your Profile</Button>
       <Checkbox.Item
-        label="Item 1"
+        label="Under Development"
         status={checked1 ? 'checked' : 'unchecked'}
         onPress={() => {
           setChecked1(!checked1);
         }}
       />
       <Checkbox.Item
-        label="Item 2"
+        label="Under Development"
         status={checked2 ? 'checked' : 'unchecked'}
         onPress={() => {
           setChecked2(!checked2);

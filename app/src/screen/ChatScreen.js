@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { GiftedChat, Bubble, Send, SystemMessage } from 'react-native-gifted-chat';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet} from 'react-native';
 import { ActivityIndicator, IconButton } from 'react-native-paper';
 
 import firebase from "../../utils/firebase";
@@ -117,7 +117,7 @@ export default ({ route }) => {
   const renderLoading = () => {
     return (
       <Screen style={styles.loadingContainer}>
-        <ActivityIndicator size='large'/>
+        <ActivityIndicator  size="large" color="black"/>
       </Screen>
     );
   }
@@ -151,7 +151,7 @@ export default ({ route }) => {
   }
 
   return (
-    <GiftedChat
+      <GiftedChat
       messages={messages}
       onSend={handleSend}
       user={{ _id: user.uid, name: user.displayName, avatar: user.photoURL }}

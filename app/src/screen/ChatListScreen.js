@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useState} from 'react';
 import { StyleSheet, Text, FlatList, View } from 'react-native'
-import {List, Avatar, ActivityIndicator, Divider, Searchbar, Menu, IconButton} from "react-native-paper";
+import {List, Avatar, ActivityIndicator, Divider, Searchbar, } from "react-native-paper";
 import { CommonActions } from '@react-navigation/native'
 
 // https://docs.expo.io/versions/latest/sdk/permissions/
@@ -19,11 +19,7 @@ export default ({navigation}) => {
   
   const [searchQuery, setSearchQuery] = useState(''); 
   const onChangeSearch = query => setSearchQuery(query); 
-  const [visible, setVisible] = useState(false);
-  const openMenu = () => setVisible(true);
-  const closeMenu = () => setVisible(false);
-  const sortNewest = () => {console.log("sortNewest")};
-  const sortOldest = () => {};
+  
 
   // const getAllChats = async (user) => {
   //   const querySnapshot = await firebase.firestore().collection("chats")
@@ -113,7 +109,10 @@ export default ({navigation}) => {
         ? otherUsername
         : "You")
       + `: ${item.lastMessage.text}`;
+    const time = new Intl.DateTimeFormat('en-US',{timeStyle:"short"}).format(item.lastMessage.createAt);
+    console.log(time);
     return (
+
       <List.Item
         title={otherUsername}
         description={lastMessage}
@@ -131,66 +130,65 @@ export default ({navigation}) => {
         titleNumberOfLines={1}
         descriptionNumberOfLines={1}
       />
+
     )
   };
 
   if (chats == null || myBuddies == null) {
-    return <Screen style={styles.container}>
-      <ActivityIndicator/>
-    </Screen>
+    return (
+      <Screen style={styles.loadingContainer}>
+        <ActivityIndicator  size="large" color="black"/>
+      </Screen>
+    )
+    
   }
-
-  return (
-    <Screen style={styles.container}>
-      {/* <Text style={{...styles.title, paddingBottom: 10}}>
-        Your Buddies
-      </Text>
-      <View  >
-        <FlatList
-          data={Object.values(myBuddies)}
-          renderItem={renderBuddy}
-          keyExtractor={item => item.buddyID}
-          horizontal={true}
+  else {
+    return (
+      <Screen style={styles.container}>
+        {/* <Text style={{...styles.title, paddingBottom: 10}}>
+          Your Buddies
+        </Text>
+        <View  >
+          <FlatList
+            data={Object.values(myBuddies)}
+            renderItem={renderBuddy}
+            keyExtractor={item => item.buddyID}
+            horizontal={true}
+          />
+        </View> */}
+        
+        <Headline style={styles.title}>
+          Messages
+        </Headline>
+        <View style={{flexDirection: 'row', justifyContent:"space-between"}}>
+        <Searchbar
+            placeholder="Search buddies"
+            onChangeText={onChangeSearch}
+            value={searchQuery}
+            style={styles.searchBar}
         />
-      </View> */}
-      
-      <Headline style={styles.title}>
-        Messages
-      </Headline>
-      <View style={{flexDirection: 'row', justifyContent:"space-between"}}>
-      <Searchbar
-          placeholder="Search buddies"
-          onChangeText={onChangeSearch}
-          value={searchQuery}
-          style={styles.searchBar}
-      />
-        <Menu
-          visible={visible}
-          onDismiss={closeMenu}
-          anchor={<IconButton onPress={openMenu} icon="sort-variant"/>}
-          style={{paddingTop: 30}}>
-          <Menu.Item onPress={sortNewest} title="Newest" />
-          <Menu.Item onPress={sortOldest} title="Oldest" />
-        </Menu>
-      </View> 
-      <View style={{flex: 1}}>
-        <FlatList
-          data={chats}
-          keyExtractor={item => item._id}
-          ItemSeparatorComponent={ () => <Divider/> }
-          renderItem={renderChat}
-        />
-      </View>
-
-    </Screen>
-
-  )
+          
+        </View> 
+        <View style={{flex: 1}}>
+          <FlatList
+            data={chats}
+            keyExtractor={item => item._id}
+            ItemSeparatorComponent={ () => <Divider/> }
+            renderItem={renderChat}
+          />
+        </View>
+      </Screen>
+  
+    )
+  }
+  
 }
 
 const styles = StyleSheet.create({
   title: {
     // fontSize: 20,
-    paddingTop: 10,
+    paddingTop:5,
+    paddingBottom:10,
     color:"#05668D"
   },
   container: {
@@ -199,10 +197,15 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     paddingHorizontal: 20
   },
+  loadingContainer:{
+    flex: 1,
+    alignItems:"center",
+    justifyContent:"center"
+  },
   searchBar: {
     marginBottom: 5,
     borderRadius:20,
     // backgroundColor:"lightblue"
-    width:"80%"
+    width:"100%"
   }
 });

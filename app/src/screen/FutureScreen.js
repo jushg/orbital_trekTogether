@@ -6,6 +6,7 @@ import {CommonActions} from "@react-navigation/native";
 
 import Screen from "../component/screen"
 
+
 export default ({navigation}) => {
   
   const renderTrip = ({item}) => {
@@ -28,6 +29,8 @@ export default ({navigation}) => {
   const closeMenu = () => setVisible(false);
   const sortNewest = () => {console.log("sortNewest")};
   const sortOldest = () => {};
+
+  
   return (
     
 

@@ -21,9 +21,9 @@ export default () => {
   const uid = userApi.user.uid;
 
   const handleAddTrip = () => {
-    let time = date.toLocaleDateString(undefined, options);
+    // let time = date.toLocaleDateString(undefined, options);
     addTrip(
-      {uid,partner,notes,place, date: time},
+      {uid,partner,notes,place, date},
       () => {console.log("Add trip successfully")},
       (err) =>{console.error(err)} 
       )

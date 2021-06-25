@@ -26,3 +26,7 @@ export const addTrip =
     return onError(err);
   }
 };
+
+export const getAllTrip = (uid) => {
+  
+}
