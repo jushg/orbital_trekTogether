@@ -23,9 +23,9 @@ export default ({navigation}) => {
         {!data.photoURL && <Avatar.Image size={90} source={require("../../assets/pain.jpg")} />}
         
         <Headline>{data.name}, {data.age}</Headline>
-        {data.level == 1 && <Caption style={{fontSize:15}}>Beginner</Caption>}
-        {data.level == 2 && <Caption style={{fontSize:15}}>Intermediate</Caption>}
-        {data.level == 3 && <Caption style={{fontSize:15}}>Advanced</Caption>}
+        {data.level === 1 && <Caption style={{fontSize:15}}>Beginner</Caption>}
+        {data.level === 2 && <Caption style={{fontSize:15}}>Intermediate</Caption>}
+        {data.level === 3 && <Caption style={{fontSize:15}}>Advanced</Caption>}
         <View style={{alignItems:"baseline", alignSelf:"stretch"}}>
           <Paragraph>Some nice things to say about myself</Paragraph>
         </View>
@@ -39,7 +39,7 @@ export default ({navigation}) => {
           
             
           </View>
-          <View style={styles.verticleLine}></View>
+          <View style={styles.verticalLine}></View>
           <View style={{flex:1 , alignItems:"center"}}>
           <Subheading>{computeDate(data.date)} free day{computeDate(data.date) > 1 ? "s":" "}</Subheading>
             {data.date[0] && <Paragraph>Monday</Paragraph>}
@@ -63,7 +63,7 @@ export default ({navigation}) => {
   }
 
   
-  const { user, _ } = useContext(UserContext);
+  const { user } = useContext(UserContext);
 
 
   const computeDate = (date) => {
@@ -131,7 +131,7 @@ const styles = StyleSheet.create({
     backgroundColor: "aquamarine",
     padding:20
   },
-  verticleLine: {
+  verticalLine: {
     height: '100%',
     width: 1,
     backgroundColor: '#909090',

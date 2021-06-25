@@ -92,17 +92,22 @@ export default ({navigation}) => {
 
   function getChatName(itemID, itemName) {
     const x = itemID.split("-");
-    const s = itemName.split("-");
+    const s = itemName.split("_");
     return (x[0] !== user.uid)
       ? { otherID: x[0], otherUsername: s[0]}
       : { otherID: x[1], otherUsername: s[1]};
   }
   const renderChat = ({item}) => {
     const {otherID, otherUsername} = getChatName(item._id, item.name);
+    const lastMessage =
+      (item.lastMessage.user.name === otherUsername
+        ? otherUsername
+        : "You")
+      + `: ${item.lastMessage.text}`;
     return (
       <List.Item
         title={otherUsername}
-        description={item.lastMessage.text}
+        description={lastMessage}
         // left={props => <List.Icon {...props} icon="account"/>}
         left={(props) => {
           const buddyData = myBuddies[otherID];
