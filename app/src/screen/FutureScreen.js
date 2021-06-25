@@ -1,13 +1,10 @@
 import React, {useState} from 'react';
-import { List, Searchbar, Button, FAB, TextInput} from "react-native-paper";
+import { List, Searchbar, Button, FAB, IconButton, Menu} from "react-native-paper";
 import { StyleSheet, Text, View, FlatList } from 'react-native';
 import {CommonActions} from "@react-navigation/native";
 
 
 import Screen from "../component/screen"
-import AddScreen from "../component/modal"
-// import * as Auth from "../../api/auth"
-import { addTrip } from '../../utils/trip';
 
 export default ({navigation}) => {
   
@@ -23,95 +20,41 @@ export default ({navigation}) => {
       )
   }
 
-  // Use for add new trip
-  // const [modalVisible, setModalVisible] = useState(false);
-  // const [partner,setPartner] = useState("");
-  // const [place,setPlace] = useState("");
-  // const [date,setDate] = useState("")
-  // const [notes,setNotes] = useState("this is for testing")
-  
-  // const showModal = () => setModalVisible(true);
-  // const hideModal = () => setModalVisible(false);
-  // const handleAddTrip = () => {
-  //   addTrip(
-  //     {partner,notes,place,date},
-  //     () => {console.log("Add trip successfully")},
-  //     (err) =>{console.error(err)} 
-  //     )
-  // }
-  // Use to search for trip
-  const [searchQuery, setSearchQuery] = useState(''); 
-  const renderSearchBar = () => {
-    return (
-      <View style={{alignItems:"baseline"}}>
-        <Searchbar
-        placeholder="Search by date"
-        onChangeText={setSearchQuery}
-        value={searchQuery}
-        style={{marginBottom:10}}
-        />
-      </View>
-   
-    )
-  }
+  const [searchQuery, setSearchQuery] = useState(''); //Example
+  const onChangeSearch = query => setSearchQuery(query); // Example
+
+  const [visible, setVisible] = useState(false);
+  const openMenu = () => setVisible(true);
+  const closeMenu = () => setVisible(false);
+  const sortNewest = () => {console.log("sortNewest")};
+  const sortOldest = () => {};
   return (
     
 
     <Screen style={styles.container}>
-      {/* 
-      <Text style={{fontSize: 20, color:"#05668D", paddingTop: 10,}}>Upcoming trips</Text> */}
-      
-      {/* <AddScreen visible={modalVisible}  dismissable={false} onDismiss={hideModal}>
-        <View style={styles.modal}>
-          <Text>Add a new trip here</Text>
-          <TextInput
-            label="Partner (optional)"
-            placeholder="John Doe"
-            value={partner}
-            autoCapitalize="words"
-            onChangeText={setPartner}
-            left={<TextInput.Icon name="human-male"/>}
-            style={{marginBottom:10, width:"95%"}}
-          />
-          <TextInput
-            label="Place"
-            placeholder="Somewhere nice ..."
-            value={place}
-            autoCapitalize="words"
-            onChangeText={setPlace}
-            left={<TextInput.Icon name="human-male"/>}
-            style={{marginBottom:10, width:"95%"}}
-          />
-          <TextInput
-            label="Date"
-            placeholder="Some sunny day"
-            value={date}
-            autoCapitalize="words"
-            onChangeText={setDate}
-            left={<TextInput.Icon name="human-male"/>}
-            style={{marginBottom:10, width:"95%"}}
-          />
-          <View style={{ flexDirection: "row", justifyContent: "space-around"}}>
-            <Button 
-            style={styles.button}
-            onPress={handleAddTrip}
-            >Add
-            </Button>
-            <Button style={styles.button} 
-            onPress= {hideModal}
-            >Cancel
-            </Button>
-          </View>
-        </View>
-      </AddScreen>   */}
     
+    <View style={{flexDirection: 'row', justifyContent:"space-between"}}>
+      <Searchbar
+          placeholder="Search Trip"
+          onChangeText={onChangeSearch}
+          value={searchQuery}
+          style={styles.searchBar}
+      />
+        <Menu
+          visible={visible}
+          onDismiss={closeMenu}
+          anchor={<IconButton onPress={openMenu} icon="sort-variant"/>}
+          style={{paddingTop: 30}}>
+          <Menu.Item onPress={sortNewest} title="Newest" />
+          <Menu.Item onPress={sortOldest} title="Oldest" />
+        </Menu>
+      </View> 
       
       <View style={{flex:1}}>
           <FlatList
             data={['1', '2', '3', '4', '5', '6', '7',"8"]}
             renderItem={renderTrip}
             keyExtractor={item => item}
-            ListHeaderComponent={renderSearchBar}
           />
           <FAB
             style={styles.fab}
@@ -142,7 +85,7 @@ const styles = StyleSheet.create({
   },
   fab: {
     position: 'absolute',
-    // backgroundColor:"lightblue",
+    backgroundColor:"teal",
     margin: 16,
     right: 0,
     bottom: 0,
@@ -153,10 +96,10 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     paddingHorizontal: 10
   },
-  modal:{
-  position:"relative",
-  backgroundColor: '#FFF',
-  justifyContent: 'center',
-  alignItems: 'center',
-}
+  searchBar: {
+    marginBottom: 5,
+    borderRadius:20,
+    // backgroundColor:"lightblue"
+    width:"80%"
+  }
 });

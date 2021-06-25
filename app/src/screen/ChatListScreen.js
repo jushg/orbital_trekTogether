@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useState} from 'react';
 import { StyleSheet, Text, FlatList, View } from 'react-native'
-import {List, Avatar, ActivityIndicator, Divider} from "react-native-paper";
+import {List, Avatar, ActivityIndicator, Divider, Searchbar, Menu, IconButton} from "react-native-paper";
 import { CommonActions } from '@react-navigation/native'
 
 // https://docs.expo.io/versions/latest/sdk/permissions/
@@ -10,11 +10,20 @@ import { CommonActions } from '@react-navigation/native'
 import Screen from "../component/screen"
 import firebase from "../../utils/firebase";
 import {UserContext} from "../feature/auth";
+import { Headline } from 'react-native-paper';
 
 export default ({navigation}) => {
   const {user} = useContext(UserContext);
   const [chats, setChats] = useState(null);
   const [myBuddies, setMyBuddies] = useState(null);
+  
+  const [searchQuery, setSearchQuery] = useState(''); 
+  const onChangeSearch = query => setSearchQuery(query); 
+  const [visible, setVisible] = useState(false);
+  const openMenu = () => setVisible(true);
+  const closeMenu = () => setVisible(false);
+  const sortNewest = () => {console.log("sortNewest")};
+  const sortOldest = () => {};
 
   // const getAllChats = async (user) => {
   //   const querySnapshot = await firebase.firestore().collection("chats")
@@ -81,14 +90,14 @@ export default ({navigation}) => {
     return () => unsubscribeBuddiesListener();
   }, []);
 
-  const renderBuddy = ({item}) => {
-    return (
-      <View style={{paddingHorizontal: 5}}>
-        {/*<Avatar.Image size={80} source={require('../../assets/ava6.jpg')} />*/}
-        <Avatar.Image size={80} source={{ uri: item.photoURL }} />
-      </View>
-    )
-  }
+  // const renderBuddy = ({item}) => {
+  //   return (
+  //     <View style={{paddingHorizontal: 5}}>
+  //       {/*<Avatar.Image size={80} source={require('../../assets/ava6.jpg')} />*/}
+  //       <Avatar.Image size={80} source={{ uri: item.photoURL }} />
+  //     </View>
+  //   )
+  // }
 
   function getChatName(itemID, itemName) {
     const x = itemID.split("-");
@@ -133,7 +142,7 @@ export default ({navigation}) => {
 
   return (
     <Screen style={styles.container}>
-      <Text style={{...styles.title, paddingBottom: 10}}>
+      {/* <Text style={{...styles.title, paddingBottom: 10}}>
         Your Buddies
       </Text>
       <View  >
@@ -143,11 +152,27 @@ export default ({navigation}) => {
           keyExtractor={item => item.buddyID}
           horizontal={true}
         />
-      </View>
-
-      <Text style={styles.title}>
+      </View> */}
+      
+      <Headline style={styles.title}>
         Messages
-      </Text>
+      </Headline>
+      <View style={{flexDirection: 'row', justifyContent:"space-between"}}>
+      <Searchbar
+          placeholder="Search buddies"
+          onChangeText={onChangeSearch}
+          value={searchQuery}
+          style={styles.searchBar}
+      />
+        <Menu
+          visible={visible}
+          onDismiss={closeMenu}
+          anchor={<IconButton onPress={openMenu} icon="sort-variant"/>}
+          style={{paddingTop: 30}}>
+          <Menu.Item onPress={sortNewest} title="Newest" />
+          <Menu.Item onPress={sortOldest} title="Oldest" />
+        </Menu>
+      </View> 
       <View style={{flex: 1}}>
         <FlatList
           data={chats}
@@ -164,7 +189,7 @@ export default ({navigation}) => {
 
 const styles = StyleSheet.create({
   title: {
-    fontSize: 20,
+    // fontSize: 20,
     paddingTop: 10,
     color:"#05668D"
   },
@@ -172,6 +197,12 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection:"column",
     justifyContent: 'flex-start',
-    paddingHorizontal: 10
+    paddingHorizontal: 20
   },
+  searchBar: {
+    marginBottom: 5,
+    borderRadius:20,
+    // backgroundColor:"lightblue"
+    width:"80%"
+  }
 });

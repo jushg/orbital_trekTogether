@@ -8,7 +8,7 @@ export default header = ({navigation, screenname}) => {
     return (
         <Screen disableTop>
             <View style={{flexDirection: "row", justifyContent: "space-between"}}>
-        <Headline>Dashboard</Headline>
+        <Headline style={{color:"teal"}}>Dashboard</Headline>
         <IconButton
           onPress={() => navigation.navigate(screenname)}
           icon="cog"

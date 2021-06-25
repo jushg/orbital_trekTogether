@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import {StyleSheet, Text, View, FlatList } from 'react-native';
-import { Button, List, Menu, Searchbar} from "react-native-paper";
+import { Button, List, Menu, Searchbar, IconButton, FAB} from "react-native-paper";
+import {CommonActions} from "@react-navigation/native";
+
 
 // https://callstack.github.io/react-native-paper/menu.html
 
@@ -30,23 +32,23 @@ export default ({navigation}) => {
 
   return (
     <Screen style={styles.container}>
-      <View style={{alignItems:"center"}}>
-        <Searchbar
+      
+        
+      <View style={{flexDirection: 'row', justifyContent:"space-between"}}>
+      <Searchbar
           placeholder="Search Trip"
           onChangeText={onChangeSearch}
           value={searchQuery}
-          style={{marginBottom:10, width:"95%"}}
-        />
-      </View>
-      <View style={{flexDirection: 'row', justifyContent:"flex-end"}}>
-            <Menu
-              visible={visible}
-              onDismiss={closeMenu}
-              anchor={<Button onPress={openMenu}>Order by</Button>}
-              style={{paddingTop: 30}}>
-              <Menu.Item onPress={sortNewest} title="Newest" />
-              <Menu.Item onPress={sortOldest} title="Oldest" />
-            </Menu>
+          style={styles.searchBar}
+      />
+        <Menu
+          visible={visible}
+          onDismiss={closeMenu}
+          anchor={<IconButton onPress={openMenu} icon="sort-variant"/>}
+          style={{paddingTop: 30}}>
+          <Menu.Item onPress={sortNewest} title="Newest" />
+          <Menu.Item onPress={sortOldest} title="Oldest" />
+        </Menu>
       </View>  
   
       <View style={{flex: 1}}>
@@ -55,6 +57,14 @@ export default ({navigation}) => {
         renderItem={renderList}
         keyExtractor={item => item}
         />
+        <FAB
+            style={styles.fab}
+            icon="plus"
+            onPress={() =>  navigation.dispatch(CommonActions.navigate({
+              name: 'Add Trip',            
+              })
+            )}
+          /> 
       </View>
     </Screen>
   )
@@ -70,6 +80,20 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection:"column",
-    justifyContent: 'flex-start'
+    justifyContent: 'flex-start',
+    paddingHorizontal: 10
   },
+  fab: {
+    position: 'absolute',
+    backgroundColor:"teal",
+    margin: 16,
+    right: 0,
+    bottom: 0,
+  },
+  searchBar: {
+    marginBottom: 10,
+    borderRadius:20,
+    // backgroundColor:"lightblue"
+    width:"80%"
+  }
 });
