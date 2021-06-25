@@ -16,9 +16,9 @@ export default ({navigation}) => {
   const {user} = useContext(UserContext);
   const [chats, setChats] = useState(null);
   const [myBuddies, setMyBuddies] = useState(null);
-  
-  const [searchQuery, setSearchQuery] = useState(''); 
-  const onChangeSearch = query => setSearchQuery(query); 
+
+  const [searchQuery, setSearchQuery] = useState('');
+  const onChangeSearch = query => setSearchQuery(query);
   const [visible, setVisible] = useState(false);
   const openMenu = () => setVisible(true);
   const closeMenu = () => setVisible(false);
@@ -90,29 +90,33 @@ export default ({navigation}) => {
     return () => unsubscribeBuddiesListener();
   }, []);
 
-  // const renderBuddy = ({item}) => {
-  //   return (
-  //     <View style={{paddingHorizontal: 5}}>
-  //       {/*<Avatar.Image size={80} source={require('../../assets/ava6.jpg')} />*/}
-  //       <Avatar.Image size={80} source={{ uri: item.photoURL }} />
-  //     </View>
-  //   )
-  // }
+  const renderBuddy = ({item}) => {
+    return (
+      <View style={{paddingHorizontal: 5}}>
+        {/*<Avatar.Image size={80} source={require('../../assets/ava6.jpg')} />*/}
+        <Avatar.Image size={80} source={{ uri: item.photoURL }} />
+      </View>
+    )
+  }
 
   function getChatName(itemID, itemName) {
-    const x = itemID.split("-");
+    const x = itemID.split("_");
     const s = itemName.split("_");
     return (x[0] !== user.uid)
       ? { otherID: x[0], otherUsername: s[0]}
       : { otherID: x[1], otherUsername: s[1]};
   }
   const renderChat = ({item}) => {
-    const {otherID, otherUsername} = getChatName(item._id, item.name);
-    const lastMessage =
+    let {otherID, otherUsername} = getChatName(item._id, item.name);
+    if (item.lastMessage.system) otherUsername += " 👋";   // new buddy? Add an emoji :)
+    let lastMessage;
+    if (item.lastMessage.system) lastMessage = item.lastMessage.text;  // system message, no sender
+    else lastMessage =
       (item.lastMessage.user.name === otherUsername
         ? otherUsername
         : "You")
       + `: ${item.lastMessage.text}`;
+
     return (
       <List.Item
         title={otherUsername}
@@ -120,7 +124,17 @@ export default ({navigation}) => {
         // left={props => <List.Icon {...props} icon="account"/>}
         left={(props) => {
           const buddyData = myBuddies[otherID];
+          // console.log(myBuddies)
+          // console.log(otherID)
+          // console.log(buddyData);
+
           return <Avatar.Image {...props} size={70} source={{uri: buddyData.photoURL}}/>;
+          // if (buddyData.photoURL)
+          //   return <Avatar.Image {...props} size={70} source={{uri: buddyData.photoURL}}/>;
+          // else
+          // return <Avatar.Image {...props} size={70} source={
+          //   require("../../assets/business_cat.png")
+          // }/>;
         }}
         onPress={() => navigation.dispatch(CommonActions.navigate({
             name: 'Chat',
@@ -130,6 +144,8 @@ export default ({navigation}) => {
         )}
         titleNumberOfLines={1}
         descriptionNumberOfLines={1}
+        titleStyle={item.lastMessage.system ? {fontWeight:'bold', color:'black'} : {}}
+        descriptionStyle={item.lastMessage.system ? {fontWeight:'bold', color:'teal'} : {}}
       />
     )
   };
@@ -142,7 +158,7 @@ export default ({navigation}) => {
 
   return (
     <Screen style={styles.container}>
-      {/* <Text style={{...styles.title, paddingBottom: 10}}>
+      {/*<Text style={{...styles.title, paddingBottom: 10}}>
         Your Buddies
       </Text>
       <View  >
@@ -152,8 +168,13 @@ export default ({navigation}) => {
           keyExtractor={item => item.buddyID}
           horizontal={true}
         />
+      </View>
+
+      <Text style={styles.title}>
+        Messages
+      </Text>
       </View> */}
-      
+
       <Headline style={styles.title}>
         Messages
       </Headline>
@@ -172,7 +193,7 @@ export default ({navigation}) => {
           <Menu.Item onPress={sortNewest} title="Newest" />
           <Menu.Item onPress={sortOldest} title="Oldest" />
         </Menu>
-      </View> 
+      </View>
       <View style={{flex: 1}}>
         <FlatList
           data={chats}

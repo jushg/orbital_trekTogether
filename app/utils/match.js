@@ -1,12 +1,13 @@
-import firebase from "./firebase";
+import firebaseApp from "./firebase";
+import firebase from "firebase/app";
 
-// pull all user data from firebase (this file)
+// pull all user data from firebaseApp (this file)
 // sort with a comparator (using a formula) (computeBuddy.js)
 // partition + shuffle (computeBuddy.js)
 // serve data to swiper (swiper import computeBuddy.js)
 
 // We only work with userID here, which is a unique string identifying a user
-const db = firebase.firestore().collection("users");
+const db = firebaseApp.firestore().collection("users");
 
 // returns a QuerySnapshot (an array of documents (not data yet!))
 export const getAllUsers = async () => {
@@ -36,23 +37,39 @@ export const getUserData = async (user) => {
 };
 
 export const addLikeUser = async (user, newLike) => {
-  await db.doc(user).update({
-    like: firebase.firestore.FieldValue.arrayUnion(newLike)
-  })
+  try {
+    await db.doc(user).update({
+      like: firebase.firestore.FieldValue.arrayUnion(newLike)
+    });
+    return "added Like user";
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 export const removeLikeUser = async (user, oldLike) => {
-  await db.doc(user).update({
-    like: firebase.firestore.FieldValue.arrayRemove(oldLike)
-  })
+  try {
+    await db.doc(user).update({
+      like: firebase.firestore.FieldValue.arrayRemove(oldLike)
+    });
+    return "removed Like user";
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 export const addPassUser = async (user, newPass) => {
-  await db.doc(user).update({
-    pass: firebase.firestore.FieldValue.arrayUnion(newPass)
-  })
+  try {
+    await db.doc(user).update({
+      pass: firebase.firestore.FieldValue.arrayUnion(newPass)
+    });
+    return "added Pass user";
+  } catch (error) {
+    console.log(error);
+  }
 };
 
+// When to use this?
 export const removePassUser = async (user, oldPass) => {
   await db.doc(user).update({
     pass: firebase.firestore.FieldValue.arrayRemove(oldPass)
@@ -60,9 +77,14 @@ export const removePassUser = async (user, oldPass) => {
 };
 
 export const addBuddy = async (user, newBuddy) => {
-  await db.doc(user).update({
-    buddies: firebase.firestore.FieldValue.arrayUnion(newBuddy)
-  })
+  try {
+    await db.doc(user).update({
+      buddies: firebase.firestore.FieldValue.arrayUnion(newBuddy)
+    });
+    return "added Buddy";
+  } catch (error) {
+    console.log(error)
+  }
 };
 
 export const removeBuddy = async (user, oldBuddy) => {
