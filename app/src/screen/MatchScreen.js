@@ -7,7 +7,7 @@ import { showMessage } from "react-native-flash-message";
 import Screen from "../component/screen"
 import { getAllPotentialBuddies } from "../../utils/computeBuddy";
 import * as Match from '../../utils/match';
-import {UserContext} from "../feature/auth";
+import {UserContext} from "../../utils/context";
 import firebase from "../../utils/firebase";
 
 import colorConst from '../constant/color';

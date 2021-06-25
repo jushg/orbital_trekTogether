@@ -27,7 +27,7 @@ import ChatScreen from './screen/ChatScreen';
 
 import * as Auth from "../utils/auth"
 import {DashboardHeader, MessengerButtonHeader} from "./component/header"
-import { UserContext } from './feature/auth';
+import { UserContext } from '../utils/context';
 import colorConst from './constant/color';
 import { IconButton } from 'react-native-paper';
 

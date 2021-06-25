@@ -5,7 +5,7 @@ import { ActivityIndicator, IconButton } from 'react-native-paper';
 
 import firebase from "../../utils/firebase";
 import Screen from "../component/screen"
-import {UserContext} from "../feature/auth";
+import {UserContext} from "../../utils/context";
 
 // https://github.com/amandeepmittal/react-native-examples
 
@@ -110,6 +110,7 @@ export default ({ route }) => {
           },
           left: { color: 'white' }
         }}
+        // tickStyle={{ color: props.currentMessage.sent ? '#34B7F1' : '#999' }}
       />
     );
   }
@@ -151,11 +152,12 @@ export default ({ route }) => {
   }
 
   return (
-      <GiftedChat
+    <GiftedChat
       messages={messages}
       onSend={handleSend}
       user={{ _id: user.uid, name: user.displayName, avatar: user.photoURL }}
       alwaysShowSend
+      // showUserAvatar
       scrollToBottom
       renderBubble={renderBubble}
       renderLoading={renderLoading}

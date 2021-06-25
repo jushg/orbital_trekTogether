@@ -1,6 +1,6 @@
 import firebase from "firebase";
 import {useContext} from "react";
-import {UserContext} from "../src/feature/auth";
+import {UserContext} from "./context";
 
 const db = firebase.firestore();
 

@@ -4,7 +4,7 @@ import { StyleSheet,Text } from 'react-native'
 
 import Screen from "../component/screen"
 import * as Auth from "../../utils/auth"
-import {UserContext} from "../feature/auth";
+import {UserContext} from "../../utils/context";
 
 //https://callstack.github.io/react-native-paper/checkbox.html
 //https://callstack.github.io/react-native-paper/switch.html

@@ -5,7 +5,7 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 
 import Screen from "../component/screen"
 import { addTrip } from '../../utils/trip';
-import { UserContext } from '../feature/auth';
+import { UserContext } from '../../utils/context';
 
 export default () => {
   

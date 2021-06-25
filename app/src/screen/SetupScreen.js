@@ -7,7 +7,7 @@ import * as ImagePicker from "expo-image-picker";
 
 import Screen from "../component/screen"
 import * as Setup from "../../utils/setup";
-import {UserContext} from "../feature/auth"
+import {UserContext} from "../../utils/context"
 
 //This screen is use for setup user personal info
 //https://callstack.github.io/react-native-paper/chip.html

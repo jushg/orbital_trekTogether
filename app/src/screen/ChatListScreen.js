@@ -9,7 +9,7 @@ import { CommonActions } from '@react-navigation/native'
 
 import Screen from "../component/screen"
 import firebase from "../../utils/firebase";
-import {UserContext} from "../feature/auth";
+import {UserContext} from "../../utils/context";
 import { Headline } from 'react-native-paper';
 
 export default ({navigation}) => {
@@ -120,17 +120,7 @@ export default ({navigation}) => {
         // left={props => <List.Icon {...props} icon="account"/>}
         left={(props) => {
           const buddyData = myBuddies[otherID];
-          // console.log(myBuddies)
-          // console.log(otherID)
-          // console.log(buddyData);
-
           return <Avatar.Image {...props} size={70} source={{uri: buddyData.photoURL}}/>;
-          // if (buddyData.photoURL)
-          //   return <Avatar.Image {...props} size={70} source={{uri: buddyData.photoURL}}/>;
-          // else
-          // return <Avatar.Image {...props} size={70} source={
-          //   require("../../assets/business_cat.png")
-          // }/>;
         }}
         onPress={() => navigation.dispatch(CommonActions.navigate({
             name: 'Chat',
