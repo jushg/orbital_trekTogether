@@ -8,7 +8,7 @@ import FlashMessage from "react-native-flash-message";
 import {AuthScreenStack, DashboardScreenTab, MainScreenStack} from "./src/navigation"
 import TestScreen from "./src/screen/AddTripScreen"
 
-
+import colorConstant from './src/constant/color';
 
 const CombinedDefaultTheme = {
   ...PaperDefaultTheme,
@@ -16,6 +16,11 @@ const CombinedDefaultTheme = {
   colors: {
     ...PaperDefaultTheme.colors,
     ...NavigationDefaultTheme.colors,
+    primary: colorConstant.primary,
+    accent:  colorConstant.accent,
+    background: colorConstant.background,
+    card: colorConstant.card,
+    text: colorConstant.text
   },
 };
 

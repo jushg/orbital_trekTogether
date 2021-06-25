@@ -86,7 +86,6 @@ const styles = StyleSheet.create({
     fontSize: 30,
     paddingTop: 20,
     paddingBottom: 30,
-    color:"#05668D"
   },
   signupBtn: {
     width:"35%",
@@ -99,7 +98,6 @@ const styles = StyleSheet.create({
   container: {
     flex:1,
     flexDirection:"column",
-    backgroundColor:"white",
     justifyContent:"flex-start"
   },
 });

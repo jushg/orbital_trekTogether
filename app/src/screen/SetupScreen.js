@@ -117,7 +117,7 @@ export default ({navigation}) => {
           onPress={() => setLevel('Advanced')}
         /> */}
           <RadioButton.Group onValueChange={newLevel => setLevel(newLevel)} value={level}>
-            <RadioButton.Item label="Beginner" value="Beginner" color="lightblue" />
+            <RadioButton.Item label="Beginner" value="Beginner" color="aqua" />
             <RadioButton.Item label="Intermediate" value="Intermediate" color="blue" />
             <RadioButton.Item label="Advanced" value="Advanced" color="darkblue"/>
           </RadioButton.Group>

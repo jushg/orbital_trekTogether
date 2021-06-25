@@ -101,24 +101,7 @@ export default ({ navigation }) => {
           </Pressable>
         </View>
           </View>  
-
-      {/* <Text style={styles.otherLogin}>- Or log in with -</Text>
-        <View style= {{borderWidth: 5, borderColor: "red",flexDirection:"row", justifyContent:"center"}}>
-          <Button 
-            mode="contained" 
-            //color="blue"
-            compact="true"
-            >Facebook
-            </Button> 
-          <Text>  </Text>
-          <Button 
-            mode="contained" 
-            //color="red"
-            compact="true"
-            >Google
-          </Button> 
-        </View> */} 
-              </ScrollView>
+      </ScrollView>
 
     </Screen>
   );
@@ -132,7 +115,6 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 40,
     paddingBottom: 30,
-    color:"#05668D"
   },
   loginBtn: {
     width:"35%",

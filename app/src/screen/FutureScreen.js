@@ -5,7 +5,7 @@ import {CommonActions} from "@react-navigation/native";
 
 
 import Screen from "../component/screen"
-
+import { DashboardFAB } from '../component/fab';
 
 export default ({navigation}) => {
   
@@ -34,9 +34,11 @@ export default ({navigation}) => {
   return (
     
 
-    <Screen style={styles.container}>
     
-    <View style={{flexDirection: 'row', justifyContent:"space-between"}}>
+    
+      
+  <View style={styles.container}>
+        {/* <View style={{flexDirection: 'row', justifyContent:"space-between"}}>
       <Searchbar
           placeholder="Search Trip"
           onChangeText={onChangeSearch}
@@ -51,24 +53,14 @@ export default ({navigation}) => {
           <Menu.Item onPress={sortNewest} title="Newest" />
           <Menu.Item onPress={sortOldest} title="Oldest" />
         </Menu>
-      </View> 
-      
-      <View style={{flex:1}}>
+      </View>  */}
           <FlatList
             data={['1', '2', '3', '4', '5', '6', '7',"8"]}
             renderItem={renderTrip}
             keyExtractor={item => item}
           />
-          <FAB
-            style={styles.fab}
-            icon="plus"
-            onPress={() =>  navigation.dispatch(CommonActions.navigate({
-              name: 'Add Trip',            
-              })
-            )}
-          /> 
-      </View>      
-    </Screen>
+          <DashboardFAB navigation={navigation} />
+  </View>      
   )
 }
 
@@ -76,7 +68,6 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 30,
     paddingTop: 0,
-    color:"#05668D"
   },
   button: {
     borderRadius:25,
@@ -85,13 +76,6 @@ const styles = StyleSheet.create({
     justifyContent:"center",
     marginTop:20,
    
-  },
-  fab: {
-    position: 'absolute',
-    backgroundColor:"teal",
-    margin: 16,
-    right: 0,
-    bottom: 0,
   },
   container: {
     flex: 1,
@@ -102,7 +86,6 @@ const styles = StyleSheet.create({
   searchBar: {
     marginBottom: 5,
     borderRadius:20,
-    // backgroundColor:"lightblue"
     width:"80%"
   }
 });

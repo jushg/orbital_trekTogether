@@ -5,6 +5,7 @@ import { CommonActions } from "@react-navigation/native";
 
 import Screen from "../component/screen"
 import { getCurrentUser } from '../../utils/auth';
+//To Do :Find a png img to replace this 
 
 export default ({navigation}) => {
   return (
@@ -32,7 +33,6 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 30,
     paddingTop: 0,
-    color:"#05668D"
   },
   button: {
     // width:"70%",

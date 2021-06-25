@@ -1,5 +1,5 @@
 import React, {useContext, useState} from 'react';
-import { Button, Checkbox, Avatar } from "react-native-paper"
+import { Button, Checkbox, Avatar, Headline } from "react-native-paper"
 import { StyleSheet,Text } from 'react-native'
 
 import Screen from "../component/screen"
@@ -11,7 +11,7 @@ import {UserContext} from "../feature/auth";
 //https://callstack.github.io/react-native-paper/toggle-button.html
 
 export default ({navigation}) => {
-  const [checked1, setChecked1] = useState(false) //example
+  const [checked1, setChecked1] = useState(true) 
   const [checked2, setChecked2] = useState(false) //example
 
   const handleLogout = () => {
@@ -27,7 +27,7 @@ export default ({navigation}) => {
 
   return (
     <Screen style={styles.container}>
-      <Text style={styles.title}>Setting Screen</Text>
+      <Headline >Setting Screen</Headline>
       <Avatar.Image
         size={90}
         source={{ uri: Auth.getCurrentUser().photoURL }}
@@ -41,13 +41,13 @@ export default ({navigation}) => {
           setChecked1(!checked1);
         }}
       />
-      <Checkbox.Item
+      {/* <Checkbox.Item
         label="Under Development"
         status={checked2 ? 'checked' : 'unchecked'}
         onPress={() => {
           setChecked2(!checked2);
         }}
-      />
+      /> */}
       <Button onPress={handleLogout} style={styles.button}>Log Out</Button>
     </Screen>
   )
@@ -57,7 +57,6 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 30,
     paddingTop: 30,
-    color:"#05668D"
   },
   button: {
     borderRadius:25,

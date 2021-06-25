@@ -3,6 +3,7 @@ import {StyleSheet, Text, View, FlatList } from 'react-native';
 import { Button, List, Menu, Searchbar, IconButton, FAB} from "react-native-paper";
 import {CommonActions} from "@react-navigation/native";
 
+import { DashboardFAB } from '../component/fab';
 
 // https://callstack.github.io/react-native-paper/menu.html
 
@@ -31,10 +32,12 @@ export default ({navigation}) => {
   }
 
   return (
-    <Screen style={styles.container}>
       
         
-      <View style={{flexDirection: 'row', justifyContent:"space-between"}}>
+     
+  
+      <View style={styles.container}>
+         {/* <View style={{flexDirection: 'row', justifyContent:"space-between"}}>
       <Searchbar
           placeholder="Search Trip"
           onChangeText={onChangeSearch}
@@ -49,24 +52,15 @@ export default ({navigation}) => {
           <Menu.Item onPress={sortNewest} title="Newest" />
           <Menu.Item onPress={sortOldest} title="Oldest" />
         </Menu>
-      </View>  
-  
-      <View style={{flex: 1}}>
+      </View>   */}
         <FlatList
         data={['1', '2', '3', '4', '5', '6', '7', '8', '9']}
         renderItem={renderList}
         keyExtractor={item => item}
         />
-        <FAB
-            style={styles.fab}
-            icon="plus"
-            onPress={() =>  navigation.dispatch(CommonActions.navigate({
-              name: 'Add Trip',            
-              })
-            )}
-          /> 
+        <DashboardFAB navigation={navigation} />
+        
       </View>
-    </Screen>
   )
 }
 
@@ -82,13 +76,6 @@ const styles = StyleSheet.create({
     flexDirection:"column",
     justifyContent: 'flex-start',
     paddingHorizontal: 10
-  },
-  fab: {
-    position: 'absolute',
-    backgroundColor:"teal",
-    margin: 16,
-    right: 0,
-    bottom: 0,
   },
   searchBar: {
     marginBottom: 10,

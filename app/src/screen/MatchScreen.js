@@ -10,6 +10,7 @@ import * as Match from '../../utils/match';
 import {UserContext} from "../feature/auth";
 import firebase from "../../utils/firebase";
 
+import colorConst from '../constant/color';
 export default ({navigation}) => {
 
   const computeDate = (date) => {
@@ -163,7 +164,7 @@ export default ({navigation}) => {
             onSwipedRight={handleSwipeRight}
             onSwipedAll={() => setSwipedAll(true)}
             cardIndex={0}
-            backgroundColor={'white'}
+            backgroundColor={colorConst.backgroundCard}
             stackSize= {3}
         >
         </Swiper>
@@ -177,7 +178,6 @@ export default ({navigation}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // backgroundColor: "#F5FCFF"
     justifyContent:"center",
     alignItems:"center"
   },
@@ -190,10 +190,10 @@ const styles = StyleSheet.create({
     flex: 1,
     borderRadius: 25,
     borderWidth: 2,
-    borderColor: "#E8E8E8",
+    // borderColor: "#E8E8E8",
     justifyContent: "space-around",
     alignItems:"center",
-    backgroundColor: "aquamarine",
+    backgroundColor: colorConst.background,
     padding:20
   },
   verticalLine: {

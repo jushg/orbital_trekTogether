@@ -26,8 +26,10 @@ import ChatListScreen from "./screen/ChatListScreen"
 import ChatScreen from './screen/ChatScreen';
 
 import * as Auth from "../utils/auth"
-import HeaderDashboard from "./component/header"
+import {DashboardHeader, MessengerButtonHeader} from "./component/header"
 import { UserContext } from './feature/auth';
+import colorConst from './constant/color';
+import { IconButton } from 'react-native-paper';
 
 const MainStack = createStackNavigator();
 
@@ -54,14 +56,15 @@ export const MainScreenStack = () => {
         ):(
           <>
             <MainStack.Screen name="Home" component = {HomeScreenTab} options={{headerShown:false}}/>
-            <MainStack.Screen name="Setting" component={SettingScreen}/>
-            <MainStack.Screen name="Add Trip" component={AddTripScreen}/>
+            <MainStack.Screen name="Setting" component={SettingScreen} options={{headerStyle: {backgroundColor: colorConst.primary }}} />
+            <MainStack.Screen name="Add Trip" component={AddTripScreen} options={{headerStyle: {backgroundColor: colorConst.primary }}}/>
             <MainStack.Screen 
             name="Chat" 
             component = {ChatScreen}
             options={({ navigation, route }) => ({
+              headerStyle: {backgroundColor: colorConst.primary },
               headerTitle: route.params.user,
-            })
+              headerRight: () => (<MessengerButtonHeader/>) })
             }
             />
           </>
@@ -79,7 +82,7 @@ export const AuthScreenStack = () => {
     <AuthStack.Navigator initialRouteName={"Login"} >
       <AuthStack.Screen name="Welcome" key = "welcome" component = {WelcomeScreen} options={{headerShown:false}}/>
       <AuthStack.Screen name="Login" key = "login" component = {LoginScreen} options={{headerShown:false}}/>
-      <AuthStack.Screen name="Sign Up" key = "signup" component = {SignupScreen}/>
+      <AuthStack.Screen name="Sign Up" key = "signup" component = {SignupScreen} options={{headerStyle: {backgroundColor: colorConst.primary }}}/>
       <AuthStack.Screen name="Setup" key = "setup" component = {SetupScreen} options={{headerShown:false}}/>
     </AuthStack.Navigator>
   )
@@ -89,7 +92,7 @@ const HomeTab = createMaterialBottomTabNavigator();
 
 export const HomeScreenTab = () => {
   return (
-    <HomeTab.Navigator initialRouteName="Home" >
+    <HomeTab.Navigator initialRouteName="Home">
       <HomeTab.Screen
         name="Home"
         component={DashboardScreenStack}
@@ -141,15 +144,15 @@ export const DashboardScreenStack = () => {
       component={DashboardScreenTab}
       options={({route, navigation}) => ({
         header: ({ scene, previous, navigation }) => {
-          const { options } = scene.descriptor;
-          const title =
-            options.headerTitle !== undefined
-              ? options.headerTitle
-              : options.title !== undefined
-              ? options.title
-              : scene.route.name;
+          // const { options } = scene.descriptor;
+          // const title =
+          //   options.headerTitle !== undefined
+          //     ? options.headerTitle
+          //     : options.title !== undefined
+          //     ? options.title
+          //     : scene.route.name;
           return (
-            <HeaderDashboard navigation={navigation} screenname="Setting"/>
+            <DashboardHeader navigation={navigation} screenname="Setting"/>
           )
         },
       })}/>

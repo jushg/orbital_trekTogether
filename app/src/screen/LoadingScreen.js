@@ -2,6 +2,8 @@ import React from "react";
 import { StyleSheet, ActivityIndicator, Image, Text} from "react-native";
 import { Headline,Caption } from "react-native-paper";
 
+import colorConst from "../constant/color";
+
 import Screen from "../component/screen";
 
 export default () => {
@@ -12,7 +14,7 @@ export default () => {
         />
         <Headline>Loading your journey...</Headline>
         <Caption>Please look at this cute cat in the meantime</Caption>
-        <ActivityIndicator animating size="large" color="black" />
+        <ActivityIndicator animating size="large" color={colorConst.primary} />
       </Screen>
     )
   }

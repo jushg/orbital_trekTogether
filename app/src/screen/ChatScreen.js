@@ -156,7 +156,6 @@ export default ({ route }) => {
       onSend={handleSend}
       user={{ _id: user.uid, name: user.displayName, avatar: user.photoURL }}
       alwaysShowSend
-      showUserAvatar
       scrollToBottom
       renderBubble={renderBubble}
       renderLoading={renderLoading}

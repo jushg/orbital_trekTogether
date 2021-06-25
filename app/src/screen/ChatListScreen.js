@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useState} from 'react';
 import { StyleSheet, Text, FlatList, View } from 'react-native'
-import {List, Avatar, ActivityIndicator, Divider, Searchbar, } from "react-native-paper";
+import {List, Avatar, ActivityIndicator, Divider, Searchbar, Appbar, } from "react-native-paper";
 import { CommonActions } from '@react-navigation/native'
 
 // https://docs.expo.io/versions/latest/sdk/permissions/
@@ -157,29 +157,19 @@ export default ({navigation}) => {
   }
   else {
     return (
-      <Screen style={styles.container}>
-        {/* <Text style={{...styles.title, paddingBottom: 10}}>
-          Your Buddies
-        </Text>
-        <View  >
-          <FlatList
-            data={Object.values(myBuddies)}
-            renderItem={renderBuddy}
-            keyExtractor={item => item.buddyID}
-            horizontal={true}
-          />
-        </View> */}
-        
-        <Headline style={styles.title}>
-          Messages
-        </Headline>
+      <>
+        <Appbar.Header>
+          <Appbar.Content title="Messages"  />
+            <Appbar.Action icon="magnify" disabled  />
+            <Appbar.Action icon="account-cog"/>
+        </Appbar.Header>           
         <View style={{flexDirection: 'row', justifyContent:"space-between"}}>
-        <Searchbar
+        {/* <Searchbar
             placeholder="Search buddies"
             onChangeText={onChangeSearch}
             value={searchQuery}
             style={styles.searchBar}
-        />
+        /> */}
           
         </View> 
         <View style={{flex: 1}}>
@@ -190,8 +180,7 @@ export default ({navigation}) => {
             renderItem={renderChat}
           />
         </View>
-      </Screen>
-  
+      </>
     )
   }
   
@@ -199,10 +188,8 @@ export default ({navigation}) => {
 
 const styles = StyleSheet.create({
   title: {
-    // fontSize: 20,
     paddingTop:5,
     paddingBottom:10,
-    color:"#05668D"
   },
   container: {
     flex: 1,
@@ -218,7 +205,6 @@ const styles = StyleSheet.create({
   searchBar: {
     marginBottom: 5,
     borderRadius:20,
-    // backgroundColor:"lightblue"
     width:"100%"
   }
 });
