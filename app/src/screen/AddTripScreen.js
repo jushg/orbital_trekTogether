@@ -62,9 +62,9 @@ export default ({navigation}) => {
     // let time = date.toLocaleDateString(undefined, options);
     Trip.addTrip(
       {user, buddy, place, date, notes},
-      () => {
+      (source) => {
         console.log("Added trip successfully");
-        navigation.navigate("Future");
+        navigation.navigate(source);
       },
       (error) => {
         showMessage({
