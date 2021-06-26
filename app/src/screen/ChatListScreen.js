@@ -15,34 +15,15 @@ import { Headline } from 'react-native-paper';
 export default ({navigation}) => {
   const {user} = useContext(UserContext);
   const [chats, setChats] = useState(null);
-  const [myBuddies, setMyBuddies] = useState(null);
+  // const [myBuddies, setMyBuddies] = useState(null);
   
   const [searchQuery, setSearchQuery] = useState(''); 
-  const onChangeSearch = query => setSearchQuery(query); 
-  
-
-  // const getAllChats = async (user) => {
-  //   const querySnapshot = await firebase.firestore().collection("chats")
-  //     .where("members", "array-contains", user)
-  //     .orderBy("lastMessage.createdAt", "desc")
-  //     .get();
-  //   const allChats = querySnapshot.docs.map(doc => {
-  //     return {
-  //       _id: doc.id,
-  //       // give defaults
-  //       name: '',
-  //       latestMessage: {
-  //         text: ''
-  //       },
-  //       ...doc.data()
-  //     };
-  //   });
-  //   return allChats;
-  // }
+  const onChangeSearch = query => setSearchQuery(query);
 
   useEffect(() => {
     const unsubscribeChatListener = firebase.firestore()
       .collection("chats")
+      .where("isActive", "==", true)
       .where("members", "array-contains", user.uid)
       .orderBy("lastMessage.createdAt", 'desc')
       .onSnapshot(querySnapshot => {
@@ -63,37 +44,28 @@ export default ({navigation}) => {
     return () => unsubscribeChatListener();
   }, []);
 
-  useEffect(() => {
-    const unsubscribeBuddiesListener = firebase.firestore()
-      .collection("users")
-      .doc(user.uid)
-      .onSnapshot(snapshot => {
-        const b = snapshot.data().buddies;    // array of uid, which are strings
-        const promises = [];
-        // read data from firestore; firestore returns a promise
-        b.map(buddy => promises.push(
-          firebase.firestore().collection("users")
-            .doc(buddy)
-            .get()
-        ))
-        // wait till all promises are resolved, then set state
-        Promise.all(promises).then(allResponses => {
-          const result = {};
-          allResponses.map(doc => result[doc.id] = { buddyID: doc.id, ...doc.data() } );
-          setMyBuddies(result);
-        });
-      });
-    return () => unsubscribeBuddiesListener();
-  }, []);
-
-  const renderBuddy = ({item}) => {
-    return (
-      <View style={{paddingHorizontal: 5}}>
-        {/*<Avatar.Image size={80} source={require('../../assets/ava6.jpg')} />*/}
-        <Avatar.Image size={80} source={{ uri: item.photoURL }} />
-      </View>
-    )
-  }
+  // useEffect(() => {
+  //   const unsubscribeBuddiesListener = firebase.firestore()
+  //     .collection("users")
+  //     .doc(user.uid)
+  //     .onSnapshot(snapshot => {
+  //       const b = snapshot.data().buddies;    // array of uid, which are strings
+  //       const promises = [];
+  //       // read data from firestore; firestore returns a promise
+  //       b.map(buddy => promises.push(
+  //         firebase.firestore().collection("users")
+  //           .doc(buddy)
+  //           .get()
+  //       ))
+  //       // wait till all promises are resolved, then set state
+  //       Promise.all(promises).then(allResponses => {
+  //         const result = {};
+  //         allResponses.map(doc => result[doc.id] = { buddyID: doc.id, ...doc.data() } );
+  //         setMyBuddies(result);
+  //       });
+  //     });
+  //   return () => unsubscribeBuddiesListener();
+  // }, []);
 
   function getChatName(itemID, itemName) {
     const x = itemID.split("_");
@@ -117,15 +89,16 @@ export default ({navigation}) => {
       <List.Item
         title={otherUsername}
         description={lastMessage}
-        // left={props => <List.Icon {...props} icon="account"/>}
-        left={(props) => {
-          const buddyData = myBuddies[otherID];
-          return <Avatar.Image {...props} size={70} source={{uri: buddyData.photoURL}}/>;
-        }}
+        left={props => <List.Icon {...props} icon="account"/>}
+        // left={(props) => {
+        //   const buddyData = myBuddies[otherID];
+        //   // console.log(myBuddies.length === 0);
+        //   return <Avatar.Image {...props} size={70} source={{uri: buddyData.photoURL}}/>;
+        // }}
         onPress={() => navigation.dispatch(CommonActions.navigate({
             name: 'Chat',
             //use this to pass in the name of other user
-            params: {chat: item, user: otherUsername},
+            params: {chat: item, otherName: otherUsername, otherID: otherID},
           })
         )}
         titleNumberOfLines={1}
@@ -137,13 +110,20 @@ export default ({navigation}) => {
     )
   };
 
-  if (chats == null || myBuddies == null) {
+  if (chats == null) {
     return (
       <Screen style={styles.loadingContainer}>
         <ActivityIndicator  size="large" color="black"/>
       </Screen>
     )
     
+  }
+  else if (chats.length === 0) {
+    return (
+      <Screen style={styles.loadingContainer}>
+        <Text>You have no current chats.</Text>
+      </Screen>
+    )
   }
   else {
     return (
@@ -165,6 +145,7 @@ export default ({navigation}) => {
         <View style={{flex: 1}}>
           <FlatList
             data={chats}
+            // extraData={myBuddies}
             keyExtractor={item => item._id}
             ItemSeparatorComponent={ () => <Divider/> }
             renderItem={renderChat}

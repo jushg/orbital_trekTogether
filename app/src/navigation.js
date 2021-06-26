@@ -10,10 +10,10 @@ import WelcomeScreen from "./screen/WelcomeScreen"
 import SignupScreen from "./screen/SignupScreen"
 import SetupScreen from "./screen/SetupScreen"
 
-//Match feature Screen
+//Match Buddy Screen
 import MatchScreen from "./screen/MatchScreen"
 
-//Loading ScreenText
+//Loading Screen
 import LoadingScreen from './screen/LoadingScreen';
 
 //Dashboard Screen
@@ -21,7 +21,8 @@ import PastScreen from "./screen/PastScreen"
 import FutureScreen from './screen/FutureScreen'
 import SettingScreen from "./screen/SettingScreen"
 import AddTripScreen from './screen/AddTripScreen';
-//Chat feature Screens
+
+//Chat Screens
 import ChatListScreen from "./screen/ChatListScreen"
 import ChatScreen from './screen/ChatScreen';
 
@@ -46,6 +47,7 @@ export const MainScreenStack = () => {
       () => setUser(null),
     );
   }, []);
+
   return (
     <UserContext.Provider value={{user, changeUserState}}>
       <MainStack.Navigator >
@@ -63,8 +65,8 @@ export const MainScreenStack = () => {
             component = {ChatScreen}
             options={({ navigation, route }) => ({
               headerStyle: {backgroundColor: colorConst.primary },
-              headerTitle: route.params.user,
-              headerRight: () => (<MessengerButtonHeader/>) })
+              headerTitle: route.params.otherName,
+              headerRight: () => (<MessengerButtonHeader navigation={navigation} otherID={route.params.otherID}/>) })
             }
             />
           </>
@@ -152,7 +154,7 @@ export const DashboardScreenStack = () => {
           //     ? options.title
           //     : scene.route.name;
           return (
-            <DashboardHeader navigation={navigation} screenname="Setting"/>
+            <DashboardHeader navigation={navigation} screenName="Setting"/>
           )
         },
       })}/>

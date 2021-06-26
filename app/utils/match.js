@@ -88,7 +88,12 @@ export const addBuddy = async (user, newBuddy) => {
 };
 
 export const removeBuddy = async (user, oldBuddy) => {
-  await db.doc(user).update({
-    buddies: firebase.firestore.FieldValue.arrayRemove(oldBuddy)
-  })
+  try {
+    await db.doc(user).update({
+      buddies: firebase.firestore.FieldValue.arrayRemove(oldBuddy)
+    });
+    return "removed Buddy";
+  } catch (error) {
+    console.log(error);
+  }
 };

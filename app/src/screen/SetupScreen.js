@@ -56,11 +56,11 @@ export default ({navigation}) => {
       else hasCameraRollPermission = true;
     }
 
-    let pickerResult = await ImagePicker.launchImageLibraryAsync();
+    let pickerResult = await ImagePicker.launchImageLibraryAsync({quality: 0.3});
     if (!pickerResult.cancelled) {
-      console.log(pickerResult);
+      // console.log(pickerResult);
       setAvatar({ uri: pickerResult.uri });
-      console.log(`avatar is null? ${avatar == null}`);
+      // console.log(`avatar is null? ${avatar == null}`);
     }
   };
 

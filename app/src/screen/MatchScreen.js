@@ -23,7 +23,7 @@ export default ({navigation}) => {
   // doc is not data yet!
   const renderCard = (doc) => {
     const data = doc.data();
-    console.log("Item is " + data.email);
+    // console.log("Item is " + data.email);
     return(
       <View style={styles.card}>
         <View style={{justifyContent:"center", alignItems:"center"}}>
@@ -75,6 +75,7 @@ export default ({navigation}) => {
   const [swipedAll, setSwipedAll] = useState(false);
   const [buddies, setBuddies] = useState(null);   // array of potential buddy DOCUMENTS
 
+  // Does not have a listener! One time use
   useEffect(() => {
     getAllPotentialBuddies(user)
       .then(docArray => setBuddies(docArray))
@@ -82,14 +83,14 @@ export default ({navigation}) => {
 
   function handleSwipeLeft(cardIndex) {
     const other = buddies[cardIndex];
-    Match.addPassUser(user.uid, other.id).then(result => console.log(result));
+    Match.addPassUser(user.uid, other.id).then(console.log);
   }
 
   async function handleSwipeRight(cardIndex) {
     const other = buddies[cardIndex];
     const otherData = other.data();
     if (!otherData.like.includes(user.uid)) {
-      Match.addLikeUser(user.uid, other.id).then(result => console.log(result));
+      Match.addLikeUser(user.uid, other.id).then(console.log);
     } else {    // mutual like
       await Promise.all([
         Match.removeLikeUser(other.id, user.uid),
@@ -112,6 +113,7 @@ export default ({navigation}) => {
     }
   }
 
+  // to be put in a separate file
   const createChatBetween = async (user, newBuddy) => {
     const [u1, u2] = [user.uid, newBuddy.id];
     const [n1, n2] = [user.displayName, newBuddy.data().name];
@@ -129,22 +131,26 @@ export default ({navigation}) => {
       system: true,
     };
     try {
-      // set last message as the system message
-      await firebase.firestore().collection("chats")
-        .doc(chatID)
-        .set({
-          lastMessage: {
-            ...announcement,
-            // user: { _id: newBuddy.id, name: newBuddy.name }
-          },
-          members: [u1, u2],
-          name: chatName
-        });
-      // initialize message history with the system message
-      await firebase.firestore().collection("chats")
-        .doc(chatID)
-        .collection("messages")
-        .add(announcement);
+      await Promise.all([
+        // set last message as the system message
+        firebase.firestore().collection("chats")
+          .doc(chatID)
+          .set({
+            lastMessage: {
+              ...announcement,
+              // user: { _id: newBuddy.id, name: newBuddy.name }
+            },
+            members: [u1, u2],
+            avatarURL: {u1: user.photoURL, u2: newBuddy.data().photoURL},
+            name: chatName,
+            isActive: true
+          }),
+        // initialize message history with the system message
+        firebase.firestore().collection("chats")
+          .doc(chatID)
+          .collection("messages")
+          .add(announcement)
+      ]);
       return true;
     } catch (error) {
       console.log(error);
