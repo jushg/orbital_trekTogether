@@ -1,27 +1,34 @@
 import firebase from "firebase";
-import {useContext} from "react";
-import {UserContext} from "./context";
 
-const db = firebase.firestore();
-
+const db = firebase.firestore().collection("trips");
 
 export const addTrip =
-    async ({uid, partner, notes, place, date}, onSuccess, onError) => {
+    async ({user, buddy, place, date, notes}, onSuccess, onError) => {
   try {
-
-    // add tripID to each user for the number of trips
-    await db.collection("trips").doc(uid).set({
-      tripID: 0,
-      partner: partner,
-      notes: notes,
-      place: place.split(",").map(place => place.trim()).filter(place => place !== ''),
-      date: date
-    }, {merge: true});
-    return onSuccess(uid);
-
-    // else {
-    //   throw new Error("No user found!");
-    // }
+    if (place === '') return onError("Please provide some destination");
+    if (buddy === 'None') {   // individual trip
+      const uid = user.uid;
+      await db.add({
+        members: [uid,],
+        otherMemberName: {[uid]: ''},
+        avatarURL: {[uid]: user.photoURL},
+        notes: notes,
+        place: place,
+        date: date
+      })
+    }
+    else {    // trip with buddy
+      const [u1, u2] = [user.uid, buddy.uid];
+      await db.add({
+        members: [u1, u2],
+        otherMemberName: {[u1]: buddy.name, [u2]: user.displayName},   // cross-name!!
+        avatarURL: {[u1]: user.photoURL, [u2]: buddy.photoURL},
+        notes: notes,
+        place: place,
+        date: date
+      });
+    }
+    return onSuccess(user);
   } catch (err) {
     return onError(err);
   }
