@@ -6,6 +6,7 @@ import { ActivityIndicator, IconButton } from 'react-native-paper';
 import firebase from "../../utils/firebase";
 import Screen from "../component/screen"
 import {UserContext} from "../../utils/context";
+import colorConst from '../constant/color';
 
 // https://github.com/amandeepmittal/react-native-examples
 
@@ -100,15 +101,16 @@ export default ({ route }) => {
         {...props}
         wrapperStyle={{
           right: {
-            backgroundColor: '#6646ee'
+            backgroundColor: colorConst.accent
           },
-          left: { backgroundColor: 'gray' }
+          left: { 
+            backgroundColor: colorConst.primary }
         }}
         textStyle={{
           right: {
-            color: '#fff'
+            color: colorConst.text
           },
-          left: { color: 'white' }
+          left: { color: colorConst.text }
         }}
         // tickStyle={{ color: props.currentMessage.sent ? '#34B7F1' : '#999' }}
       />
@@ -127,7 +129,7 @@ export default ({ route }) => {
     return (
       <Send {...props}>
         <View style={styles.sendingContainer}>
-          <IconButton icon='send' size={30}/>
+          <IconButton icon='send' size={30} color={colorConst.accent}/>
         </View>
       </Send>
     );

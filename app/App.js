@@ -20,7 +20,8 @@ const CombinedDefaultTheme = {
     accent:  colorConstant.accent,
     background: colorConstant.background,
     card: colorConstant.card,
-    text: colorConstant.text
+    text: colorConstant.text,
+    // surface: colorConstant.surface
   },
 };
 

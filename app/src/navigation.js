@@ -58,14 +58,22 @@ export const MainScreenStack = () => {
         ):(
           <>
             <MainStack.Screen name="Home" component = {HomeScreenTab} options={{headerShown:false}}/>
-            <MainStack.Screen name="Setting" component={SettingScreen} options={{headerStyle: {backgroundColor: colorConst.primary }}} />
-            <MainStack.Screen name="Add Trip" component={AddTripScreen} options={{headerStyle: {backgroundColor: colorConst.primary }}}/>
+            <MainStack.Screen name="Setting" component={SettingScreen} 
+              options={{
+                headerStyle: {backgroundColor: colorConst.primary },
+                headerTintColor: colorConst.textHeader}}
+              h />
+            <MainStack.Screen name="Add Trip" component={AddTripScreen} 
+              options={{
+                headerStyle: {backgroundColor: colorConst.primary },
+                headerTintColor: colorConst.textHeader}}/>
             <MainStack.Screen 
             name="Chat" 
             component = {ChatScreen}
             options={({ navigation, route }) => ({
               headerStyle: {backgroundColor: colorConst.primary },
               headerTitle: route.params.otherName,
+              headerTintColor: colorConst.textHeader,
               headerRight: () => (<MessengerButtonHeader navigation={navigation} otherID={route.params.otherID}/>) })
             }
             />

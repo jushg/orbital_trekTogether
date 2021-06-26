@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useState} from 'react';
 import { StyleSheet, Text, FlatList, View } from 'react-native'
-import {List, Avatar, ActivityIndicator, Divider, Searchbar, Appbar, } from "react-native-paper";
+import {List, Avatar, ActivityIndicator, Divider, Searchbar, Appbar, Caption, } from "react-native-paper";
 import { CommonActions } from '@react-navigation/native'
 
 // https://docs.expo.io/versions/latest/sdk/permissions/
@@ -109,39 +109,21 @@ export default ({navigation}) => {
 
     )
   };
-
-  if (chats == null) {
-    return (
-      <Screen style={styles.loadingContainer}>
-        <ActivityIndicator  size="large" color="black"/>
-      </Screen>
-    )
-    
-  }
-  else if (chats.length === 0) {
-    return (
-      <Screen style={styles.loadingContainer}>
-        <Text>You have no current chats.</Text>
-      </Screen>
-    )
-  }
-  else {
     return (
       <>
         <Appbar.Header>
           <Appbar.Content title="Messages"  />
             <Appbar.Action icon="magnify" disabled  />
-            <Appbar.Action icon="account-cog"/>
-        </Appbar.Header>           
-        <View style={{flexDirection: 'row', justifyContent:"space-between"}}>
-        {/* <Searchbar
-            placeholder="Search buddies"
-            onChangeText={onChangeSearch}
-            value={searchQuery}
-            style={styles.searchBar}
-        /> */}
-          
-        </View> 
+            <Appbar.Action icon="account-cog" disabled/>
+        </Appbar.Header>  
+        {chats == null ? 
+        <View style={styles.loadingContainer}>
+          <ActivityIndicator  size="large" color="black"/>
+        </View> :
+        chats.length === 0?
+        <View style={styles.loadingContainer}>
+        <Caption>You have no current chats.</Caption>
+        </View> :
         <View style={{flex: 1}}>
           <FlatList
             data={chats}
@@ -151,10 +133,9 @@ export default ({navigation}) => {
             renderItem={renderChat}
           />
         </View>
+        }
       </>
     )
-  }
-  
 }
 
 const styles = StyleSheet.create({

@@ -11,7 +11,10 @@ export const DashboardHeader = ({navigation, screenName}) => {
   const {user} = useContext(UserContext);
   return (
     <Appbar.Header>
-      <Appbar.Content title="Dashboard" subtitle={user.displayName} />
+      <Appbar.Content 
+        title="Dashboard" 
+        // subtitle={user.displayName}
+       />
       <Appbar.Action icon="magnify"  disabled />
       <Appbar.Action icon="account-cog" onPress={() => navigation.navigate(screenName)} />
     </Appbar.Header>
@@ -58,7 +61,7 @@ export const MessengerButtonHeader = ({navigation, otherID}) => {
     <Menu
       visible={visible}
       onDismiss={closeMenu}
-      anchor={<IconButton onPress={openMenu} icon="dots-vertical"/>}
+      anchor={<IconButton onPress={openMenu} icon="dots-vertical" color={colorConst.textHeader}/>}
       style={{paddingTop: 40}}
     >
       <Menu.Item onPress={unmatch} title="Unmatch" />
