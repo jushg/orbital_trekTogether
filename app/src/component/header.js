@@ -22,7 +22,7 @@ export const DashboardHeader = ({navigation, screenName}) => {
 }
 
 // to be put in a separate file
-// NEED MORE WORK
+// NEED SOME MORE POLISHING
 const unmatchBetween = async (user, otherID) => {
   const uid = user.uid;
   const chatID = uid < otherID ? `${uid}_${otherID}` : `${otherID}_${uid}`;
@@ -49,14 +49,14 @@ export const MessengerButtonHeader = ({navigation, otherID}) => {
   const closeMenu = () => setVisible(false);
   const unmatch = () => {
     // import function to remove buddy and delete chat
-    // unmatchBetween(user, otherID).then(result => {
-    //     console.log(result);
-    //     // bring user back to chat list
-    //     navigation.navigate("Message");
-    //   })
-    console.log("you want to unmatch this dude ?")
+    unmatchBetween(user, otherID).then(result => {
+        console.log(result);
+        // bring user back to chat list
+        navigation.navigate("Message");
+      })
+    // console.log("you want to unmatch this person?")
   };
-  const report = () => {console.log("report this dude")};
+  const report = () => {console.log("report this person")};
   return (
     <Menu
       visible={visible}

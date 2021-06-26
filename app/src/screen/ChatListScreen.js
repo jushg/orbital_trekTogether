@@ -89,12 +89,10 @@ export default ({navigation}) => {
       <List.Item
         title={otherUsername}
         description={lastMessage}
-        left={props => <List.Icon {...props} icon="account"/>}
-        // left={(props) => {
-        //   const buddyData = myBuddies[otherID];
-        //   // console.log(myBuddies.length === 0);
-        //   return <Avatar.Image {...props} size={70} source={{uri: buddyData.photoURL}}/>;
-        // }}
+        // left={props => <List.Icon {...props} icon="account"/>}
+        left={(props) => {
+          return <Avatar.Image {...props} size={70} source={{uri: item.avatarURL[otherID]}}/>;
+        }}
         onPress={() => navigation.dispatch(CommonActions.navigate({
             name: 'Chat',
             //use this to pass in the name of other user
@@ -127,7 +125,6 @@ export default ({navigation}) => {
         <View style={{flex: 1}}>
           <FlatList
             data={chats}
-            // extraData={myBuddies}
             keyExtractor={item => item._id}
             ItemSeparatorComponent={ () => <Divider/> }
             renderItem={renderChat}

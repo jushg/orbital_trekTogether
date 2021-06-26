@@ -83,16 +83,18 @@ export default ({ route }) => {
       }
     };
 
-    await firebase.firestore()
-      .collection("chats")
-      .doc(chat._id)
-      .collection("messages")
-      .add(lastMessage);
+    Promise.all([
+      firebase.firestore()
+        .collection("chats")
+        .doc(chat._id)
+        .collection("messages")
+        .add(lastMessage),
 
-    await firebase.firestore()
-      .collection("chats")
-      .doc(chat._id)
-      .update({lastMessage: lastMessage});
+      firebase.firestore()
+        .collection("chats")
+        .doc(chat._id)
+        .update({lastMessage: lastMessage})
+    ]);
   }
 
   const renderBubble = (props) => {

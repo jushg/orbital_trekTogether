@@ -141,10 +141,10 @@ export default ({navigation}) => {
               // user: { _id: newBuddy.id, name: newBuddy.name }
             },
             members: [u1, u2],
-            avatarURL: {u1: user.photoURL, u2: newBuddy.data().photoURL},
+            avatarURL: {[u1]: user.photoURL, [u2]: newBuddy.data().photoURL},
             name: chatName,
             isActive: true
-          }),
+          }, {merge: true}),
         // initialize message history with the system message
         firebase.firestore().collection("chats")
           .doc(chatID)
