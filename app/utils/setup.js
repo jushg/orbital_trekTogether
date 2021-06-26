@@ -14,12 +14,13 @@ export const setUpProfile = async ({age, level, place, date, avatar}, onSuccess,
       age = Math.floor(parseInt(age));
       if (Number.isNaN(age)) return onError("Age must be a positive number");
       if (level === '') return onError("Please choose one level");
-      if (place === '') return onError("Please input some destination");
+      if (place === '') return onError("Please provide some destination");
+      place = place.split(",").map(place => place.trim()).filter(place => place !== "");
+      if (place === []) return onError("Please input some destination");
       if (date.every(day => day === false)) return onError("Please choose at least one free day");
 
       // inputs have passed validation, so parse them
       level = level === "Beginner" ? 1 : level === "Intermediate" ? 2 : 3;
-      place = place.split(",").map(place => place.trim()).filter(place => place !== "");
 
       const response = await fetch(avatar.uri);
       const blob = await response.blob();
@@ -40,7 +41,7 @@ export const setUpProfile = async ({age, level, place, date, avatar}, onSuccess,
         // hobby: hobby,
         place: place,
         date: date,
-        trips: [],
+        // trips: [],     // unnecessary
         buddies: [],
         like: [],
         pass: []

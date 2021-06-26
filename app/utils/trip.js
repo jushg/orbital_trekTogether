@@ -1,4 +1,7 @@
 import firebase from "firebase";
+import {View} from "react-native";
+import {Avatar, List} from "react-native-paper";
+import React from "react";
 
 const db = firebase.firestore().collection("trips");
 
@@ -11,7 +14,7 @@ export const addTrip =
       await db.add({
         members: [uid,],
         otherMemberName: {[uid]: ''},
-        avatarURL: {[uid]: user.photoURL},
+        otherAvatarURL: {[uid]: ''},
         notes: notes,
         place: place,
         date: date
@@ -22,18 +25,40 @@ export const addTrip =
       await db.add({
         members: [u1, u2],
         otherMemberName: {[u1]: buddy.name, [u2]: user.displayName},   // cross-name!!
-        avatarURL: {[u1]: user.photoURL, [u2]: buddy.photoURL},
+        otherAvatarURL: {[u1]: user.photoURL, [u2]: buddy.photoURL},     // cross-name!!
         notes: notes,
         place: place,
         date: date
       });
     }
-    return onSuccess(user);
+    // decide where to route the user
+    const today = new Date(new Date().toDateString());
+    if (date < today) return onSuccess("Past");
+    else              return onSuccess("Future");
   } catch (err) {
     return onError(err);
   }
 };
 
-export const getAllTrip = (uid) => {
-  
+export const renderTrip = ({item, user}) => {
+  const date = item.date.toDate().toDateString();
+  const hasBuddy = item.members.length === 2;
+  let buddyDesc = '';
+  if (hasBuddy) {
+    buddyDesc += ` - Buddy: ${item.otherMemberName[user.uid]}`;
+  }
+  return (
+    <View>
+      <List.Item
+        title={item.place}
+        description={date + buddyDesc}
+        // right={props => <List.Icon {...props} icon="account" />}
+        right={(props) => {
+          if (hasBuddy)
+            return <Avatar.Image {...props} size={50} source={{uri: item.otherAvatarURL[user.uid]}}/>;
+        }}
+        onPress={() => {}}
+      />
+    </View>
+  )
 }

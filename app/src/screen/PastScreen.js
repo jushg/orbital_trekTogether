@@ -1,13 +1,13 @@
-import React, { useState } from 'react'
+import React, {useContext, useEffect, useState} from 'react';
 import {StyleSheet, Text, View, FlatList } from 'react-native';
-import { Button, List, Menu, Searchbar, IconButton, FAB} from "react-native-paper";
+import {Button, List, Menu, Searchbar, IconButton, Avatar, Divider} from "react-native-paper";
 import {CommonActions} from "@react-navigation/native";
 
 import { DashboardFAB } from '../component/fab';
-
-// https://callstack.github.io/react-native-paper/menu.html
-
+import firebase from "../../utils/firebase";
+import {UserContext} from "../../utils/context";
 import Screen from "../component/screen"
+import * as Trip from "../../utils/trip";
 
 export default ({navigation}) => {
   const [searchQuery, setSearchQuery] = useState(''); //Example
@@ -18,26 +18,35 @@ export default ({navigation}) => {
   const closeMenu = () => setVisible(false);
   const sortNewest = () => {console.log("sortNewest")};
   const sortOldest = () => {};
-  //This item include subject, time, place, destination, partner, description
-  const renderList = ({item}) => {
-    return (
-      <View>
-        <List.Item
-        title="MacRitchie Reservoir"
-        description="nice trip, but it rained"
-        left={props => <List.Icon {...props} icon="image-filter-hdr" />}
-      />
-      </View>
-    )
-  }
+
+  const {user} = useContext(UserContext);
+  const [pastTrips, setPastTrips] = useState(null);
+
+  useEffect(() => {
+    const now = new Date();
+    const today = new Date(now.toDateString());
+    const unsubscribeTripListener = firebase.firestore()
+      .collection("trips")
+      .where("members", "array-contains", user.uid)
+      .where("date", "<", today)
+      .orderBy("date", "desc")
+      .onSnapshot(querySnapshot => {
+        const results = querySnapshot.docs.map(doc => {
+          return {
+            id: doc.id,
+            ...doc.data()
+          };
+        });
+        setPastTrips(results);
+      });
+
+    return () => unsubscribeTripListener();
+  }, []);
+
 
   return (
-      
-        
-     
-  
-      <View style={styles.container}>
-         {/* <View style={{flexDirection: 'row', justifyContent:"space-between"}}>
+    <View style={styles.container}>
+      {/* <View style={{flexDirection: 'row', justifyContent:"space-between"}}>
       <Searchbar
           placeholder="Search Trip"
           onChangeText={onChangeSearch}
@@ -52,15 +61,18 @@ export default ({navigation}) => {
           <Menu.Item onPress={sortNewest} title="Newest" />
           <Menu.Item onPress={sortOldest} title="Oldest" />
         </Menu>
-      </View>   */}
-        <FlatList
-        data={['1', '2', '3', '4', '5', '6', '7', '8', '9']}
-        renderItem={renderList}
-        keyExtractor={item => item}
-        />
-        <DashboardFAB navigation={navigation} />
-        
-      </View>
+      </View>  */}
+
+      <FlatList
+        data={pastTrips}
+        keyExtractor={item => item.id}
+        ItemSeparatorComponent={ () => <Divider/> }
+        renderItem={({item}) => Trip.renderTrip({item, user})}
+      />
+
+      <DashboardFAB navigation={navigation} />
+
+    </View>
   )
 }
 
