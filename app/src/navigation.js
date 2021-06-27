@@ -92,7 +92,10 @@ export const AuthScreenStack = () => {
     <AuthStack.Navigator initialRouteName={"Login"} >
       <AuthStack.Screen name="Welcome" key = "welcome" component = {WelcomeScreen} options={{headerShown:false}}/>
       <AuthStack.Screen name="Login" key = "login" component = {LoginScreen} options={{headerShown:false}}/>
-      <AuthStack.Screen name="Sign Up" key = "signup" component = {SignupScreen} options={{headerStyle: {backgroundColor: colorConst.primary }}}/>
+      <AuthStack.Screen name="Sign Up" key = "signup" component = {SignupScreen} 
+        options={{
+          headerStyle: {backgroundColor: colorConst.primary },
+          headerTintColor:colorConst.textHeader}}/>
       <AuthStack.Screen name="Setup" key = "setup" component = {SetupScreen} options={{headerShown:false}}/>
     </AuthStack.Navigator>
   )

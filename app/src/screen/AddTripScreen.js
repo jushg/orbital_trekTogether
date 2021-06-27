@@ -82,7 +82,8 @@ export default ({navigation}) => {
 
   return (
       <Screen style={styles.container}>
-        {myBuddies == null ? <ActivityIndicator/> :
+        {myBuddies == null ? 
+        <ActivityIndicator size="large" color="black"/> : 
         <ScrollView>
           <Subheading style={{paddingVertical: 10}}>ROUTE</Subheading>
           <TextInput

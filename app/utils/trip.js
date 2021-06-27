@@ -57,7 +57,11 @@ export const renderTrip = ({item, user}) => {
         // right={props => <List.Icon {...props} icon="account" />}
         right={(props) => {
           if (hasBuddy)
-            return <Avatar.Image {...props} size={50} source={{uri: item.otherAvatarURL[user.uid]}}/>;
+            return (
+              <View style={{justifyContent:'center'}}>
+                <Avatar.Image {...props} size={50} source={{uri: item.otherAvatarURL[user.uid]}}/>
+              </View>
+            );
         }}
         onPress={() => {}}
       />

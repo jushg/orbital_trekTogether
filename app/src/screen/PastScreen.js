@@ -10,14 +10,14 @@ import Screen from "../component/screen"
 import * as Trip from "../../utils/trip";
 
 export default ({navigation}) => {
-  const [searchQuery, setSearchQuery] = useState(''); //Example
-  const onChangeSearch = query => setSearchQuery(query); // Example
+  // const [searchQuery, setSearchQuery] = useState(''); //Example
+  // const onChangeSearch = query => setSearchQuery(query); // Example
 
-  const [visible, setVisible] = useState(false);
-  const openMenu = () => setVisible(true);
-  const closeMenu = () => setVisible(false);
-  const sortNewest = () => {console.log("sortNewest")};
-  const sortOldest = () => {};
+  // const [visible, setVisible] = useState(false);
+  // const openMenu = () => setVisible(true);
+  // const closeMenu = () => setVisible(false);
+  // const sortNewest = () => {console.log("sortNewest")};
+  // const sortOldest = () => {};
 
   const {user} = useContext(UserContext);
   const [pastTrips, setPastTrips] = useState(null);

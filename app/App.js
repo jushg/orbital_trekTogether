@@ -3,12 +3,17 @@ import { Provider as PaperProvider , DefaultTheme as PaperDefaultTheme } from "r
 import { LogBox } from 'react-native';
 import { NavigationContainer,  DefaultTheme as NavigationDefaultTheme,} from "@react-navigation/native";
 import FlashMessage from "react-native-flash-message";
+import { Provider as ReduxProvider } from 'react-redux';
+import { PersistGate } from "redux-persist/integration/react";
 
 //import testing screen here
 import {AuthScreenStack, DashboardScreenTab, MainScreenStack} from "./src/navigation"
 import TestScreen from "./src/screen/AddTripScreen"
+import LoadingScreen from './src/screen/LoadingScreen';
 
 import colorConstant from './src/constant/color';
+import storeConfig from "./store/configureStore";
+
 
 const CombinedDefaultTheme = {
   ...PaperDefaultTheme,
@@ -23,12 +28,15 @@ const CombinedDefaultTheme = {
     text: colorConstant.text,
   },
 };
+
+const { store, persistor } = storeConfig();
 // Android problem with Firebase JS SDK, cannot be fixed
 LogBox.ignoreLogs(["Setting a timer for a long period of"]);
 
 export default function App() {
   return (
-      
+    <ReduxProvider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
         <PaperProvider theme={CombinedDefaultTheme}>
           <NavigationContainer theme={CombinedDefaultTheme}>
             <MainScreenStack/>
@@ -36,5 +44,7 @@ export default function App() {
             {/* <TestScreen/> */}
           </NavigationContainer>
         </PaperProvider>
+      </PersistGate>
+    </ReduxProvider>
   );
 }

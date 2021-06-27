@@ -1,5 +1,5 @@
 import React, {useContext, useState} from 'react';
-import { Button, Checkbox, Avatar, Headline, Caption } from "react-native-paper"
+import { Button, Checkbox, Avatar, Headline, Caption, Subheading } from "react-native-paper"
 import { StyleSheet,Text, View } from 'react-native'
 
 import Screen from "../component/screen"
@@ -11,8 +11,8 @@ import {UserContext} from "../../utils/context";
 //https://callstack.github.io/react-native-paper/toggle-button.html
 
 export default ({navigation}) => {
-  const [checked1, setChecked1] = useState(true) 
-  const [checked2, setChecked2] = useState(false) //example
+  // const [checked1, setChecked1] = useState(true) 
+  // const [checked2, setChecked2] = useState(false) //example
 
   const handleLogout = () => {
     Auth.logout(
@@ -29,13 +29,14 @@ export default ({navigation}) => {
     <Screen style={styles.container}>
       <View style={{alignItems:"center"}}>
         <Headline >Customization</Headline>
-        <Caption>Under Development</Caption>
         <Avatar.Image
-          size={90}
+          size={100}
           source={{ uri: Auth.getCurrentUser().photoURL }}
         />
-        <Text>{Auth.getCurrentUser().displayName}</Text>
-        <Button disabled>Change Your Profile</Button>
+        <Subheading>{Auth.getCurrentUser().displayName}</Subheading>
+        <Button disabled>Edit Profile</Button>
+        <Caption>Under Development</Caption>
+
       </View>
       
       {/* <Checkbox.Item

@@ -112,7 +112,7 @@ export default ({navigation}) => {
         <Appbar.Header>
           <Appbar.Content title="Messages"  />
             <Appbar.Action icon="magnify" disabled  />
-            <Appbar.Action icon="account-cog" disabled/>
+            <Appbar.Action icon="cog" disabled/>
         </Appbar.Header>  
         {chats == null ? 
         <View style={styles.loadingContainer}>

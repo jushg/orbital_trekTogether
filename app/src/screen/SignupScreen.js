@@ -40,7 +40,7 @@ export default ({navigation}) =>{
           mode="contained"
           value={email}
           onChangeText={setEmail}
-          style={{marginBottom:10, width:"95%"}}
+          style={{marginBottom:10, width:"100%"}}
           left={<TextInput.Icon name="email"/>}
           autoCapitalize="none"
           />
@@ -52,7 +52,7 @@ export default ({navigation}) =>{
           autoCapitalize="words"
           onChangeText={setUsername}
           left={<TextInput.Icon name="human-male"/>}
-          style={{marginBottom:10, width:"95%"}}
+          style={{marginBottom:10, width:"100%"}}
           />
 
           <TextInput
@@ -64,7 +64,7 @@ export default ({navigation}) =>{
           secureTextEntry = {passwordVisible}
           left={<TextInput.Icon name="lock"/>}
           right={<TextInput.Icon name={passwordVisible ? "eye-off" : "eye"} onPress={() => setPasswordVisible((state) => !state)} />}
-          style={{marginBottom:10, width:"95%"}}
+          style={{marginBottom:10, width:"100%"}}
           autoCapitalize="none"
           />
           <Button
@@ -90,13 +90,14 @@ const styles = StyleSheet.create({
   signupBtn: {
     width:"35%",
     height:50,
-    borderRadius:25,
+    borderRadius:5,
     alignItems:"center",
     justifyContent:"center",
     marginTop:20,
   },
   container: {
     flex:1,
+    padding: 10,
     flexDirection:"column",
     justifyContent:"flex-start"
   },

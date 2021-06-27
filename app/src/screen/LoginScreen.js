@@ -53,7 +53,7 @@ export default ({ navigation }) => {
         mode="contained"
         value={email}
         onChangeText={setEmail}
-        style={{marginBottom:10, width:"95%"}}
+        style={{marginBottom:10, width:"100%"}}
         left={<TextInput.Icon name="email"/>}
         autoCapitalize="none"
         />
@@ -67,7 +67,7 @@ export default ({ navigation }) => {
         secureTextEntry = {passwordVisible}
         left={<TextInput.Icon name="lock"/>}
         right={<TextInput.Icon name={passwordVisible ? "eye-off" : "eye"} onPress={() => setPasswordVisible((state) => !state)} />}
-        style={{marginBottom:10, width:"95%"}}
+        style={{marginBottom:10, width:"100%"}}
         autoCapitalize="none"
         />
 
@@ -110,7 +110,8 @@ export default ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex:1,
-    justifyContent:"flex-start"
+    justifyContent:"flex-start",
+    padding: 10
   },
   title: {
     fontSize: 40,
@@ -118,7 +119,7 @@ const styles = StyleSheet.create({
   },
   loginBtn: {
     width:"35%",
-    borderRadius:25,
+    borderRadius:5,
     height:50,
     alignItems:"center",
     justifyContent:"center",
