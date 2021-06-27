@@ -30,7 +30,7 @@ import * as Auth from "../utils/auth"
 import {DashboardHeader, MessengerButtonHeader} from "./component/header"
 import { UserContext } from '../utils/context';
 import colorConst from './constant/color';
-import { IconButton } from 'react-native-paper';
+import { DashboardFAB } from './component/fab';
 
 const MainStack = createStackNavigator();
 
@@ -105,7 +105,12 @@ const HomeTab = createMaterialBottomTabNavigator();
 
 export const HomeScreenTab = () => {
   return (
-    <HomeTab.Navigator initialRouteName="Home">
+    <HomeTab.Navigator 
+    initialRouteName="Home"
+    // activeColor= {colorConst.accent}
+    
+    >
+      
       <HomeTab.Screen
         name="Home"
         component={DashboardScreenStack}
@@ -149,8 +154,9 @@ export const HomeScreenTab = () => {
 
 const DashboardStack = createStackNavigator();
 
-export const DashboardScreenStack = () => {
+export const DashboardScreenStack = ({navigation}) => {
   return (
+    <>
     <DashboardStack.Navigator>
       <DashboardStack.Screen 
       name="Dashboard" 
@@ -170,6 +176,8 @@ export const DashboardScreenStack = () => {
         },
       })}/>
     </DashboardStack.Navigator>
+    <DashboardFAB navigation={navigation}/>
+    </>
   )
 }
 
@@ -178,6 +186,7 @@ const DashboardTab = createMaterialTopTabNavigator();
 export const DashboardScreenTab = () => {
   return (
     <DashboardTab.Navigator>
+
       <DashboardTab.Screen 
         name="Future" 
         component={FutureScreen}
@@ -190,6 +199,7 @@ export const DashboardScreenTab = () => {
         options={{
           tabBarLabel: 'Your journal'
         }}/>
+
     </DashboardTab.Navigator>
   )
 } 

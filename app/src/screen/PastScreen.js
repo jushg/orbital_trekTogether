@@ -69,9 +69,6 @@ export default ({navigation}) => {
         ItemSeparatorComponent={ () => <Divider/> }
         renderItem={({item}) => Trip.renderTrip({item, user})}
       />
-
-      <DashboardFAB navigation={navigation} />
-
     </View>
   )
 }

@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {List, Searchbar, Button, IconButton, Menu, Divider, Avatar} from "react-native-paper";
+import {List, Searchbar, Button, IconButton, Menu, Divider, Avatar, Portal} from "react-native-paper";
 import { StyleSheet, Text, View, FlatList } from 'react-native';
 
 
@@ -70,9 +70,6 @@ export default ({navigation}) => {
         // renderItem={renderFutureTrip}
         renderItem={({item}) => Trip.renderTrip({item, user})}
       />
-
-      <DashboardFAB navigation={navigation} />
-
     </View>
   )
 }
