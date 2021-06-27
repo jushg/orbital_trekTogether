@@ -41,17 +41,19 @@ export const addTrip =
 };
 
 export const renderTrip = ({item, user}) => {
-  const date = item.date.toDate().toDateString();
+  const date = item.date.toDate().toLocaleDateString();
   const hasBuddy = item.members.length === 2;
   let buddyDesc = '';
   if (hasBuddy) {
-    buddyDesc += ` - Buddy: ${item.otherMemberName[user.uid]}`;
+    buddyDesc += `${item.otherMemberName[user.uid]}`;
   }
   return (
     <View>
       <List.Item
-        title={item.place}
-        description={date + buddyDesc}
+        title={item.place + " - " + date } 
+        // description={date + buddyDesc}
+        description = {buddyDesc ? 'Buddy: ' + buddyDesc + '\n' + item.notes : 'Solo Trip \n' + item.notes}
+        descriptionNumberOfLines = {2}
         // right={props => <List.Icon {...props} icon="account" />}
         right={(props) => {
           if (hasBuddy)

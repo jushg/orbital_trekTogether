@@ -10,7 +10,8 @@ import { UserContext } from '../../utils/context';
 import firebase from "../../utils/firebase";
 import {Actions} from "react-native-gifted-chat";
 import {showMessage} from "react-native-flash-message";
-
+import colorConst from '../constant/color';
+import { FONT_SANS_10_BLACK } from 'jimp';
 export default ({navigation}) => {
 
   const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
@@ -82,68 +83,69 @@ export default ({navigation}) => {
   return (
       <Screen style={styles.container}>
         {myBuddies == null ? <ActivityIndicator/> :
-
-          <ScrollView>
-            <Subheading style={{paddingVertical: 10}}>Route</Subheading>
-            <TextInput
-              label="Place"
-              placeholder="Somewhere nice ..."
-              value={place}
-              autoCapitalize="words"
-              onChangeText={setPlace}
-              left={<TextInput.Icon name="human-male"/>}
-              style={{marginBottom: 10, width: "95%"}}
+        <ScrollView>
+          <Subheading style={{paddingVertical: 10}}>ROUTE</Subheading>
+          <TextInput
+            label="Place"
+            placeholder="Somewhere nice ..."
+            value={place}
+            autoCapitalize="words"
+            onChangeText={setPlace}
+            left={<TextInput.Icon name="human-male"/>}
+            style={{marginBottom: 10, width: "100%", alignSelf:"center"}}
+          />
+          
+          <Subheading style={{paddingTop:10}}>DATE: { Platform.OS === 'ios' && date.toLocaleDateString(undefined, options)}</Subheading>
+          {Platform.OS === 'android' && 
+          <Button onPress={() => setShowPicker(true)}  color={colorConst.accent} labelStyle={{fontSize: 20}}> 
+            {date.toLocaleDateString(undefined, options)} 
+          </Button>}
+          
+          {showPicker && (
+            <DateTimePicker
+              // testID="dateTimePicker"
+              value={date}
+              mode={"date"}
+              display="default"
+              onChange={onChangeDatePicker}
             />
+          )}
 
-            <Subheading
-              style={{paddingVertical: 10}}>Date: {date.toLocaleDateString(undefined, options)}</Subheading>
-            <Button onPress={() => setShowPicker(true)}>
-              Click here to choose a date
-            </Button>
-            {showPicker && (
-              <DateTimePicker
-                // testID="dateTimePicker"
-                value={date}
-                mode={"date"}
-                display="default"
-                onChange={onChangeDatePicker}
+          <Subheading style={{paddingVertical: 10}}>BUDDY</Subheading>
+          <Picker
+            selectedValue={buddy}
+            mode="dropdown"
+            onValueChange={(itemValue, itemIndex) => {
+              // console.log(itemValue);
+              setBuddy(itemValue);
+            }}
+          >
+            <Picker.Item label="None" value="None"/>
+            {myBuddies.map(buddy => (
+              <Picker.Item
+                key={buddy.uid}
+                value={buddy}
+                label={buddy.name}
               />
-            )}
+            ))}
+          </Picker>
 
-            <Subheading style={{paddingVertical: 10}}>Will you be going with a buddy?</Subheading>
-            <Picker
-              selectedValue={buddy}
-              onValueChange={(itemValue, itemIndex) => {
-                // console.log(itemValue);
-                setBuddy(itemValue);
-              }}
-            >
-              <Picker.Item label="None" value="None"/>
-              {myBuddies.map(buddy => (
-                <Picker.Item
-                  key={buddy.uid}
-                  value={buddy}
-                  label={buddy.name}
-                />
-              ))}
-            </Picker>
+          <Subheading style={{paddingVertical:10}}>NOTES</Subheading>
+          <TextInput
+            label="Notes"
+            placeholder="Things to note..."
+            value={notes}
+            autoCapitalize="words"
+            onChangeText={setNotes}
+            left={<TextInput.Icon name="human-male"/>}
+            style={{marginBottom: 10, width: "100%" , alignSelf:"center"}}
+          />
 
-            {/*<Subheading style={{paddingVertical:10}}>Notes</Subheading>*/}
-            <TextInput
-              label="Notes"
-              placeholder="Things to note..."
-              value={notes}
-              autoCapitalize="words"
-              onChangeText={setNotes}
-              left={<TextInput.Icon name="human-male"/>}
-              style={{marginBottom: 10, width: "95%"}}
-            />
+          <View style={{flexDirection: "row", justifyContent: "space-around", paddingTop: 60}}>
+            <Button onPress={handleAddTrip} style={{color:colorConst.accent}}>Add</Button>
+          </View>
 
-            <View style={{flexDirection: "row", justifyContent: "space-around", paddingTop: 60}}>
-              <Button onPress={handleAddTrip}>Add</Button>
-            </View>
-
-          </ScrollView>
+        </ScrollView>
         }
       </Screen>
     
@@ -160,5 +162,8 @@ const styles = StyleSheet.create({
     flexDirection:"column",
     justifyContent: 'center',
     padding:10
+  },
+  button : {
+    color:colorConst.prim
   }
 });

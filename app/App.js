@@ -1,6 +1,6 @@
 import React from 'react';
 import { Provider as PaperProvider , DefaultTheme as PaperDefaultTheme } from "react-native-paper";
-
+import { LogBox } from 'react-native';
 import { NavigationContainer,  DefaultTheme as NavigationDefaultTheme,} from "@react-navigation/native";
 import FlashMessage from "react-native-flash-message";
 
@@ -21,10 +21,10 @@ const CombinedDefaultTheme = {
     background: colorConstant.background,
     card: colorConstant.card,
     text: colorConstant.text,
-    // surface: colorConstant.surface
   },
 };
-
+// Android problem with Firebase JS SDK, cannot be fixed
+LogBox.ignoreLogs(["Setting a timer for a long period of"]);
 
 export default function App() {
   return (

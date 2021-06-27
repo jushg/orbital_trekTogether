@@ -1,6 +1,6 @@
 import React, {useContext, useState} from 'react';
-import { Button, Checkbox, Avatar, Headline } from "react-native-paper"
-import { StyleSheet,Text } from 'react-native'
+import { Button, Checkbox, Avatar, Headline, Caption } from "react-native-paper"
+import { StyleSheet,Text, View } from 'react-native'
 
 import Screen from "../component/screen"
 import * as Auth from "../../utils/auth"
@@ -27,20 +27,24 @@ export default ({navigation}) => {
 
   return (
     <Screen style={styles.container}>
-      <Headline >Setting Screen</Headline>
-      <Avatar.Image
-        size={90}
-        source={{ uri: Auth.getCurrentUser().photoURL }}
-      />
-      <Text>{Auth.getCurrentUser().displayName}</Text>
-      <Button>Change Your Profile</Button>
-      <Checkbox.Item
+      <View style={{alignItems:"center"}}>
+        <Headline >Customization</Headline>
+        <Caption>Under Development</Caption>
+        <Avatar.Image
+          size={90}
+          source={{ uri: Auth.getCurrentUser().photoURL }}
+        />
+        <Text>{Auth.getCurrentUser().displayName}</Text>
+        <Button disabled>Change Your Profile</Button>
+      </View>
+      
+      {/* <Checkbox.Item
         label="Under Development"
         status={checked1 ? 'checked' : 'unchecked'}
         onPress={() => {
           setChecked1(!checked1);
         }}
-      />
+      /> */}
       {/* <Checkbox.Item
         label="Under Development"
         status={checked2 ? 'checked' : 'unchecked'}
@@ -69,6 +73,6 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection:"column",
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'space-around',
   },
 });

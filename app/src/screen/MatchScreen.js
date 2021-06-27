@@ -62,9 +62,9 @@ export default ({navigation}) => {
 
 
         <View style={{flexDirection:"row", justifyContent:"space-between", alignItems:"center", alignSelf:"stretch"}}>
-          <Button  icon="arrow-left" col>Pass</Button>
+          <Button  icon="arrow-left" disabled>Pass</Button>
          
-          <Button icon="arrow-right" contentStyle={{flexDirection:"row-reverse" }}>Like</Button>
+          <Button icon="arrow-right" contentStyle={{flexDirection:"row-reverse" }} disabled>Like</Button>
         </View>
       </View>
     )

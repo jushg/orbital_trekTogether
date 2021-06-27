@@ -103,10 +103,13 @@ export default ({ route }) => {
         {...props}
         wrapperStyle={{
           right: {
-            backgroundColor: colorConst.accent
+            borderWidth: 1,
+            backgroundColor: colorConst.secondaryDark
           },
           left: { 
-            backgroundColor: colorConst.primary }
+            borderWidth: 1,
+            backgroundColor: colorConst.secondaryLight 
+          }
         }}
         textStyle={{
           right: {
@@ -114,7 +117,7 @@ export default ({ route }) => {
           },
           left: { color: colorConst.text }
         }}
-        // tickStyle={{ color: props.currentMessage.sent ? '#34B7F1' : '#999' }}
+        tickStyle={{ color: props.currentMessage.sent ? '#34B7F1' : '#999' }}
       />
     );
   }
@@ -187,7 +190,7 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   systemMessageWrapper: {
-    backgroundColor: '#6646ee',
+    backgroundColor: colorConst.accent,
     borderRadius: 4,
     padding: 5
   },
