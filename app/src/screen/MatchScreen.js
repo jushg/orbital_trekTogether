@@ -35,7 +35,7 @@ export default ({navigation}) => {
         {data.level === 2 && <Caption style={{fontSize:15}}>Intermediate</Caption>}
         {data.level === 3 && <Caption style={{fontSize:15}}>Advanced</Caption>}
         <View style={{alignItems:"baseline", alignSelf:"stretch"}}>
-          <Paragraph>Some nice things to say about myself</Paragraph>
+          <Paragraph>{data.about || "No description"}</Paragraph>
         </View>
         </View>
        
@@ -43,7 +43,7 @@ export default ({navigation}) => {
         <View style={{flexDirection:"row", justifyContent:"space-around", alignItems:"flex-start"}}>
           <View style={{flex:1, alignItems:"center"}}>
             <Subheading>Destination</Subheading>
-            <Paragraph>{data.place}</Paragraph>
+            {data.place.map((place, i) => <Paragraph key={i} >{place}</Paragraph>)}
           
             
           </View>
@@ -103,7 +103,7 @@ export default ({navigation}) => {
         showMessage({
           message: `It's a match!\nYou and ${otherData.name} are now buddies 🎉 `,
           type: "success",
-          duration: 4200,
+          duration: 4000,
           floating: true,
           icon: "auto"
         });

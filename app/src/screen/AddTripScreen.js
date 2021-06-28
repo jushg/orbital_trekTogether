@@ -11,7 +11,7 @@ import firebase from "../../utils/firebase";
 import {Actions} from "react-native-gifted-chat";
 import {showMessage} from "react-native-flash-message";
 import colorConst from '../constant/color';
-import TextBox from '../component/textInput'
+import TextBox from '../component/textbox'
 
 export default ({navigation}) => {
 
@@ -114,6 +114,8 @@ export default ({navigation}) => {
 
           <Subheading style={{paddingVertical: 10 , fontWeight:"bold"}}>BUDDY</Subheading>
           <Picker
+            style={{height: Platform.OS === "ios" ? 132 : 0}}
+            itemStyle={{height: Platform.OS === "ios" ? 132 : 0}}
             selectedValue={buddy}
             dropdownIconColor={colorConst.accent}
             mode="dropdown"

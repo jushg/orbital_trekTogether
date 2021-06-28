@@ -6,6 +6,7 @@ import colorConst from "../constant/color"
 import {UserContext} from "../../utils/context";
 import * as Match from "../../utils/match";
 import firebase from "../../utils/firebase";
+import {showMessage} from "react-native-flash-message";
 
 export const DashboardHeader = ({navigation, screenName}) => {
   const {user} = useContext(UserContext);
@@ -42,7 +43,7 @@ const unmatchBetween = async (user, otherID) => {
   }
 };
 
-export const MessengerButtonHeader = ({navigation, otherID}) => {
+export const MessengerButtonHeader = ({navigation, otherName, otherID}) => {
   const {user} = useContext(UserContext);
   const [visible, setVisible] = useState(false);
   const openMenu = () => setVisible(true);
@@ -53,6 +54,10 @@ export const MessengerButtonHeader = ({navigation, otherID}) => {
         console.log(result);
         // bring user back to chat list
         navigation.navigate("Message");
+        showMessage({
+          "message": `Unmatched with ${otherName}`,
+          type: "info", icon: "auto", floating: true
+        });
       })
     // console.log("you want to unmatch this person?")
   };

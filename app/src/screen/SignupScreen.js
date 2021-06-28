@@ -6,8 +6,8 @@ import { CommonActions } from "@react-navigation/native";
 import Screen from "../component/screen"
 import * as Auth from "../../utils/auth"
 import image from "../../assets/new_icon.png"
-import TextBox from '../component/textInput'
-
+import TextBox from '../component/textbox'
+import {showMessage} from "react-native-flash-message";
 
 export default ({navigation}) =>{
   const [email,setEmail] = useState("");
@@ -25,7 +25,11 @@ export default ({navigation}) =>{
         }]
       })),
       (error) => {
-        return console.error(error)
+        console.error(error);
+        showMessage({
+          "message": error.message,
+          type: "danger", icon: "auto", floating: true
+        });
       }
     )
   }

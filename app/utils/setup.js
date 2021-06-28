@@ -3,7 +3,7 @@ import firebase from "./firebase";
 const db = firebase.firestore().collection("users");
 
 // push profile data to db
-export const setUpProfile = async ({age, level, place, date, avatar}, onSuccess, onError) => {
+export const setUpProfile = async ({age, level, about, place, date, avatar}, onSuccess, onError) => {
   try {
     const user = firebase.auth().currentUser;
     if (user) {
@@ -14,6 +14,7 @@ export const setUpProfile = async ({age, level, place, date, avatar}, onSuccess,
       age = Math.floor(parseInt(age));
       if (Number.isNaN(age)) return onError("Age must be a positive number");
       if (level === '') return onError("Please choose one level");
+      if (about === '') return onError("Please provide a brief description of yourself")
       if (place === '') return onError("Please provide some destination");
       place = place.split(",").map(place => place.trim()).filter(place => place !== "");
       if (place === []) return onError("Please input some destination");
@@ -37,7 +38,7 @@ export const setUpProfile = async ({age, level, place, date, avatar}, onSuccess,
         uid: uid,
         age: age,
         level: level,
-        // intro: intro,
+        about: about,
         // hobby: hobby,
         place: place,
         date: date,

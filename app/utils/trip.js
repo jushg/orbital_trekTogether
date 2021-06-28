@@ -1,7 +1,7 @@
-import firebase from "firebase";
+import React from "react";
 import {View} from "react-native";
 import {Avatar, List} from "react-native-paper";
-import React from "react";
+import firebase from "firebase";
 
 const db = firebase.firestore().collection("trips");
 
@@ -13,8 +13,8 @@ export const addTrip =
       const uid = user.uid;
       await db.add({
         members: [uid,],
-        otherMemberName: {[uid]: ''},
-        otherAvatarURL: {[uid]: ''},
+        otherMemberName: {[uid]: ''},     // Key-this user; value-other user
+        otherAvatarURL: {[uid]: ''},      // Key-this user; value-other user
         notes: notes,
         place: place,
         date: date
@@ -67,4 +67,4 @@ export const renderTrip = ({item, user}) => {
       />
     </View>
   )
-}
+};

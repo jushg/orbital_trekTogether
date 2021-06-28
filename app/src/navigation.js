@@ -74,7 +74,12 @@ export const MainScreenStack = () => {
               headerStyle: {backgroundColor: colorConst.primary },
               headerTitle: route.params.otherName,
               headerTintColor: colorConst.textHeader,
-              headerRight: () => (<MessengerButtonHeader navigation={navigation} otherID={route.params.otherID}/>) })
+              headerRight: () => (
+                <MessengerButtonHeader
+                  navigation={navigation}
+                  otherName={route.params.otherName}
+                  otherID={route.params.otherID}/>
+              ) })
             }
             />
           </>

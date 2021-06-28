@@ -5,7 +5,7 @@ import { CommonActions } from "@react-navigation/native"
 // import { useDispatch } from 'react-redux';
 
 import Screen from "../component/screen"
-import TextBox from '../component/textInput';
+import TextBox from '../component/textbox';
 import * as Auth from "../../utils/auth"
 // import * as AuthCommons from "../../utils/context"
 import image from "../../assets/new_icon.png"

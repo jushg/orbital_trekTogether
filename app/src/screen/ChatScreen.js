@@ -7,7 +7,7 @@ import firebase from "../../utils/firebase";
 import Screen from "../component/screen"
 import {UserContext} from "../../utils/context";
 import colorConst from '../constant/color';
-import TextBox from '../component/textInput'
+import TextBox from '../component/textbox'
 
 // https://github.com/amandeepmittal/react-native-examples
 
@@ -118,7 +118,7 @@ export default ({ route }) => {
           },
           left: { color: colorConst.text }
         }}
-        tickStyle={{ color: props.currentMessage.sent ? '#34B7F1' : '#999' }}
+        // tickStyle={{ color: props.currentMessage.sent ? '#34B7F1' : '#999' }}
       />
     );
   }

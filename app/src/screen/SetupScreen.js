@@ -8,7 +8,7 @@ import * as ImagePicker from "expo-image-picker";
 import Screen from "../component/screen"
 import * as Setup from "../../utils/setup";
 import {UserContext} from "../../utils/context"
-import TextBox from '../component/textInput'
+import TextBox from '../component/textbox'
 import colorConst from '../constant/color';
 
 
@@ -16,7 +16,7 @@ import colorConst from '../constant/color';
 export default ({navigation}) => {
   const [age, setAge] = useState('');
   const [level, setLevel] = useState('');
-  // const [intro, setIntro] = useState("");
+  const [about, setAbout] = useState("");
   // const [hobby, setHobby] = useState("");
   const [place, setPlace] = useState("");
   const [date, setDate] = useState([false, false, false, false, false, false, false]);
@@ -26,7 +26,11 @@ export default ({navigation}) => {
 
   // callback function when user presses 'Finish' to set up their profile
   const handleSetUpProfile = async () => {
-     Setup.setUpProfile({age, level, place, date, avatar},
+     showMessage({
+       message: "Creating your account...",
+       type: "info", duration: 1500, floating: true
+     })
+     Setup.setUpProfile({age, level, about, place, date, avatar},
       () => {
         // console.log("Success")
         // console.log(userAPI.user)
@@ -95,7 +99,7 @@ export default ({navigation}) => {
           // left={<TextInput.Icon name="email"/>}
         /> 
         <View style={{justifyContent:"center"}} >
-        <Subheading style={styles.title}>LEVEL</Subheading>        
+        <Subheading style={styles.title}>LEVEL</Subheading>
         {/* <RadioButton.Item
           label="Beginner"
           value="Beginner"
@@ -119,20 +123,20 @@ export default ({navigation}) => {
             <RadioButton.Item label="Intermediate" value="Intermediate" color={colorConst.accentLight} />
             <RadioButton.Item label="Advanced" value="Advanced" color={colorConst.accent}/>
           </RadioButton.Group>
-        </View>    
-        
+        </View>
 
-        {/*<TextInput*/}
-        {/*  label="Intro"*/}
-        {/*  placeholder="A few words to describe yourself..."*/}
-        {/*  keyboardType="default"*/}
-        {/*  mode="contained"*/}
-        {/*  value={intro}*/}
-        {/*  onChangeText={setIntro}*/}
-        {/*  style={{marginBottom:10, width:"95%"}}*/}
-        {/*  // left={<TextInput.Icon name="email"/>}*/}
-        {/*/>*/}
-        <Subheading style={styles.title}>DESTINATION PREFERRENCE</Subheading>        
+        <Headline style={styles.title}>About you</Headline>
+        <TextBox
+          label="About"
+          placeholder="A few words to describe yourself..."
+          value={about}
+          onChangeText={setAbout}
+          style={{marginBottom:10, height: 120}}
+          multiline={true}
+          // left={<TextInput.Icon name="email"/>}
+        />
+
+        <Subheading style={styles.title}>DESTINATION PREFERRENCE</Subheading>
         <TextBox
           label="Places"
           placeholder="Somewhere nice, somewhere nicer,..."
@@ -144,12 +148,12 @@ export default ({navigation}) => {
         />
 
         {/*  Pick dates */}
-        <Subheading style={styles.title}>AVAILABILITY</Subheading>        
+        <Subheading style={styles.title}>AVAILABILITY</Subheading>
         <View style={{flex: 1}}>
         {daysInWeek.map((item, index) => {
           return (
-            <View 
-            style={{ margin: 5,flexWrap: 'wrap'}} 
+            <View
+            style={{ margin: 5,flexWrap: 'wrap'}}
             key={index}
             >
               <Chip
