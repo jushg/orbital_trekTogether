@@ -5,7 +5,7 @@ import { CommonActions } from "@react-navigation/native";
 
 import Screen from "../component/screen"
 import * as Auth from "../../utils/auth"
-import image from "../../assets/new_icon.png"
+import image from "../../assets/TrekTogether.svg"
 import TextBox from '../component/textbox'
 import {showMessage} from "react-native-flash-message";
 

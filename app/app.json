@@ -4,7 +4,7 @@
     "slug": "trek-together",
     "version": "1.0.1",
     "orientation": "portrait",
-    "icon": "./assets/new_icon.png",
+    "icon": "./assets/TrekTogether.svg",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
