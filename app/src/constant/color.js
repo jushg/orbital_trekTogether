@@ -3,7 +3,7 @@ export default {
     primary: '#6e7b31',
     accent: '#b66924', 
     surface: 'red',
-    background: 'rgb(242, 242, 242)',
+    background: 'rgb(250, 250, 250)',//'#fefae0',
     card: 'rgb(255, 255, 255)',
     text: 'rgb(28, 28, 30)',
     border: 'rgb(199, 199, 204)',

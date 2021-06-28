@@ -10,7 +10,7 @@ export default () => {
     return (
       <Screen style={styles.screen}>
         <Image source={require("../../assets/stock_cat_pict.jpg")} 
-        style={{width: "90%", height:"65%"}}
+        style={{width: "70%", height:"50%"}}
         />
         <Headline>Loading your journey...</Headline>
         <Caption>Please look at this cute cat in the meantime</Caption>

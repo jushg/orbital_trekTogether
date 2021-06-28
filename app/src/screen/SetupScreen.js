@@ -1,6 +1,6 @@
 import React, {useState, useContext}  from 'react';
 import { StyleSheet,Text, Image, View, ScrollView} from 'react-native'
-import {Button, RadioButton, TextInput, Chip, Avatar, Headline } from "react-native-paper";
+import {Button, RadioButton, TextInput, Chip, Avatar, Headline, Subheading } from "react-native-paper";
 import { CommonActions } from "@react-navigation/native";
 import { showMessage } from "react-native-flash-message";
 import * as ImagePicker from "expo-image-picker";
@@ -8,9 +8,10 @@ import * as ImagePicker from "expo-image-picker";
 import Screen from "../component/screen"
 import * as Setup from "../../utils/setup";
 import {UserContext} from "../../utils/context"
+import TextBox from '../component/textInput'
+import colorConst from '../constant/color';
 
-//This screen is use for setup user personal info
-//https://callstack.github.io/react-native-paper/chip.html
+
 
 export default ({navigation}) => {
   const [age, setAge] = useState('');
@@ -76,7 +77,7 @@ export default ({navigation}) => {
             source={
               avatar !== null
                 ? ({ uri: avatar.uri })
-                : require('../../assets/ava1.jpg')
+                : require('../../assets/account-icon.png')
             }
             style={{marginTop: 10}}
           />
@@ -85,19 +86,16 @@ export default ({navigation}) => {
           </Button>
         </View>
         
-        <Headline style={styles.title}>Age</Headline>
-        <TextInput
-          label="Age"
-          placeholder="25"
+        <Subheading style={styles.title}>AGE</Subheading>
+        <TextBox
+          placeholder="Just a number"
           keyboardType="numeric"
-          mode="contained"
           value={age}
           onChangeText={setAge}
-          // style={{marginBottom:10, width:"95%"}}
           // left={<TextInput.Icon name="email"/>}
         /> 
         <View style={{justifyContent:"center"}} >
-        <Headline style={styles.title}>Level</Headline>
+        <Subheading style={styles.title}>LEVEL</Subheading>        
         {/* <RadioButton.Item
           label="Beginner"
           value="Beginner"
@@ -117,9 +115,9 @@ export default ({navigation}) => {
           onPress={() => setLevel('Advanced')}
         /> */}
           <RadioButton.Group onValueChange={newLevel => setLevel(newLevel)} value={level}>
-            <RadioButton.Item label="Beginner" value="Beginner" color="aqua" />
-            <RadioButton.Item label="Intermediate" value="Intermediate" color="blue" />
-            <RadioButton.Item label="Advanced" value="Advanced" color="darkblue"/>
+            <RadioButton.Item label="Beginner" value="Beginner" color={colorConst.backgroundCard} />
+            <RadioButton.Item label="Intermediate" value="Intermediate" color={colorConst.accentLight} />
+            <RadioButton.Item label="Advanced" value="Advanced" color={colorConst.accent}/>
           </RadioButton.Group>
         </View>    
         
@@ -134,43 +132,43 @@ export default ({navigation}) => {
         {/*  style={{marginBottom:10, width:"95%"}}*/}
         {/*  // left={<TextInput.Icon name="email"/>}*/}
         {/*/>*/}
-        <Headline style={styles.title}>Preferred Destination</Headline>
-        <TextInput
-          label="Place"
-          placeholder="MacRitchie Reservoir, ..."
-          mode="contained"
+        <Subheading style={styles.title}>DESTINATION PREFERRENCE</Subheading>        
+        <TextBox
+          label="Places"
+          placeholder="Somewhere nice, somewhere nicer,..."
           value={place}
+          multiline={true}
           onChangeText={setPlace}
-          style={{marginBottom:10, width:"95%"}}
+          style={{marginBottom:10, height: 120}}
           // left={<TextInput.Icon name="email"/>}
         />
 
         {/*  Pick dates */}
-        <Headline style={styles.title}>Availability</Headline>
+        <Subheading style={styles.title}>AVAILABILITY</Subheading>        
         <View style={{flex: 1}}>
         {daysInWeek.map((item, index) => {
-              return (
-                <View 
-                style={{ margin: 5,flexWrap: 'wrap'}} 
+          return (
+            <View 
+            style={{ margin: 5,flexWrap: 'wrap'}} 
+            key={index}
+            >
+              <Chip
                 key={index}
-                >
-                  <Chip
-                    key={index}
-                    mode="outlined" // changing display mode, default is flat
-                    height={30} // give desirable height to chip
-                    textStyle={{ color:'black', fontSize: 15 }} //label properties
-                    // style={{ backgroundColor: "gray" }}
-                    selected={date[index]}
-                    selectedColor="darkblue"
-                    onPress={() => {
-                      let newDate = [...date];
-                      newDate[index] = !newDate[index];
-                      setDate(newDate);
-                      console.log('Clicked chip '+ item)
-                    }}> { item }
-                  </Chip>
-                </View>
-              );
+                mode="outlined" // changing display mode, default is flat
+                height={30} // give desirable height to chip
+                textStyle={{ color:'black', fontSize: 15 }} //label properties
+                // style={{ backgroundColor: "gray" }}
+                selected={date[index]}
+                selectedColor= {colorConst.accent}
+                onPress={() => {
+                  let newDate = [...date];
+                  newDate[index] = !newDate[index];
+                  setDate(newDate);
+                  console.log('Clicked chip '+ item)
+                }}> { item }
+              </Chip>
+            </View>
+          );
             })
           }
         </View>
@@ -187,10 +185,10 @@ export default ({navigation}) => {
 const styles = StyleSheet.create({
   title: {  
     paddingTop: 15,
-    paddingBottom: 5
+    paddingBottom: 5,
+    fontWeight: 'bold'
   },
   button: {
-    // width:"70%",
     borderRadius:25,
     marginVertical:20
   },

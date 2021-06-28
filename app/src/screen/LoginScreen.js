@@ -2,14 +2,15 @@ import React, { useState } from 'react';
 import { Button, TextInput } from "react-native-paper";
 import { StyleSheet, Text, View, Pressable, Image, ScrollView } from 'react-native';
 import { CommonActions } from "@react-navigation/native"
-import { useDispatch } from 'react-redux';
+// import { useDispatch } from 'react-redux';
 
 import Screen from "../component/screen"
+import TextBox from '../component/textInput';
 import * as Auth from "../../utils/auth"
-import * as AuthCommons from "../../utils/context"
+// import * as AuthCommons from "../../utils/context"
 import image from "../../assets/new_icon.png"
 import {showMessage} from "react-native-flash-message";
-
+import colorConst from "../constant/color"
 
 export default ({ navigation }) => {
   const [email,setEmail] = useState("");
@@ -44,24 +45,21 @@ export default ({ navigation }) => {
 
       <View style={{justifyContent:"center", alignItems:"center"}}>
       <Image source={image} style={{ width: 305, height: 300 }}/>
-        {/* <Text style = {styles.title}>TrekTogether</Text> */}
 
-        <TextInput
+        <TextBox
         label="Email"
         placeholder="johndoe@gmail.com"
         keyboardType="email-address"
-        mode="contained"
         value={email}
         onChangeText={setEmail}
-        style={{marginBottom:10, width:"100%"}}
+        style={{marginBottom:10}}
         left={<TextInput.Icon name="email"/>}
         autoCapitalize="none"
         />
 
-        <TextInput
+        <TextBox
         label="Password"
         placeholder="123456"
-        mode="contained"
         value={password}
         onChangeText={setPassword}
         secureTextEntry = {passwordVisible}
@@ -92,10 +90,21 @@ export default ({ navigation }) => {
           
         <View style= {{flexDirection:"row", justifyContent:"center"}}>
           <Text style={{fontSize:16}}>Don't have an account?  </Text>
-          <Pressable onPress={() => {}}>
+          <Pressable 
+            onPress={() => navigation.navigate("Sign Up")}
+            style={({ pressed }) => [
+              {
+                backgroundColor: pressed
+                  ? colorConst.backgroundCard
+                  : colorConst.background
+              },
+              styles.wrapperCustom
+            ]}
+            >
             <Text
               style={{fontSize:16, textDecorationLine: "underline"}}
-              onPress={() => navigation.navigate("Sign Up")}>
+              // onPress={() => navigation.navigate("Sign Up")}
+              >
               Sign Up
             </Text>
           </Pressable>
@@ -111,15 +120,15 @@ const styles = StyleSheet.create({
   container: {
     flex:1,
     justifyContent:"flex-start",
-    padding: 10
+    margin: '2%'
   },
   title: {
     fontSize: 40,
     paddingBottom: 30,
   },
   loginBtn: {
-    width:"35%",
-    borderRadius:5,
+    width:"40%",
+    borderRadius:25,
     height:50,
     alignItems:"center",
     justifyContent:"center",
@@ -131,6 +140,10 @@ const styles = StyleSheet.create({
     fontStyle:"italic",
     fontSize: 16,
     textDecorationLine: "underline",
+  },
+  wrapperCustom: {
+    borderRadius: 5,
+    paddingHorizontal:8,
   },
 });
 

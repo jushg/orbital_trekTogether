@@ -11,6 +11,7 @@ import Screen from "../component/screen"
 import firebase from "../../utils/firebase";
 import {UserContext} from "../../utils/context";
 import { Headline } from 'react-native-paper';
+import colorConst from '../constant/color';
 
 export default ({navigation}) => {
   const {user} = useContext(UserContext);
@@ -91,7 +92,9 @@ export default ({navigation}) => {
         description={lastMessage}
         // left={props => <List.Icon {...props} icon="account"/>}
         left={(props) => {
-          return <Avatar.Image {...props} size={70} source={{uri: item.avatarURL[otherID]}}/>;
+          return <Avatar.Image {...props} 
+          size={70} 
+          source={{uri: item.avatarURL[otherID]}}/>;
         }}
         onPress={() => navigation.dispatch(CommonActions.navigate({
             name: 'Chat',
@@ -102,7 +105,9 @@ export default ({navigation}) => {
         titleNumberOfLines={1}
         descriptionNumberOfLines={1}
         titleStyle={item.lastMessage.system ? {fontWeight:'bold', color:'black'} : {}}
+        // titleStyle={{fontWeight:"bold"}}
         descriptionStyle={item.lastMessage.system ? {fontWeight:'bold', color:'teal'} : {}}
+        // style={{backgroundColor:colorConst}}
       />
 
     )

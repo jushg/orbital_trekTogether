@@ -1,11 +1,9 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {List, Searchbar, Button, IconButton, Menu, Divider, Avatar, Portal} from "react-native-paper";
+import {Divider, ActivityIndicator, Caption} from "react-native-paper";
 import { StyleSheet, Text, View, FlatList } from 'react-native';
 
 
-import Screen from "../component/screen"
 import firebase from "../../utils/firebase";
-import { DashboardFAB } from '../component/fab';
 import {UserContext} from "../../utils/context";
 import * as Trip from "../../utils/trip";
 
@@ -46,31 +44,26 @@ export default ({navigation}) => {
 
 
   return (
-    <View style={styles.container}>
-        {/* <View style={{flexDirection: 'row', justifyContent:"space-between"}}>
-      <Searchbar
-          placeholder="Search Trip"
-          onChangeText={onChangeSearch}
-          value={searchQuery}
-          style={styles.searchBar}
-      />
-        <Menu
-          visible={visible}
-          onDismiss={closeMenu}
-          anchor={<IconButton onPress={openMenu} icon="sort-variant"/>}
-          style={{paddingTop: 30}}>
-          <Menu.Item onPress={sortNewest} title="Newest" />
-          <Menu.Item onPress={sortOldest} title="Oldest" />
-        </Menu>
-      </View>  */}
+    <>
+    {futureTrips == null ? 
+      <View style={styles.loadingContainer}>
+        <ActivityIndicator  size="large" color="black"/>
+      </View> :
+      futureTrips.length === 0?
+      <View style={styles.loadingContainer}> 
+        <Caption>You have no plan yet</Caption>
+      </View> :
+      <View style={styles.container}>
       <FlatList
         data={futureTrips}
         keyExtractor={item => item.id}
         ItemSeparatorComponent={ () => <Divider/> }
         // renderItem={renderFutureTrip}
         renderItem={({item}) => Trip.renderTrip({item, user})}
-      />
+      /> 
     </View>
+      }
+    </>
   )
 }
 
@@ -93,9 +86,31 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     paddingHorizontal: 10
   },
+  loadingContainer:{
+    flex: 1,
+    alignItems:"center",
+    justifyContent:"center"
+  },
   searchBar: {
     marginBottom: 5,
     borderRadius:20,
     width:"80%"
   }
 });
+
+ {/* <View style={{flexDirection: 'row', justifyContent:"space-between"}}>
+      <Searchbar
+          placeholder="Search Trip"
+          onChangeText={onChangeSearch}
+          value={searchQuery}
+          style={styles.searchBar}
+      />
+        <Menu
+          visible={visible}
+          onDismiss={closeMenu}
+          anchor={<IconButton onPress={openMenu} icon="sort-variant"/>}
+          style={{paddingTop: 30}}>
+          <Menu.Item onPress={sortNewest} title="Newest" />
+          <Menu.Item onPress={sortOldest} title="Oldest" />
+        </Menu>
+      </View>  */}

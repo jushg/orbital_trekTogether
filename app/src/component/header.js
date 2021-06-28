@@ -65,7 +65,7 @@ export const MessengerButtonHeader = ({navigation, otherID}) => {
       style={{paddingTop: 40}}
     >
       <Menu.Item onPress={unmatch} title="Unmatch" />
-      <Menu.Item onPress={report} title="Report" />
+      <Menu.Item onPress={report} title="Report" disabled />
     </Menu>
   )
 }

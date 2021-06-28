@@ -27,14 +27,14 @@ export default ({navigation}) => {
 
   return (
     <Screen style={styles.container}>
-      <View style={{alignItems:"center"}}>
-        <Headline >Customization</Headline>
+      <View style={{alignItems:"center", alignSelf: "stretch"}}>
+        <Headline >Profile</Headline>
         <Avatar.Image
           size={100}
           source={{ uri: Auth.getCurrentUser().photoURL }}
         />
-        <Subheading>{Auth.getCurrentUser().displayName}</Subheading>
-        <Button disabled>Edit Profile</Button>
+        <Subheading style={{fontWeight:"bold"}}>{Auth.getCurrentUser().displayName}</Subheading>
+        <Button disabled mode="contained" style={styles.button}>Edit Profile</Button>
         <Caption>Under Development</Caption>
 
       </View>
@@ -53,7 +53,7 @@ export default ({navigation}) => {
           setChecked2(!checked2);
         }}
       /> */}
-      <Button onPress={handleLogout} style={styles.button}>Log Out</Button>
+      <Button onPress={handleLogout} style={styles.button} mode="contained">Log Out</Button>
     </Screen>
   )
 }
@@ -64,8 +64,8 @@ const styles = StyleSheet.create({
     paddingTop: 30,
   },
   button: {
+    width:"40%",
     borderRadius:25,
-    height:50,
     alignItems:"center",
     justifyContent:"center",
     marginTop:20,
@@ -75,5 +75,6 @@ const styles = StyleSheet.create({
     flexDirection:"column",
     alignItems: 'center',
     justifyContent: 'space-around',
+    padding: 10
   },
 });

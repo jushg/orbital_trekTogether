@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useContext} from 'react';
 import {View,  Platform, Text, StyleSheet, ScrollView} from 'react-native';
-import {Button, TextInput, Headline, Subheading, List, ActivityIndicator} from 'react-native-paper';
+import {Button, Subheading, TextInput, ActivityIndicator} from 'react-native-paper';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import {Picker} from '@react-native-picker/picker';
 
@@ -11,7 +11,8 @@ import firebase from "../../utils/firebase";
 import {Actions} from "react-native-gifted-chat";
 import {showMessage} from "react-native-flash-message";
 import colorConst from '../constant/color';
-import { FONT_SANS_10_BLACK } from 'jimp';
+import TextBox from '../component/textInput'
+
 export default ({navigation}) => {
 
   const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
@@ -85,18 +86,17 @@ export default ({navigation}) => {
         {myBuddies == null ? 
         <ActivityIndicator size="large" color="black"/> : 
         <ScrollView>
-          <Subheading style={{paddingVertical: 10}}>ROUTE</Subheading>
-          <TextInput
-            label="Place"
+          <Subheading style={{paddingVertical: 10, fontWeight:"bold"}}>ROUTE</Subheading>
+          <TextBox
             placeholder="Somewhere nice ..."
             value={place}
             autoCapitalize="words"
             onChangeText={setPlace}
-            left={<TextInput.Icon name="human-male"/>}
-            style={{marginBottom: 10, width: "100%", alignSelf:"center"}}
+            left={<TextInput.Icon name="map-marker"/>}
+            style={{marginBottom: 10,  alignSelf:"center"}}
           />
           
-          <Subheading style={{paddingTop:10}}>DATE: { Platform.OS === 'ios' && date.toLocaleDateString(undefined, options)}</Subheading>
+          <Subheading style={{paddingTop:10, fontWeight:"bold"}}>DATE: { Platform.OS === 'ios' && date.toLocaleDateString(undefined, options)}</Subheading>
           {Platform.OS === 'android' && 
           <Button onPress={() => setShowPicker(true)}  color={colorConst.accent} labelStyle={{fontSize: 20}}> 
             {date.toLocaleDateString(undefined, options)} 
@@ -104,17 +104,18 @@ export default ({navigation}) => {
           
           {showPicker && (
             <DateTimePicker
-              // testID="dateTimePicker"
               value={date}
-              mode={"date"}
+              mode="date"
               display="default"
+              
               onChange={onChangeDatePicker}
             />
           )}
 
-          <Subheading style={{paddingVertical: 10}}>BUDDY</Subheading>
+          <Subheading style={{paddingVertical: 10 , fontWeight:"bold"}}>BUDDY</Subheading>
           <Picker
             selectedValue={buddy}
+            dropdownIconColor={colorConst.accent}
             mode="dropdown"
             onValueChange={(itemValue, itemIndex) => {
               // console.log(itemValue);
@@ -131,19 +132,22 @@ export default ({navigation}) => {
             ))}
           </Picker>
 
-          <Subheading style={{paddingVertical:10}}>NOTES</Subheading>
-          <TextInput
+          <Subheading style={{paddingBottom:10 ,paddingTop:30, fontWeight:"bold"}}>NOTES</Subheading>
+          <TextBox
             label="Notes"
-            placeholder="Things to note..."
+            placeholder="Foods, weather, deadlines,..."
             value={notes}
             autoCapitalize="words"
             onChangeText={setNotes}
-            left={<TextInput.Icon name="human-male"/>}
-            style={{marginBottom: 10, width: "100%" , alignSelf:"center"}}
+            left={<TextInput.Icon name="note-text"/>}
+            multiline={true}
+            numberOfLines={3}
+            underlineColor={colorConst.secondaryLight}
+            style={{marginBottom: 10, height: 140, alignSelf:"center"}}
           />
 
           <View style={{flexDirection: "row", justifyContent: "space-around", paddingTop: 60}}>
-            <Button onPress={handleAddTrip} style={{color:colorConst.accent}}>Add</Button>
+            <Button onPress={handleAddTrip} mode="contained" style={styles.button}>Add</Button>
           </View>
 
         </ScrollView>
@@ -155,7 +159,6 @@ export default ({navigation}) => {
 
 const styles = StyleSheet.create({
   title: {
-    alignSelf:"center",
     paddingBottom: 10,
   },
   container: {
@@ -165,6 +168,7 @@ const styles = StyleSheet.create({
     padding:10
   },
   button : {
-    color:colorConst.prim
+    width:'40%',
+    borderRadius:25,
   }
 });

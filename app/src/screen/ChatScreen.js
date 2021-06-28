@@ -1,12 +1,13 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { GiftedChat, Bubble, Send, SystemMessage } from 'react-native-gifted-chat';
 import { View, StyleSheet} from 'react-native';
-import { ActivityIndicator, IconButton } from 'react-native-paper';
+import { ActivityIndicator, IconButton, TextInput } from 'react-native-paper';
 
 import firebase from "../../utils/firebase";
 import Screen from "../component/screen"
 import {UserContext} from "../../utils/context";
 import colorConst from '../constant/color';
+import TextBox from '../component/textInput'
 
 // https://github.com/amandeepmittal/react-native-examples
 
@@ -130,6 +131,13 @@ export default ({ route }) => {
     );
   }
 
+  const renderComposer = () => {
+    return (
+      <TextInput 
+      style={{flex:1}}
+      />
+    )
+  }
   const renderSend = (props) => {
     return (
       <Send {...props}>
@@ -183,7 +191,8 @@ const styles = StyleSheet.create({
   },
   sendingContainer: {
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    // backgroundColor: colorConst.backgroundCard
   },
   bottomComponentContainer: {
     justifyContent: 'center',

@@ -6,6 +6,8 @@ import { CommonActions } from "@react-navigation/native";
 import Screen from "../component/screen"
 import * as Auth from "../../utils/auth"
 import image from "../../assets/new_icon.png"
+import TextBox from '../component/textInput'
+
 
 export default ({navigation}) =>{
   const [email,setEmail] = useState("");
@@ -33,38 +35,36 @@ export default ({navigation}) =>{
         <ScrollView>
         <View style={{ justifyContent:"center", alignItems:"center"}}>
           <Image source={image} style={{ width: 305, height: 300 }}/>
-          <TextInput
+          <TextBox
           label="Email"
           placeholder="johndoe@gmail.com"
           keyboardType="email-address"
-          mode="contained"
           value={email}
           onChangeText={setEmail}
-          style={{marginBottom:10, width:"100%"}}
+          style={{marginBottom:15}}
           left={<TextInput.Icon name="email"/>}
           autoCapitalize="none"
           />
 
-          <TextInput
+          <TextBox
           label="Full Name"
           placeholder="John Doe"
           value={username}
           autoCapitalize="words"
           onChangeText={setUsername}
           left={<TextInput.Icon name="human-male"/>}
-          style={{marginBottom:10, width:"100%"}}
+          style={{marginBottom:15}}
           />
 
-          <TextInput
+          <TextBox
           label="Password"
           placeholder="123456"
-          mode="contained"
           value={password}
           onChangeText={setPassword}
           secureTextEntry = {passwordVisible}
           left={<TextInput.Icon name="lock"/>}
           right={<TextInput.Icon name={passwordVisible ? "eye-off" : "eye"} onPress={() => setPasswordVisible((state) => !state)} />}
-          style={{marginBottom:10, width:"100%"}}
+          style={{marginBottom:10}}
           autoCapitalize="none"
           />
           <Button
@@ -88,9 +88,9 @@ const styles = StyleSheet.create({
     paddingBottom: 30,
   },
   signupBtn: {
-    width:"35%",
+    width:"40%",
     height:50,
-    borderRadius:5,
+    borderRadius:25,
     alignItems:"center",
     justifyContent:"center",
     marginTop:20,
