@@ -42,7 +42,7 @@ export default ({navigation}) => {
       </View> :
       pastTrips.length === 0?
       <View style={styles.loadingContainer}> 
-        <Caption>You have no recorded journal</Caption>
+        <Caption>You have no recorded journals</Caption>
       </View> :
       <View style={styles.container}>
         <FlatList

@@ -42,14 +42,14 @@ export default ({navigation}) => {
         
         <View style={{flexDirection:"row", justifyContent:"space-around", alignItems:"flex-start"}}>
           <View style={{flex:1, alignItems:"center"}}>
-            <Subheading>Destination</Subheading>
+            <Subheading style={{fontWeight:'bold'}}>Destination</Subheading>
             {data.place.map((place, i) => <Paragraph key={i} >{place}</Paragraph>)}
           
             
           </View>
           <View style={styles.verticalLine}></View>
           <View style={{flex:1 , alignItems:"center"}}>
-          <Subheading>{computeDate(data.date)} free day{computeDate(data.date) > 1 ? "s":" "}</Subheading>
+          <Subheading style={{fontWeight:'bold'}}>{computeDate(data.date)} free day{computeDate(data.date) > 1 ? "s":" "}</Subheading>
             {data.date[0] && <Paragraph>Monday</Paragraph>}
             {data.date[1] && <Paragraph>Tuesday</Paragraph>}
             {data.date[2] && <Paragraph>Wednesday</Paragraph>}
@@ -163,7 +163,7 @@ export default ({navigation}) => {
         : (buddies.length === 0 || swipedAll)
           ? <Image style={{width: 250, height: 270}} source={require("../../assets/business_cat.png")}/>
           : <Swiper
-          verticalSwipe={false}
+            verticalSwipe={false}
             cards={buddies}
             renderCard={renderCard}
             // onSwipedLeft={handleSwipeLeft}
@@ -172,6 +172,8 @@ export default ({navigation}) => {
             cardIndex={0}
             backgroundColor={colorConst.backgroundCard}
             stackSize= {3}
+            // marginBottom={30}
+            // style={{cardVer}}
         >
         </Swiper>
       }

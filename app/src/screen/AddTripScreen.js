@@ -114,8 +114,8 @@ export default ({navigation}) => {
 
           <Subheading style={{paddingVertical: 10 , fontWeight:"bold"}}>BUDDY</Subheading>
           <Picker
-            style={{height: Platform.OS === "ios" ? 132 : 0}}
-            itemStyle={{height: Platform.OS === "ios" ? 132 : 0}}
+            // style={{height: Platform.OS === "ios" ? 132 : 69}}
+            // itemStyle={{height: Platform.OS === "ios" ? 132 : 0}}
             selectedValue={buddy}
             dropdownIconColor={colorConst.accent}
             mode="dropdown"
@@ -125,9 +125,9 @@ export default ({navigation}) => {
             }}
           >
             <Picker.Item label="None" value="None"/>
-            {myBuddies.map(buddy => (
+            {myBuddies.map((buddy, i) => (
               <Picker.Item
-                key={buddy.uid}
+                key= {i}
                 value={buddy}
                 label={buddy.name}
               />
@@ -139,7 +139,6 @@ export default ({navigation}) => {
             label="Notes"
             placeholder="Foods, weather, deadlines,..."
             value={notes}
-            autoCapitalize="words"
             onChangeText={setNotes}
             left={<TextInput.Icon name="note-text"/>}
             multiline={true}

@@ -125,7 +125,7 @@ export default ({navigation}) => {
           </RadioButton.Group>
         </View>
 
-        <Headline style={styles.title}>About you</Headline>
+        <Subheading style={styles.title}>ABOUT YOU</Subheading>
         <TextBox
           label="About"
           placeholder="A few words to describe yourself..."

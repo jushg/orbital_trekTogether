@@ -51,7 +51,7 @@ export default ({navigation}) => {
       </View> :
       futureTrips.length === 0?
       <View style={styles.loadingContainer}> 
-        <Caption>You have no plan yet</Caption>
+        <Caption>You have no plans</Caption>
       </View> :
       <View style={styles.container}>
       <FlatList
