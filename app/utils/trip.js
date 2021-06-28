@@ -25,7 +25,7 @@ export const addTrip =
       await db.add({
         members: [u1, u2],
         otherMemberName: {[u1]: buddy.name, [u2]: user.displayName},   // cross-name!!
-        otherAvatarURL: {[u1]: user.photoURL, [u2]: buddy.photoURL},     // cross-name!!
+        otherAvatarURL: {[u1]: buddy.photoURL, [u2]: user.photoURL},     // cross-name!!
         notes: notes,
         place: place,
         date: date
