@@ -23,7 +23,7 @@ export const addTrip =
     else {    // trip with buddy
       const [u1, u2] = [user.uid, buddy.uid];
       await db.add({
-        members: [u1, u2],
+        members: [u1, u2].sort(),
         otherMemberName: {[u1]: buddy.name, [u2]: user.displayName},   // cross-name!!
         otherAvatarURL: {[u1]: buddy.photoURL, [u2]: user.photoURL},     // cross-name!!
         notes: notes,
@@ -68,3 +68,19 @@ export const renderTrip = ({item, user}) => {
     </View>
   )
 };
+
+export const deleteFutureTripWithUnmatchedBuddy = async (user, otherID) => {
+  try {
+    const uid = user.uid;
+    const today = new Date(new Date().toDateString());
+    const querySnapshot = await
+      db.where("members", "==", [uid, otherID].sort())
+      // .where("members", "array-contains", otherID)
+      .where("date", ">=", today)
+      .get();
+    querySnapshot.forEach(doc => doc.ref.delete());
+    return "deleted future trips with ex buddy";
+  } catch (e) {
+    console.error(e);
+  }
+}

@@ -84,7 +84,7 @@ export default ({ route }) => {
       }
     };
 
-    Promise.all([
+    await Promise.all([
       firebase.firestore()
         .collection("chats")
         .doc(chat._id)

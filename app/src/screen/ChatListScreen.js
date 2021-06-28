@@ -16,7 +16,6 @@ import colorConst from '../constant/color';
 export default ({navigation}) => {
   const {user} = useContext(UserContext);
   const [chats, setChats] = useState(null);
-  // const [myBuddies, setMyBuddies] = useState(null);
   
   const [searchQuery, setSearchQuery] = useState(''); 
   const onChangeSearch = query => setSearchQuery(query);
@@ -44,29 +43,6 @@ export default ({navigation}) => {
 
     return () => unsubscribeChatListener();
   }, []);
-
-  // useEffect(() => {
-  //   const unsubscribeBuddiesListener = firebase.firestore()
-  //     .collection("users")
-  //     .doc(user.uid)
-  //     .onSnapshot(snapshot => {
-  //       const b = snapshot.data().buddies;    // array of uid, which are strings
-  //       const promises = [];
-  //       // read data from firestore; firestore returns a promise
-  //       b.map(buddy => promises.push(
-  //         firebase.firestore().collection("users")
-  //           .doc(buddy)
-  //           .get()
-  //       ))
-  //       // wait till all promises are resolved, then set state
-  //       Promise.all(promises).then(allResponses => {
-  //         const result = {};
-  //         allResponses.map(doc => result[doc.id] = { buddyID: doc.id, ...doc.data() } );
-  //         setMyBuddies(result);
-  //       });
-  //     });
-  //   return () => unsubscribeBuddiesListener();
-  // }, []);
 
   function getChatName(itemID, itemName) {
     const x = itemID.split("_");
@@ -112,32 +88,36 @@ export default ({navigation}) => {
 
     )
   };
-    return (
+
+  return (
       <>
         <Appbar.Header>
           <Appbar.Content title="Messages"  />
             <Appbar.Action icon="magnify" disabled  />
             <Appbar.Action icon="cog" disabled/>
         </Appbar.Header>  
-        {chats == null ? 
-        <View style={styles.loadingContainer}>
-          <ActivityIndicator  size="large" color="black"/>
-        </View> :
-        chats.length === 0?
-        <View style={styles.loadingContainer}>
-        <Caption>You have no current chats.</Caption>
-        </View> :
-        <View style={{flex: 1}}>
-          <FlatList
-            data={chats}
-            keyExtractor={item => item._id}
-            ItemSeparatorComponent={ () => <Divider/> }
-            renderItem={renderChat}
-          />
-        </View>
+
+        {chats == null ?
+          <View style={styles.loadingContainer}>
+            <ActivityIndicator  size="large" color="black"/>
+          </View> :
+
+        chats.length === 0 ?
+          <View style={styles.loadingContainer}>
+            <Caption>You have no current chats.</Caption>
+          </View> :
+
+          <View style={{flex: 1}}>
+            <FlatList
+              data={chats}
+              keyExtractor={item => item._id}
+              ItemSeparatorComponent={ () => <Divider/> }
+              renderItem={renderChat}
+            />
+          </View>
         }
       </>
-    )
+  )
 }
 
 const styles = StyleSheet.create({
