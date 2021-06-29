@@ -12,12 +12,12 @@ export const setUpProfile = async ({age, level, about, place, date, avatar}, onS
       if (avatar == null) return onError("Please add a profile picture");
 
       age = Math.floor(parseInt(age));
-      if (Number.isNaN(age)) return onError("Age must be a positive number");
+      if (Number.isNaN(age) || age <= 0) return onError("Age must be a positive number");
       if (level === '') return onError("Please choose one level");
       if (about === '') return onError("Please provide a brief description of yourself")
       if (place === '') return onError("Please provide some destination");
       place = place.split(",").map(place => place.trim()).filter(place => place !== "");
-      if (place === []) return onError("Please input some destination");
+      if (place == 0) return onError("Please provide some destination");
       if (date.every(day => day === false)) return onError("Please choose at least one free day");
 
       // inputs have passed validation, so parse them

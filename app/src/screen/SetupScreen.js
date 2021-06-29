@@ -27,7 +27,7 @@ export default ({navigation}) => {
   // callback function when user presses 'Finish' to set up their profile
   const handleSetUpProfile = async () => {
      showMessage({
-       message: "Creating your account...",
+       message: "Setting up your profile...",
        type: "info", duration: 1500, floating: true
      })
      Setup.setUpProfile({age, level, about, place, date, avatar},
@@ -136,7 +136,7 @@ export default ({navigation}) => {
           // left={<TextInput.Icon name="email"/>}
         />
 
-        <Subheading style={styles.title}>DESTINATION PREFERRENCE</Subheading>
+        <Subheading style={styles.title}>DESTINATION PREFERENCES</Subheading>
         <TextBox
           label="Places"
           placeholder="Somewhere nice, somewhere nicer,..."

@@ -166,7 +166,7 @@ export default ({navigation}) => {
             verticalSwipe={false}
             cards={buddies}
             renderCard={renderCard}
-            // onSwipedLeft={handleSwipeLeft}
+            onSwipedLeft={handleSwipeLeft}
             onSwipedRight={handleSwipeRight}
             onSwipedAll={() => setSwipedAll(true)}
             cardIndex={0}
