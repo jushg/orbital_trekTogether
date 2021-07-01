@@ -9,7 +9,7 @@ export const setUpProfile = async ({age, level, about, place, date, avatar}, onS
     if (user) {
       const uid = user.uid;
       // validate inputs
-      // if (avatar == null) return onError("Please add a profile picture");
+      if (avatar == null) return onError("Please add a profile picture");
 
       age = Math.floor(parseInt(age));
       if (Number.isNaN(age) || age <= 0) return onError("Age must be a positive number");
