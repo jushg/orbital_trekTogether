@@ -2,9 +2,9 @@
   "expo": {
     "name": "trek-together",
     "slug": "trek-together",
-    "version": "1.0.1",
+    "version": "2.0.1",
     "orientation": "portrait",
-    "icon": "./assets/TrekTogether.svg",
+    "icon": "./assets/app-icon.png",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
@@ -27,7 +27,7 @@
         "backgroundColor": "#FFFFFF"
       },
       "package": "com.orbital.trektogether",
-      "versionCode": 2
+      "versionCode": 4
     },
     "web": {
       "favicon": "./assets/favicon.png"
