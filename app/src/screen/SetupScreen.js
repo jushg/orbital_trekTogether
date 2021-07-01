@@ -1,16 +1,17 @@
 import React, {useState, useContext}  from 'react';
-import { StyleSheet,Text, Image, View, ScrollView} from 'react-native'
+import {StyleSheet, Text, Image, View, ScrollView, Keyboard} from 'react-native';
 import {Button, RadioButton, TextInput, Chip, Avatar, Headline, Subheading } from "react-native-paper";
 import { CommonActions } from "@react-navigation/native";
 import { showMessage } from "react-native-flash-message";
 import * as ImagePicker from "expo-image-picker";
+import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 
 import Screen from "../component/screen"
 import * as Setup from "../../utils/setup";
 import {UserContext} from "../../utils/context"
 import TextBox from '../component/textbox'
 import colorConst from '../constant/color';
-
+import { MAPS_API_KEY } from "@env";
 
 
 export default ({navigation}) => {
@@ -18,7 +19,9 @@ export default ({navigation}) => {
   const [level, setLevel] = useState('');
   const [about, setAbout] = useState("");
   // const [hobby, setHobby] = useState("");
-  const [place, setPlace] = useState("");
+  const [place, setPlace] = useState([]);
+  // const [place, setPlace] = useState(["Hanoi", "Saigon"])
+
   const [date, setDate] = useState([false, false, false, false, false, false, false]);
   const daysInWeek = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
 
@@ -71,7 +74,7 @@ export default ({navigation}) => {
 
   return (
     <Screen style={styles.container} >
-      <ScrollView style={{paddingHorizontal: 15}}>
+      <ScrollView keyboardShouldPersistTaps={"handled"} style={{paddingHorizontal: 15}}>
 
         {/* <Text style={styles.title}>Set up your Profile</Text> */}
         
@@ -100,24 +103,6 @@ export default ({navigation}) => {
         /> 
         <View style={{justifyContent:"center"}} >
         <Subheading style={styles.title}>LEVEL</Subheading>
-        {/* <RadioButton.Item
-          label="Beginner"
-          value="Beginner"
-          status={ level === 'Beginner' ? 'checked' : 'unchecked' }
-          onPress={() => setLevel('Beginner')}
-        />
-        <RadioButton.Item
-          label="Intermediate"
-          value="Intermediate"
-          status={ level === 'Intermediate' ? 'checked' : 'unchecked' }
-          onPress={() => setLevel('Intermediate')}
-        />
-        <RadioButton.Item
-          label="Advanced"
-          value="Advanced"
-          status={ level === 'Advanced' ? 'checked' : 'unchecked' }
-          onPress={() => setLevel('Advanced')}
-        /> */}
           <RadioButton.Group onValueChange={newLevel => setLevel(newLevel)} value={level}>
             <RadioButton.Item label="Beginner" value="Beginner" color={colorConst.backgroundCard} />
             <RadioButton.Item label="Intermediate" value="Intermediate" color={colorConst.accentLight} />
@@ -137,14 +122,86 @@ export default ({navigation}) => {
         />
 
         <Subheading style={styles.title}>DESTINATION PREFERENCES</Subheading>
-        <TextBox
-          label="Places"
-          placeholder="Somewhere nice, somewhere nicer,..."
-          value={place}
-          multiline={true}
-          onChangeText={setPlace}
-          style={{marginBottom:10, height: 120}}
-          // left={<TextInput.Icon name="email"/>}
+        {/*<TextBox*/}
+        {/*  label="Places"*/}
+        {/*  placeholder="Somewhere nice, somewhere nicer,..."*/}
+        {/*  value={place}*/}
+        {/*  multiline={true}*/}
+        {/*  onChangeText={setPlace}*/}
+        {/*  style={{marginBottom:10, height: 120}}*/}
+        {/*  // left={<TextInput.Icon name="email"/>}*/}
+        {/*/>*/}
+
+        <View
+          style={{
+            flexDirection: 'row',
+            // alignItems: 'center',
+            // justifyContent: 'flex-start',
+            flexWrap: 'wrap'
+          }}
+        >
+        {place.map((item, index) => {
+          return (
+            <View
+              style={{ marginHorizontal: 3, marginVertical: 3}}
+              // key={item.place_id}
+              key={index}
+            >
+              <Chip
+                mode="outlined"
+                selected={false}
+                height={30}
+                textStyle={{ color:'black', fontSize: 15 }}
+                style={{ backgroundColor: colorConst.secondaryDark }}
+                // selectedColor= {colorConst.accent}
+                onClose={() => {
+                  let newPlace = [...place];
+                  newPlace.splice(index, 1);
+                  setPlace(newPlace);
+                  console.log('Delete place '+ item.description)
+                }}>
+                { item.structured_formatting.main_text }
+              </Chip>
+            </View>
+          );
+        })}
+        </View>
+
+        <GooglePlacesAutocomplete
+          placeholder='Search for a place...'
+          debounce={1000}     // delay after typing to call API
+          multiline={false}
+          // fetchDetails={true}
+          onPress={(data, details = null) => {
+            // 'details' is provided when fetchDetails = true
+            const arr = [...place, data];
+            setPlace(arr);
+            // console.log(data, details);
+          }}
+          // returnKeyType="search"
+          onEndEditing={Keyboard.dismiss}
+          onFail={console.error}
+          onNotFound={console.error}
+          query={{
+            key: MAPS_API_KEY,
+            language: 'en',
+            components: 'country:sg',
+          }}
+          textInputProps={{   // props for react native's TextInput, not rn paper!
+            clearTextOnFocus: true,     // ios only
+            backgroundColor: colorConst.secondaryLight,
+            style: {
+              width: "100%",
+              height: 40,
+              borderWidth: 1,
+              borderRadius: 5,
+              paddingHorizontal: 10,
+              marginVertical: 3
+            }
+          }}
+          // suppressDefaultStyles={true}
+          enablePoweredByContainer={false}
+          // isRowScrollable={false}
         />
 
         {/*  Pick dates */}
@@ -161,7 +218,7 @@ export default ({navigation}) => {
                 mode="outlined" // changing display mode, default is flat
                 height={30} // give desirable height to chip
                 textStyle={{ color:'black', fontSize: 15 }} //label properties
-                // style={{ backgroundColor: "gray" }}
+                // style={{ backgroundColor: colorConst.secondaryDark }}
                 selected={date[index]}
                 selectedColor= {colorConst.accent}
                 onPress={() => {
