@@ -23,7 +23,9 @@ export const setUpProfile = async ({age, level, about, place, date, avatar}, onS
 
       // inputs have passed validation, so parse them
       level = level === "Beginner" ? 1 : level === "Intermediate" ? 2 : 3;
-      place = place.map(item => item.structured_formatting.main_text);
+      const uniquePlace = [... new Set(
+        place.map(item => item.structured_formatting.main_text)
+      )].sort();
 
       const response = await fetch(avatar.uri);
       const blob = await response.blob();
@@ -42,7 +44,7 @@ export const setUpProfile = async ({age, level, about, place, date, avatar}, onS
         level: level,
         about: about,
         // hobby: hobby,
-        place: place,
+        place: uniquePlace,
         date: date,
         // trips: [],     // unnecessary
         buddies: [],

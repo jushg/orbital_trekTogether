@@ -24,13 +24,29 @@ const computeScore = (buddyData, currData) => {
   else if (currData.level - buddyData.level === 1) levelSimilarity = 0.5;
   else levelSimilarity = 0;
 
-  placeSimilarity = 0.5;
+  const buddyPlaces = buddyData.place, currPlaces = currData.place;
+  let commonCount = 0;
+  let i = 0, j = 0;
+  // Like the merge step in mergesort, but only output when the values pointed at are equal
+  while (i < buddyPlaces.length && j < currPlaces.length) {
+    if (buddyPlaces[i] === currPlaces[j]) {
+      commonCount++;
+      i++;
+      j++;
+    } else if (buddyPlaces[i] < currPlaces[j]) {
+      i++;
+    } else {
+      j++;
+    }
+  }
+  // Jaccard similarity coefficient
+  placeSimilarity = commonCount * 1.0 / (buddyPlaces.length + currPlaces.length - commonCount);
 
   dateSimilarity = 0;
   for (let i = 0; i < 7; i++) {
     if (currData.date[i] && buddyData.date[i]) dateSimilarity++;
   }
-  dateSimilarity /= 7;
+  dateSimilarity /= 7.0;
 
   return formula(ageSimilarity, levelSimilarity, placeSimilarity, dateSimilarity);
 
