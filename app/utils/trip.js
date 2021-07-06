@@ -53,7 +53,7 @@ export const addTrip =
   }
 };
 
-export const renderTrip = ({item, user, rootNavigation}) => {
+export const renderTrip = ({item, user, navigation}) => {
   const date = item.date.toDate().toLocaleDateString();
   const hasBuddy = item.members.length === 2;
   let buddyDesc = '';
@@ -77,7 +77,7 @@ export const renderTrip = ({item, user, rootNavigation}) => {
             );
         }}
 
-        onPress={ rootNavigation ? () => rootNavigation.dispatch(CommonActions.navigate({
+        onPress={ navigation ? () => navigation.dispatch(CommonActions.navigate({
             name: 'View Journal',
             params: {trip: item, otherName: buddyDesc,} //otherID: otherID},
           })

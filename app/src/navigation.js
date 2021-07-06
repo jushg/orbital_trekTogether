@@ -140,9 +140,7 @@ export const AuthScreenStack = () => {
 const HomeTab = createMaterialBottomTabNavigator();
 
 export const HomeScreenTab = () => {
-  const navigation = useNavigation();
   return (
-    <RootNavigationContext.Provider value={{rootNavigation: navigation}}>
     <HomeTab.Navigator 
     initialRouteName="Home"
     // activeColor= {colorConst.accent}
@@ -184,7 +182,6 @@ export const HomeScreenTab = () => {
         }
       />
     </HomeTab.Navigator>
-    </RootNavigationContext.Provider>
   );
 }
 
