@@ -2,9 +2,9 @@ import firebase from "./firebase";
 
 const db = firebase.firestore().collection('journals');
 
-export const getJournal = async (tripID) => {
-  return await db.doc(tripID).get();
-}
+// export const getJournal = async (tripID) => {
+//   return await db.doc(tripID).get();
+// }
 
 export const updateJournal = async (tripID, username, text) => {
   try {

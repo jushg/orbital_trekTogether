@@ -12,8 +12,6 @@ export default ({navigation, route}) => {
 
   const {user} = useContext(UserContext);
   const trip = route.params.trip;
-  // const textInput = useRef(null);
-  // navigation.addListener('didBlur', () => onSubmit(journal));
 
   const [journal, setJournal] = useState(null);
   const [isTextChanged, setIsTextChanged] = useState(false);
@@ -26,10 +24,21 @@ export default ({navigation, route}) => {
     return () => unsubscribeJournalListener();
   }, []);
 
-  // navigation.onBac
+  // // instead of using isTextChanged, add a listener for when the screen goes out of focus (i.e. press Back)
+  // // However, this does not provide real time updates if the buddy is also editing.
+  // useEffect(() => {
+  //   const unsubscribe = navigation.addListener('blur', () => {
+  //     Journal.updateJournal(trip.id, user.displayName, journal.text)
+  //       .then(console.log);
+  //   });
+  //
+  //   return () => unsubscribe();
+  // }, [journal])
 
   if (!journal) {
-    return <View style={styles.loadingContainer}><ActivityIndicator size="large" color="black"/></View>
+    return <View style={styles.loadingContainer}>
+      <ActivityIndicator size="large" color="black"/>
+    </View>
   }
 
   return (
@@ -45,7 +54,6 @@ export default ({navigation, route}) => {
 
       <TextInput
         style={styles.input}
-        // ref={textInput}
         // autoFocus={true}
         multiline={true}
         scrollEnabled={false}
@@ -81,7 +89,7 @@ const styles = StyleSheet.create({
     color:"#05668D"
   },
   container: {
-    flex: 1,
+    // flex: 1,
     padding: 10,
   },
   loadingContainer:{
