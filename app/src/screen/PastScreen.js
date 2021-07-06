@@ -3,7 +3,7 @@ import {StyleSheet,  View, FlatList } from 'react-native';
 import {Caption, ActivityIndicator, Divider} from "react-native-paper";
 
 import firebase from "../../utils/firebase";
-import {UserContext} from "../../utils/context";
+import {RootNavigationContext, UserContext} from "../../utils/context";
 import * as Trip from "../../utils/trip";
 
 export default ({navigation}) => {
@@ -33,6 +33,7 @@ export default ({navigation}) => {
     return () => unsubscribeTripListener();
   }, []);
 
+  const {rootNavigation} = useContext(RootNavigationContext);
 
   return (
     <>
@@ -49,7 +50,7 @@ export default ({navigation}) => {
           data={pastTrips}
           keyExtractor={item => item.id}
           ItemSeparatorComponent={ () => <Divider/> }
-          renderItem={({item}) => Trip.renderTrip({item, user})}
+          renderItem={({item}) => Trip.renderTrip({item, user, rootNavigation})}
         />
       </View>
       }

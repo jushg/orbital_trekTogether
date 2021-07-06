@@ -3,6 +3,9 @@ import { createStackNavigator} from "@react-navigation/stack";
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import {useNavigation} from "@react-navigation/native";
+import {Keyboard} from "react-native";
+import {IconButton} from "react-native-paper";
 
 //Auth Stack Screen
 import LoginScreen from "./screen/LoginScreen"
@@ -26,11 +29,18 @@ import AddTripScreen from './screen/AddTripScreen';
 import ChatListScreen from "./screen/ChatListScreen"
 import ChatScreen from './screen/ChatScreen';
 
+//Journal Screens
+import JournalScreen from "./screen/JournalScreen";
+import EditJournalScreen from "./screen/EditJournalScreen";
+
+
 import * as Auth from "../utils/auth"
+import {RootNavigationContext, UserContext} from '../utils/context';
 import {DashboardHeader, MessengerButtonHeader} from "./component/header"
-import { UserContext } from '../utils/context';
-import colorConst from './constant/color';
 import { DashboardFAB } from './component/fab';
+import {EditJournalButton} from "./component/editJournalButton";
+import colorConst from './constant/color';
+
 
 const MainStack = createStackNavigator();
 
@@ -58,11 +68,11 @@ export const MainScreenStack = () => {
         ):(
           <>
             <MainStack.Screen name="Home" component = {HomeScreenTab} options={{headerShown:false}}/>
-            <MainStack.Screen name="Setting" component={SettingScreen} 
+            <MainStack.Screen name="Setting" component={SettingScreen}
               options={{
                 headerStyle: {backgroundColor: colorConst.primary },
                 headerTintColor: colorConst.textHeader}}
-              h />
+            />
             <MainStack.Screen name="Add Trip" component={AddTripScreen} 
               options={{
                 headerStyle: {backgroundColor: colorConst.primary },
@@ -82,6 +92,27 @@ export const MainScreenStack = () => {
               ) })
             }
             />
+
+            <MainStack.Screen name={"View Journal"} component={JournalScreen}
+              options={({navigation, route}) => ({
+                headerTitle: "Viewing journal",
+                headerRight: () =>
+                  <EditJournalButton
+                    navigation={navigation}
+                    // journal={route.params.journal}
+                    trip={route.params.trip}
+                  />
+              })}
+            />
+
+            <MainStack.Screen name={"Edit Journal"} component={EditJournalScreen}
+              options={() => ({
+                headerRight: () => (
+                  <IconButton icon={'check-circle'} size={27} onPress={Keyboard.dismiss}/>
+              )
+              })}
+            />
+
           </>
         )}
       </MainStack.Navigator>
@@ -109,7 +140,9 @@ export const AuthScreenStack = () => {
 const HomeTab = createMaterialBottomTabNavigator();
 
 export const HomeScreenTab = () => {
+  const navigation = useNavigation();
   return (
+    <RootNavigationContext.Provider value={{rootNavigation: navigation}}>
     <HomeTab.Navigator 
     initialRouteName="Home"
     // activeColor= {colorConst.accent}
@@ -151,6 +184,7 @@ export const HomeScreenTab = () => {
         }
       />
     </HomeTab.Navigator>
+    </RootNavigationContext.Provider>
   );
 }
 
@@ -202,7 +236,7 @@ export const DashboardScreenTab = () => {
         name="Past" 
         component={PastScreen}
         options={{
-          tabBarLabel: 'Your journal'
+          tabBarLabel: 'Your journals'
         }}/>
 
     </DashboardTab.Navigator>

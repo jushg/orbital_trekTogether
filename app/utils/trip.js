@@ -2,35 +2,48 @@ import React from "react";
 import {View} from "react-native";
 import {Avatar, List} from "react-native-paper";
 import firebase from "firebase";
+import {CommonActions} from "@react-navigation/native";
 
-const db = firebase.firestore().collection("trips");
+const db = firebase.firestore();
 
 export const addTrip =
     async ({user, buddy, place, date, notes}, onSuccess, onError) => {
   try {
     if (place === '') return onError("Please provide some destination");
+    let docRef;
     if (buddy === 'None') {   // individual trip
       const uid = user.uid;
-      await db.add({
-        members: [uid,],
-        otherMemberName: {[uid]: ''},     // Key-this user; value-other user
-        otherAvatarURL: {[uid]: ''},      // Key-this user; value-other user
-        notes: notes,
-        place: place,
-        date: date
-      })
+      docRef = await db
+        .collection('trips')
+        .add({
+          members: [uid,],
+          otherMemberName: {[uid]: ''},     // Key-this user; value-other user
+          otherAvatarURL: {[uid]: ''},      // Key-this user; value-other user
+          notes: notes,
+          place: place,
+          date: date
+        });
     }
     else {    // trip with buddy
       const [u1, u2] = [user.uid, buddy.uid];
-      await db.add({
-        members: [u1, u2].sort(),
-        otherMemberName: {[u1]: buddy.name, [u2]: user.displayName},   // cross-name!!
-        otherAvatarURL: {[u1]: buddy.photoURL, [u2]: user.photoURL},     // cross-name!!
-        notes: notes,
-        place: place,
-        date: date
-      });
+      docRef = await db
+        .collection('trips')
+        .add({
+          members: [u1, u2].sort(),
+          otherMemberName: {[u1]: buddy.name, [u2]: user.displayName},   // cross-name!!
+          otherAvatarURL: {[u1]: buddy.photoURL, [u2]: user.photoURL},     // cross-name!!
+          notes: notes,
+          place: place,
+          date: date
+        });
     }
+    await db.collection('journals')
+      .doc(docRef.id)
+      .set({
+        lastEditedBy: "None",
+        text: "",
+        photos: []
+      })
     // decide where to route the user
     const today = new Date(new Date().toDateString());
     if (date < today) return onSuccess("Past");
@@ -40,7 +53,7 @@ export const addTrip =
   }
 };
 
-export const renderTrip = ({item, user}) => {
+export const renderTrip = ({item, user, rootNavigation}) => {
   const date = item.date.toDate().toLocaleDateString();
   const hasBuddy = item.members.length === 2;
   let buddyDesc = '';
@@ -63,7 +76,12 @@ export const renderTrip = ({item, user}) => {
               </View>
             );
         }}
-        onPress={() => {}}
+
+        onPress={ rootNavigation ? () => rootNavigation.dispatch(CommonActions.navigate({
+            name: 'View Journal',
+            params: {trip: item, otherName: buddyDesc,} //otherID: otherID},
+          })
+        ) : null}
       />
     </View>
   )
