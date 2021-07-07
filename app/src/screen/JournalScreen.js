@@ -1,15 +1,22 @@
-import React, {useContext, useEffect, useState} from "react";
-import {ScrollView, StyleSheet, Text, View} from "react-native";
-import {ActivityIndicator, Button} from "react-native-paper";
-import {CommonActions} from "@react-navigation/native";
-import {UserContext} from "../../utils/context";
+import React, {useEffect, useState} from "react";
+import {
+  Image,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableHighlight,
+  useWindowDimensions,
+  View
+} from "react-native";
+import {ActivityIndicator} from "react-native-paper";
 
-import * as Journal from "../../utils/journal";
 import firebase from "../../utils/firebase";
 
 export default ({navigation, route}) => {
 
-  const {user} = useContext(UserContext);
+  const containerPadding = 10;
+  const borderWidth = 3;
+  const photoWidth = useWindowDimensions().width - 2 * containerPadding;
 
   const trip = route.params.trip;
   const otherName = route.params.otherName;
@@ -32,14 +39,10 @@ export default ({navigation, route}) => {
         <ActivityIndicator size="large" color="black"/>
       </View>
       :
-      <View style={styles.container}>
-      <ScrollView>
-        <View style={{paddingBottom: 20}}>
-          <Text>Place: {trip.place}</Text>
-          <Text>{otherName ? "Buddy: " + otherName : "Solo trip"}</Text>
-          <Text style={{fontStyle: 'italic', color: 'green'}}>Last edited
-            by: {journal.lastEditedBy}</Text>
-        </View>
+      <ScrollView style={styles.container}>
+        <Text>Place: {trip.place}</Text>
+        <Text>{otherName ? "Buddy: " + otherName : "Solo trip"}</Text>
+        <Text style={{fontStyle: 'italic', color: 'green'}}>Last edited by: {journal.lastEditedBy}</Text>
 
         {/*<View style={{justifyContent: 'center', alignItems: 'center', flex: 1}}>*/}
         {/*  <Text>Move edit button to headerRight.</Text>*/}
@@ -51,15 +54,38 @@ export default ({navigation, route}) => {
         {/*    )}>Press to edit</Button>*/}
         {/*</View>*/}
 
-        <Text>Photos go here.</Text>
+        {/* CONSIDER USING Pressable */}
+        <TouchableHighlight
+          style={{
+            ...styles.profileImgContainer,
+            width: photoWidth,
+            height: photoWidth * 2 / 3,
+            borderWidth: borderWidth,
+            backgroundColor: 'silver'
+          }}
+          underlayColor={'gray'}
+          onPress={() => {
+            console.log("pressed photo");
+            navigation.navigate("Journal Photos", {'photos': journal.photos});
+          }}
+        >
+          <Image
+            source={require("../../assets/ava1.jpg")}
+            resizeMode={'contain'}
+            style={{...styles.profileImg, width: photoWidth, height: photoWidth * 2 / 3}}
+          />
+        </TouchableHighlight>
+        <Text style={{alignSelf: 'center', fontStyle: 'italic', color: 'green', marginBottom: 5}}>
+          Click the above image to view photos
+        </Text>
+
         <Text>[Journal text] {journal.text} [End]</Text>
 
       </ScrollView>
-      </View>
     }
     </>
   )
-}
+};
 
 const styles = StyleSheet.create({
   title: {
@@ -76,5 +102,18 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems:"center",
     justifyContent:"center"
+  },
+  profileImgContainer: {
+    overflow: 'hidden',
+    marginVertical: 8,
+    // height: 80,
+    // width: 80,
+    borderRadius: 5,
+    borderColor: 'green',
+  },
+  profileImg: {
+    // height: 80,
+    // width: 80,
+    borderRadius: 5,
   },
 });

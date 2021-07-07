@@ -7,7 +7,7 @@ import { Provider as ReduxProvider } from 'react-redux';
 import { PersistGate } from "redux-persist/integration/react";
 
 //import testing screen here
-import {AuthScreenStack, DashboardScreenTab, MainScreenStack} from "./src/navigation"
+import {AuthScreenStack, DashboardScreenTab, MainScreenStack, RootScreenStack} from "./src/navigation"
 import TestScreen from "./src/screen/SetupScreen"
 import LoadingScreen from './src/screen/LoadingScreen';
 
@@ -39,9 +39,10 @@ export default function App() {
       <PersistGate loading={null} persistor={persistor}>
         <PaperProvider theme={CombinedDefaultTheme}>
           <NavigationContainer theme={CombinedDefaultTheme}>
-            <MainScreenStack/>
+            <RootScreenStack/>
+            {/*<MainScreenStack/>*/}
+            {/*<TestScreen/>*/}
             <FlashMessage position="top" />
-            {/* <TestScreen/> */}
           </NavigationContainer>
         </PaperProvider>
       </PersistGate>

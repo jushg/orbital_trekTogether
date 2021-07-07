@@ -1,4 +1,4 @@
-import React, {useState, useEffect } from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import { createStackNavigator} from "@react-navigation/stack";
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
@@ -30,17 +30,42 @@ import ChatListScreen from "./screen/ChatListScreen"
 import ChatScreen from './screen/ChatScreen';
 
 //Journal Screens
+import JournalPhotoScreen from "./screen/JournalPhotoScreen";
 import JournalScreen from "./screen/JournalScreen";
 import EditJournalScreen from "./screen/EditJournalScreen";
 
 
 import * as Auth from "../utils/auth"
-import {RootNavigationContext, UserContext} from '../utils/context';
+import {UserContext} from '../utils/context';
 import {DashboardHeader, MessengerButtonHeader} from "./component/header"
 import { DashboardFAB } from './component/fab';
 import {EditJournalButton} from "./component/editJournalButton";
 import colorConst from './constant/color';
 
+const RootStack = createStackNavigator();
+export const RootScreenStack = () => {
+
+  // const [user, setUser] = useState("loading");
+  // const changeUserState = () => {
+  //   setUser(Auth.getCurrentUser())
+  // }
+
+  // useEffect(() => {
+  //   return Auth.setOnAuthStateChanged(
+  //     (user) => setUser(user),
+  //     () => setUser(null),
+  //   );
+  // }, []);
+
+  return (
+    // <UserContext.Provider value={{user, changeUserState}}>
+      <RootStack.Navigator mode="modal" initialRouteName={"Main"}>
+        <RootStack.Screen name="Main" component={MainScreenStack} options={{ headerShown: false }} />
+        <RootStack.Screen name="Journal Photos" component={JournalPhotoScreen} />
+      </RootStack.Navigator>
+    // </UserContext.Provider>
+  );
+}
 
 const MainStack = createStackNavigator();
 
@@ -50,7 +75,9 @@ export const MainScreenStack = () => {
   const changeUserState = () => {
     setUser(Auth.getCurrentUser())
   }
-  
+
+  // const {user, changeUserState} = useContext(UserContext);
+
   useEffect(() => {
     return Auth.setOnAuthStateChanged(
       (user) => setUser(user),
