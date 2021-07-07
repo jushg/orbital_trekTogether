@@ -41,21 +41,21 @@ export default ({navigation, route}) => {
   // instead of using isTextChanged, add a listener for when the screen goes out of focus (i.e. press Back)
   // However, this does not provide real time updates for TEXT if the buddy is also editing TEXT.
   // Conversely, changes to photos will not be updated in real time.
-  useEffect(() => {
-    // const unsubscribe = navigation.addListener('blur', () => {
-    //   Journal.updateJournal(trip.id, user.displayName, journal.text)
-    //     .then(console.log);
-    // });
-    console.log("run effect...")
-    const unsubscribe = navigation.addListener('beforeRemove', () => {
-      console.log("BACK")
-      Journal.updatePhotos(trip.id, journal.photos)
-        .then(console.log);
-    });
-
-    return () => unsubscribe();
-  }, [journal])
-  // }, [photos])
+  // useEffect(() => {
+  //   // const unsubscribe = navigation.addListener('blur', () => {
+  //   //   Journal.updateJournal(trip.id, user.displayName, journal.text)
+  //   //     .then(console.log);
+  //   // });
+  //   console.log("run effect...")
+  //   const unsubscribe = navigation.addListener('beforeRemove', () => {
+  //     console.log("BACK")
+  //     Journal.updatePhotos(trip.id, journal.photos)
+  //       .then(console.log);
+  //   });
+  //
+  //   return () => unsubscribe();
+  // }, [journal])
+  // // }, [photos])
 
   let hasCameraRollPermission = false;
   const handlePickImage = async () => {
@@ -70,9 +70,12 @@ export default ({navigation, route}) => {
 
     let pickerResult = await ImagePicker.launchImageLibraryAsync({quality: 0.25});
     if (!pickerResult.cancelled) {
-      const photos = [...journal.photos];
-      photos.push(pickerResult.uri);
-      setJournal({...journal, photos});
+      Journal.uploadOnePhoto(trip.id, user.displayName, pickerResult.uri)
+        .then(console.log);
+
+      // const photos = [...journal.photos];
+      // photos.push(pickerResult.uri);
+      // setJournal({...journal, photos});
     }
   };
 

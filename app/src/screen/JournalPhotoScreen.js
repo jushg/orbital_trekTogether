@@ -5,12 +5,12 @@ import * as Auth from "../../utils/auth";
 import {Text} from "react-native-paper";
 
 export default ({navigation, route}) => {
-  const user = Auth.getCurrentUser();
   const windowWidth = useWindowDimensions().width;
   const windowHeight = useWindowDimensions().height;
 
   // const data = [1,2,3,4,5,6];
   const data = [...route.params.photos].reverse();
+  // const data = route.params.photos;
 
   const renderItem = ({item, index}) => {
     // console.log(item);
