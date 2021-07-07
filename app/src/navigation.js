@@ -4,7 +4,7 @@ import { createMaterialBottomTabNavigator } from '@react-navigation/material-bot
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useNavigation} from "@react-navigation/native";
-import {Keyboard} from "react-native";
+import {Keyboard, Text, TouchableOpacity} from "react-native";
 import {IconButton} from "react-native-paper";
 
 //Auth Stack Screen
@@ -135,7 +135,10 @@ export const MainScreenStack = () => {
             <MainStack.Screen name={"Edit Journal"} component={EditJournalScreen}
               options={() => ({
                 headerRight: () => (
-                  <IconButton icon={'check-circle'} size={27} onPress={Keyboard.dismiss}/>
+                  // <IconButton icon={'check-circle'} size={27} onPress={Keyboard.dismiss}/>
+                  <TouchableOpacity onPress={Keyboard.dismiss}>
+                    <Text style={{marginHorizontal: 15, fontSize: 16}}>Done</Text>
+                  </TouchableOpacity>
               )
               })}
             />
