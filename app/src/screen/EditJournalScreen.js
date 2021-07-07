@@ -86,11 +86,9 @@ export default ({navigation, route}) => {
   }
 
   return (
-    <View style={styles.container}>
-    <ScrollView
-      keyboardShouldPersistTaps="handled"
-    // style={styles.container}
-    >
+    <KeyboardAvoidingView style={{flex: 1}} behavior="padding" keyboardVerticalOffset={75} >
+      <ScrollView keyboardShouldPersistTaps="handled">
+        <View style={styles.container}>
 
       <TouchableHighlight
         style={{
@@ -137,12 +135,9 @@ export default ({navigation, route}) => {
         }}
       />
 
-    </ScrollView>
-    <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={150}>
-      {/*<Button onPress={() => {}}>Add photos</Button>*/}
+        </View>
+      </ScrollView>
     </KeyboardAvoidingView>
-
-    </View>
   )
 }
 
@@ -170,5 +165,6 @@ const styles = StyleSheet.create({
     // padding: 10,
     // fontSize: 16,
     textAlignVertical: 'top',
+    backgroundColor: 'gray'
   },
 });
