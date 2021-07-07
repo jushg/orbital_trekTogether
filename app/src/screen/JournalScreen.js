@@ -14,19 +14,22 @@ import firebase from "../../utils/firebase";
 
 export default ({navigation, route}) => {
 
-  const containerPadding = 10;
-  const borderWidth = 3;
-  const photoWidth = useWindowDimensions().width - 2 * containerPadding;
+  const photoWidth = useWindowDimensions().width - 2 * styles.container.padding;
 
   const trip = route.params.trip;
   const otherName = route.params.otherName;
 
   const [journal, setJournal] = useState(null);
+  const [thumbnailUrl, setThumbnailUrl] = useState(null);
   useEffect(() => {
     const unsubscribeJournalListener = firebase.firestore()
       .collection('journals')
       .doc(trip.id)
-      .onSnapshot(doc => setJournal(doc.data()));
+      .onSnapshot(doc => {
+        const data = doc.data();
+        setJournal(data);
+        if (data.photos.length > 0) setThumbnailUrl(data.photos[data.photos.length - 1]);
+      });
 
     return () => unsubscribeJournalListener();
   }, []);
@@ -57,27 +60,26 @@ export default ({navigation, route}) => {
         {/* CONSIDER USING Pressable */}
         <TouchableHighlight
           style={{
-            ...styles.profileImgContainer,
+            ...styles.thumbnailContainer,
             width: photoWidth,
             height: photoWidth * 2 / 3,
-            borderWidth: borderWidth,
             backgroundColor: 'silver'
           }}
           underlayColor={'gray'}
-          onPress={() => {
-            console.log("pressed photo");
-            navigation.navigate("Journal Photos", {'photos': journal.photos});
-          }}
+          disabled={!thumbnailUrl}
+          onPress={() => navigation.navigate("Journal Photos", {'photos': journal.photos})}
         >
-          <Image
-            source={require("../../assets/ava1.jpg")}
+          { thumbnailUrl
+          ? <Image
+            // source={require("../../assets/ava1.jpg")}
+            source={{ uri: thumbnailUrl }}
             resizeMode={'contain'}
-            style={{...styles.profileImg, width: photoWidth, height: photoWidth * 2 / 3}}
+            style={{width: photoWidth, height: photoWidth * 2 / 3}}
           />
+          : <Text style={{color: 'white', fontSize: 16}}>You haven't uploaded any photos yet!</Text>
+          }
         </TouchableHighlight>
-        <Text style={{alignSelf: 'center', fontStyle: 'italic', color: 'green', marginBottom: 5}}>
-          Click the above image to view photos
-        </Text>
+        <Text style={styles.thumbnailCaption}>Click the above image to view photos</Text>
 
         <Text>[Journal text] {journal.text} [End]</Text>
 
@@ -88,12 +90,6 @@ export default ({navigation, route}) => {
 };
 
 const styles = StyleSheet.create({
-  title: {
-    flex: 1,
-    fontSize: 30,
-    paddingTop: 10,
-    color:"#05668D"
-  },
   container: {
     flex: 1,
     padding: 10,
@@ -103,17 +99,19 @@ const styles = StyleSheet.create({
     alignItems:"center",
     justifyContent:"center"
   },
-  profileImgContainer: {
-    overflow: 'hidden',
+  thumbnailContainer: {
+    overflow: 'hidden',  // (?)
     marginVertical: 8,
-    // height: 80,
-    // width: 80,
-    borderRadius: 5,
+    borderRadius: 15,
+    borderWidth: 3,
     borderColor: 'green',
+    justifyContent: 'center',
+    alignItems: 'center'
   },
-  profileImg: {
-    // height: 80,
-    // width: 80,
-    borderRadius: 5,
-  },
+  thumbnailCaption: {
+    alignSelf: 'center',
+    fontStyle: 'italic',
+    color: 'green',
+    marginBottom: 5
+  }
 });

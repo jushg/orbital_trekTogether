@@ -10,51 +10,51 @@ export default ({navigation, route}) => {
   const windowHeight = useWindowDimensions().height;
 
   // const data = [1,2,3,4,5,6];
-  const data = route.params.photos;
+  const data = [...route.params.photos].reverse();
 
   const renderItem = ({item, index}) => {
-    console.log(item);
-    if (item === 2) {
-      return (
-        <View style={styles.card}>
-          <Image source={require("../../assets/business_cat.png")}
-                 resizeMode={'contain'} style={{width: windowWidth, height: windowHeight}}/>
-        </View>
-      )
-    }
-    if (item === 3) {
-      return (
-        <View style={styles.card}>
-          <Image source={require("../../assets/pain.jpg")}
-                 resizeMode={'contain'}
-                 style={{width: windowWidth, height: windowHeight}}/>
-        </View>
-      )
-    }
-    if (item === 4) {
-      return (
-        <View style={styles.card}>
-          <Image source={require("../../assets/ava1.png")}
-                 resizeMode={'contain'}
-                 style={{width: windowWidth, height: windowHeight}}/>
-        </View>
-      )
-    }
-    if (item === 5) {
-      return (
-        <View style={styles.card}>
-            <Image source={require("../../assets/splash.png")}
-                   resizeMode={'contain'}
-                   style={{width: windowWidth, height: windowHeight}}/>
-        </View>
-      )
-    }
+    // console.log(item);
+    // if (item === 2) {
+    //   return (
+    //     <View style={styles.card}>
+    //       <Image source={require("../../assets/business_cat.png")}
+    //              resizeMode={'contain'} style={{width: windowWidth, height: windowHeight}}/>
+    //     </View>
+    //   )
+    // }
+    // if (item === 3) {
+    //   return (
+    //     <View style={styles.card}>
+    //       <Image source={require("../../assets/pain.jpg")}
+    //              resizeMode={'contain'}
+    //              style={{width: windowWidth, height: windowHeight}}/>
+    //     </View>
+    //   )
+    // }
+    // if (item === 4) {
+    //   return (
+    //     <View style={styles.card}>
+    //       <Image source={require("../../assets/ava1.png")}
+    //              resizeMode={'contain'}
+    //              style={{width: windowWidth, height: windowHeight}}/>
+    //     </View>
+    //   )
+    // }
+    // if (item === 5) {
+    //   return (
+    //     <View style={styles.card}>
+    //         <Image source={require("../../assets/splash.png")}
+    //                resizeMode={'contain'}
+    //                style={{width: windowWidth, height: windowHeight}}/>
+    //     </View>
+    //   )
+    // }
 
     return (
       <View style={styles.card}>
         <Image
-          source={{ uri: user.photoURL }}
-          resizeMode={'center'}
+          source={{ uri: item }}
+          resizeMode={'contain'}
           style={{width: windowWidth, height: windowHeight}}
         />
       </View>
