@@ -1,7 +1,9 @@
 import React, {useContext, useEffect, useState} from 'react';
-import { StyleSheet, Text, FlatList, View } from 'react-native'
-import {List, Avatar, ActivityIndicator, Divider, Searchbar, Appbar, Caption, } from "react-native-paper";
+import { StyleSheet, Text, FlatList, View, Animated } from 'react-native'
+import {List, Avatar, ActivityIndicator, Divider, Searchbar, Appbar, Caption, Button, } from "react-native-paper";
 import { CommonActions } from '@react-navigation/native'
+import { RectButton } from 'react-native-gesture-handler';
+import Swipeable from 'react-native-gesture-handler/Swipeable';
 
 // https://docs.expo.io/versions/latest/sdk/permissions/
 // TO CACHE AVATARS ?
@@ -51,6 +53,21 @@ export default ({navigation}) => {
       ? { otherID: x[0], otherUsername: s[0]}
       : { otherID: x[1], otherUsername: s[1]};
   }
+
+  const renderRightActions = () => {
+    
+    return (
+      <Button  
+        onPress={() => console.log("Meowmeow please do sth here")} 
+        compact={true} 
+        style={{justifyContent:"center", borderRadius:0, backgroundColor:colorConst.accent}} 
+        mode="contained" 
+        labelStyle={{paddingVertical:"100%"}}
+        >
+        Delete
+      </Button>
+    );
+  };
   const renderChat = ({item}) => {
     let {otherID, otherUsername} = getChatName(item._id, item.name);
     if (item.lastMessage.system) otherUsername += " 👋";   // new buddy? Add an emoji :)
@@ -62,30 +79,30 @@ export default ({navigation}) => {
         : "You")
       + `: ${item.lastMessage.text}`;
     return (
-
-      <List.Item
-        title={otherUsername}
-        description={lastMessage}
-        // left={props => <List.Icon {...props} icon="account"/>}
-        left={(props) => {
-          return <Avatar.Image {...props} 
-          size={70} 
-          source={{uri: item.avatarURL[otherID]}}/>;
-        }}
-        onPress={() => navigation.dispatch(CommonActions.navigate({
-            name: 'Chat',
-            //use this to pass in the name of other user
-            params: {chat: item, otherName: otherUsername, otherID: otherID},
-          })
-        )}
-        titleNumberOfLines={1}
-        descriptionNumberOfLines={1}
-        titleStyle={item.lastMessage.system ? {fontWeight:'bold', color:'black'} : {}}
-        // titleStyle={{fontWeight:"bold"}}
-        descriptionStyle={item.lastMessage.system ? {fontWeight:'bold', color:'teal'} : {}}
-        // style={{backgroundColor:colorConst}}
-      />
-
+      <Swipeable renderRightActions={renderRightActions} overshootRight={false} >
+        <List.Item
+          title={otherUsername}
+          description={lastMessage}
+          // left={props => <List.Icon {...props} icon="account"/>}
+          left={(props) => {
+            return <Avatar.Image {...props} 
+            size={70} 
+            source={{uri: item.avatarURL[otherID]}}/>;
+          }}
+          onPress={() => navigation.dispatch(CommonActions.navigate({
+              name: 'Chat',
+              //use this to pass in the name of other user
+              params: {chat: item, otherName: otherUsername, otherID: otherID},
+            })
+          )}
+          titleNumberOfLines={1}
+          descriptionNumberOfLines={1}
+          titleStyle={item.lastMessage.system ? {fontWeight:'bold', color:'black'} : {}}
+          // titleStyle={{fontWeight:"bold"}}
+          descriptionStyle={item.lastMessage.system ? {fontWeight:'bold', color:'teal'} : {}}
+          // style={{backgroundColor:colorConst}}
+        />
+      </Swipeable>
     )
   };
 
