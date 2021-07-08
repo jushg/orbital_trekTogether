@@ -61,7 +61,7 @@ export const RootScreenStack = () => {
     // <UserContext.Provider value={{user, changeUserState}}>
       <RootStack.Navigator mode="modal" initialRouteName={"Main"}>
         <RootStack.Screen name="Main" component={MainScreenStack} options={{ headerShown: false }} />
-        <RootStack.Screen name="Journal Photos" component={JournalPhotoScreen} />
+        <RootStack.Screen name="Journal Photos" component={JournalPhotoScreen}/>
       </RootStack.Navigator>
     // </UserContext.Provider>
   );
@@ -105,24 +105,26 @@ export const MainScreenStack = () => {
                 headerStyle: {backgroundColor: colorConst.primary },
                 headerTintColor: colorConst.textHeader}}/>
             <MainStack.Screen 
-            name="Chat" 
-            component = {ChatScreen}
-            options={({ navigation, route }) => ({
-              headerStyle: {backgroundColor: colorConst.primary },
-              headerTitle: route.params.otherName,
-              headerTintColor: colorConst.textHeader,
-              headerRight: () => (
-                <MessengerButtonHeader
-                  navigation={navigation}
-                  otherName={route.params.otherName}
-                  otherID={route.params.otherID}/>
-              ) })
-            }
+              name="Chat" 
+              component = {ChatScreen}
+              options={({ navigation, route }) => ({
+                headerStyle: {backgroundColor: colorConst.primary },
+                headerTitle: route.params.otherName,
+                headerTintColor: colorConst.textHeader,
+                headerRight: () => (
+                  <MessengerButtonHeader
+                    navigation={navigation}
+                    otherName={route.params.otherName}
+                    otherID={route.params.otherID}/>
+                ) })
+              }
             />
 
             <MainStack.Screen name={"View Journal"} component={JournalScreen}
               options={({navigation, route}) => ({
                 headerTitle: "Viewing journal",
+                headerStyle: {backgroundColor: colorConst.primary },
+                headerTintColor: colorConst.textHeader,
                 headerRight: () =>
                   <EditJournalButton
                     navigation={navigation}
@@ -134,10 +136,12 @@ export const MainScreenStack = () => {
 
             <MainStack.Screen name={"Edit Journal"} component={EditJournalScreen}
               options={() => ({
+                headerStyle: {backgroundColor: colorConst.primary },
+                headerTintColor: colorConst.textHeader,
                 headerRight: () => (
                   // <IconButton icon={'check-circle'} size={27} onPress={Keyboard.dismiss}/>
                   <TouchableOpacity onPress={Keyboard.dismiss}>
-                    <Text style={{marginHorizontal: 15, fontSize: 16}}>Done</Text>
+                    <Text style={{marginHorizontal: 15, fontSize: 20, color:colorConst.textHeader}}>Done</Text>
                   </TouchableOpacity>
               )
               })}

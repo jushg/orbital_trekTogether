@@ -9,11 +9,12 @@ import {
 } from "react-native";
 import {ActivityIndicator, Button} from "react-native-paper";
 import {TextInput} from "react-native"
+import * as ImagePicker from "expo-image-picker";
 
 import firebase from "../../utils/firebase";
 import * as Journal from "../../utils/journal";
 import {UserContext} from "../../utils/context";
-import * as ImagePicker from "expo-image-picker";
+import colorConst from "../constant/color";
 
 export default ({navigation, route}) => {
 
@@ -94,9 +95,10 @@ export default ({navigation, route}) => {
           ...styles.thumbnailContainer,
           width: photoWidth,
           height: photoWidth * 2 / 3,
-          backgroundColor: 'silver'
+          backgroundColor: colorConst.secondaryLight,
+          borderColor:colorConst.backgroundCard
         }}
-        underlayColor={'gray'}
+        underlayColor={colorConst.secondaryDark}
         disabled={journal.photos.length === 0}
         onPress={() => navigation.navigate("Journal Photos", {'photos': journal.photos})}
       >
@@ -107,7 +109,7 @@ export default ({navigation, route}) => {
             resizeMode={'contain'}
             style={{width: photoWidth, height: photoWidth * 2 / 3}}
           />
-          : <Text style={{color: 'white', fontSize: 16}}>You haven't uploaded any photos yet!</Text>
+          : <Text style={{color: 'black', fontSize: 16}}>You haven't uploaded any photos yet!</Text>
         }
       </TouchableHighlight>
 

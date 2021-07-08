@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {Divider, ActivityIndicator, Caption} from "react-native-paper";
+import {Divider, ActivityIndicator, Caption, Card, Title,Button,Paragraph, Avatar} from "react-native-paper";
 import { StyleSheet, Text, View, FlatList } from 'react-native';
 
 
@@ -42,7 +42,25 @@ export default ({navigation}) => {
     return () => unsubscribeTripListener();
   }, []);
 
-
+  const buddyContent =({buddy}) => {
+    return (
+      <Avatar.Image size={40} source={require('../../assets/ava6.jpg')}/>
+    )
+  }
+  const renderCard = ({item,user}) => {
+    const date = item.date.toDate().toLocaleDateString();
+    return(
+      <Card>
+        <Card.Title title={item.place} subtitle={date} right={buddyContent} />
+        
+        <Card.Cover source={{ uri: 'https://picsum.photos/700' }} />
+        <Card.Content>
+          <Paragraph>{item.notes}</Paragraph>
+        </Card.Content>
+       
+      </Card>
+    )
+  }
   return (
     <>
     {futureTrips == null ? 
@@ -59,7 +77,8 @@ export default ({navigation}) => {
         keyExtractor={item => item.id}
         ItemSeparatorComponent={ () => <Divider/> }
         // renderItem={renderFutureTrip}
-        renderItem={({item}) => Trip.renderTrip({item, user})}
+        // renderItem={({item}) => Trip.renderTrip({item, user})}
+        renderItem={({item}) => renderCard({item, user})}
       /> 
     </View>
       }

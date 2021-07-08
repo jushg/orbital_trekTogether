@@ -11,6 +11,7 @@ import {
 import {ActivityIndicator} from "react-native-paper";
 
 import firebase from "../../utils/firebase";
+import colorConst from "../constant/color";
 
 export default ({navigation, route}) => {
 
@@ -63,9 +64,10 @@ export default ({navigation, route}) => {
             ...styles.thumbnailContainer,
             width: photoWidth,
             height: photoWidth * 2 / 3,
-            backgroundColor: 'silver'
+            backgroundColor: colorConst.secondaryLight,
+            borderColor: colorConst.backgroundCard
           }}
-          underlayColor={'gray'}
+          underlayColor={colorConst.secondaryDark}
           disabled={!thumbnailUrl}
           onPress={() => navigation.navigate("Journal Photos", {'photos': journal.photos})}
         >
@@ -76,7 +78,7 @@ export default ({navigation, route}) => {
             resizeMode={'contain'}
             style={{width: photoWidth, height: photoWidth * 2 / 3}}
           />
-          : <Text style={{color: 'white', fontSize: 16}}>You haven't uploaded any photos yet!</Text>
+          : <Text style={{color: 'black', fontSize: 16}}>You haven't uploaded any photos yet!</Text>
           }
         </TouchableHighlight>
         <Text style={styles.thumbnailCaption}>Click the above image to view photos</Text>
