@@ -83,7 +83,7 @@ export default ({navigation, route}) => {
         </TouchableHighlight>
         <Text style={styles.thumbnailCaption}>Click the above image to view photos</Text>
 
-        <Text>[Journal text] {journal.text} [End]</Text>
+        <Text>{journal.text}</Text>
 
       </ScrollView>
     }
