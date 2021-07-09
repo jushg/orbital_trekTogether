@@ -12,7 +12,7 @@ import LoginScreen from "./screen/LoginScreen"
 import WelcomeScreen from "./screen/WelcomeScreen"
 import SignupScreen from "./screen/SignupScreen"
 import SetupScreen from "./screen/SetupScreen"
-
+import ForgotPasswordScreen from './screen/ForgotPasswordScreen';
 //Match Buddy Screen
 import MatchScreen from "./screen/MatchScreen"
 
@@ -163,6 +163,10 @@ export const AuthScreenStack = () => {
       <AuthStack.Screen name="Welcome" key = "welcome" component = {WelcomeScreen} options={{headerShown:false}}/>
       <AuthStack.Screen name="Login" key = "login" component = {LoginScreen} options={{headerShown:false}}/>
       <AuthStack.Screen name="Sign Up" key = "signup" component = {SignupScreen} 
+        options={{
+          headerStyle: {backgroundColor: colorConst.primary },
+          headerTintColor:colorConst.textHeader}}/>
+      <AuthStack.Screen name="Reset Password" key = "resetpassword" component = {ForgotPasswordScreen} 
         options={{
           headerStyle: {backgroundColor: colorConst.primary },
           headerTintColor:colorConst.textHeader}}/>
