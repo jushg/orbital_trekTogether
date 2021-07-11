@@ -6,6 +6,7 @@ import { StyleSheet, Text, View, FlatList } from 'react-native';
 import firebase from "../../utils/firebase";
 import {UserContext} from "../../utils/context";
 import * as Trip from "../../utils/trip";
+import colorConst from '../constant/color';
 
 export default ({navigation}) => {
 
@@ -47,13 +48,20 @@ export default ({navigation}) => {
       <Avatar.Image size={40} source={require('../../assets/ava6.jpg')}/>
     )
   }
+  const renderDivider= () => {
+    return (
+      <View style={{backgroundColor:colorConst.background}}>
+        <Divider style={{marginBottom:20}}/>
+        
+      </View>
+    )
+  }
   const renderCard = ({item,user}) => {
     const date = item.date.toDate().toLocaleDateString();
     return(
-      <Card>
-        <Card.Title title={item.place} subtitle={date} right={buddyContent} />
-        
+      <Card mode="outlined" >
         <Card.Cover source={{ uri: 'https://picsum.photos/700' }} />
+        <Card.Title title={item.place} subtitle={date} right={buddyContent} />
         <Card.Content>
           <Paragraph>{item.notes}</Paragraph>
         </Card.Content>
@@ -75,7 +83,7 @@ export default ({navigation}) => {
       <FlatList
         data={futureTrips}
         keyExtractor={item => item.id}
-        ItemSeparatorComponent={ () => <Divider/> }
+        ItemSeparatorComponent={ renderDivider}
         // renderItem={renderFutureTrip}
         // renderItem={({item}) => Trip.renderTrip({item, user})}
         renderItem={({item}) => renderCard({item, user})}
@@ -103,7 +111,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection:"column",
     justifyContent: 'flex-start',
-    paddingHorizontal: 10
+    paddingHorizontal: "1%"
   },
   loadingContainer:{
     flex: 1,

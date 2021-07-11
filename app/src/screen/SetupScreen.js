@@ -12,7 +12,7 @@ import {UserContext} from "../../utils/context"
 import TextBox from '../component/textbox'
 import colorConst from '../constant/color';
 import { MAPS_API_KEY } from "@env";
-
+import PlaceSearch from "../component/placeSearch"
 
 export default ({navigation}) => {
   const [age, setAge] = useState('');
@@ -124,12 +124,16 @@ export default ({navigation}) => {
         />
 
         <Subheading style={styles.title}>DESTINATION PREFERENCES</Subheading>
-        <View
+        <PlaceSearch place={place} setPlace={setPlace} textPlaceHolder='Where do you want to visit?' />
+        {/* <View
           style={{
             flexDirection: 'row',
             flexWrap: 'wrap'
           }}
         >
+
+        
+        
         {place.map((item, index) => {
           return (
             <View
@@ -142,7 +146,7 @@ export default ({navigation}) => {
                 selected={false}
                 height={30}
                 textStyle={{ color:'black', fontSize: 15 }}
-                style={{ backgroundColor: colorConst.secondaryDark, borderWidth:22}}
+                style={{ backgroundColor: colorConst.secondaryDark, borderColor:"black"}}
                 // selectedColor= {colorConst.accent}
                 onClose={() => {
                   let newPlace = [...place];
@@ -180,7 +184,7 @@ export default ({navigation}) => {
           textInputProps={{   // props for react native's TextInput, not rn paper!
             clearTextOnFocus: true,     // ios only
             backgroundColor: colorConst.secondaryLight,
-            clearButtonMode: "always",
+            clearButtonMode: "always", //ios only ?
             style: {
               width: "100%",
               height: 40,
@@ -193,7 +197,7 @@ export default ({navigation}) => {
           // suppressDefaultStyles={true}
           enablePoweredByContainer={false}
           // isRowScrollable={false}
-        />
+        /> */}
         <Subheading style={styles.title}>AVAILABILITY</Subheading>
         <View style={{marginBBottom: 3, flexWrap: 'wrap', flexDirection:"row" }}>
         {daysInWeek.map((item, index) => {
@@ -244,9 +248,6 @@ const styles = StyleSheet.create({
     marginVertical:20
   },
   container: {
-    // flex: 1,
-    // flexDirection:"column",
-    // alignItems: "center",
     justifyContent: 'flex-start',
   },
 });

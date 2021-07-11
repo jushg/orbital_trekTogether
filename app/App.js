@@ -8,7 +8,7 @@ import { PersistGate } from "redux-persist/integration/react";
 
 //import testing screen here
 import {AuthScreenStack, DashboardScreenTab, MainScreenStack, RootScreenStack} from "./src/navigation"
-import TestScreen from "./src/screen/ForgotPasswordScreen"
+import TestScreen from "./src/screen/SetupScreen"
 import LoadingScreen from './src/screen/LoadingScreen';
 
 import colorConstant from './src/constant/color';

@@ -12,6 +12,7 @@ import {Actions} from "react-native-gifted-chat";
 import {showMessage} from "react-native-flash-message";
 import colorConst from '../constant/color';
 import TextBox from '../component/textbox'
+import PlaceSearch from '../component/placeSearch';
 
 export default ({navigation}) => {
 
@@ -20,7 +21,8 @@ export default ({navigation}) => {
   const [showPicker, setShowPicker] = useState(false);
 
   const [buddy, setBuddy] = useState("None");
-  const [place, setPlace] = useState("");
+  const [routeName, setRouteName] = useState("");
+  const [place, setPlace] = useState([]);
   const [notes, setNotes] = useState("")
 
   const {user} = useContext(UserContext);
@@ -85,23 +87,28 @@ export default ({navigation}) => {
       <Screen style={styles.container}>
         {myBuddies == null ? 
         <ActivityIndicator size="large" color="black"/> : 
-        <ScrollView>
-          <Subheading style={{paddingVertical: 10, fontWeight:"bold"}}>ROUTE</Subheading>
+        <ScrollView keyboardShouldPersistTaps={"handled"}>
+
+          <Subheading style={{paddingBottom: 10, fontWeight:"bold"}}>TRIP NAME</Subheading>
           <TextBox
-            placeholder="Somewhere nice ..."
-            value={place}
+            placeholder="What do you call this trip ?"
+            value={routeName}
             autoCapitalize="words"
-            onChangeText={setPlace}
+            onChangeText={setRouteName}
             left={<TextInput.Icon name="map-marker"/>}
             style={{marginBottom: 10,  alignSelf:"center"}}
           />
-          
+
+          <Subheading style={{paddingTop: 10, fontWeight:"bold"}}>PLACES</Subheading>
+          <PlaceSearch place={place} setPlace={setPlace} textPlaceHolder="Where will this trip stop by?" details/>
+
           <Subheading style={{paddingTop:10, fontWeight:"bold"}}>DATE: { Platform.OS === 'ios' && date.toLocaleDateString(undefined, options)}</Subheading>
           {Platform.OS === 'android' && 
           <Button onPress={() => setShowPicker(true)}  color={colorConst.accent} labelStyle={{fontSize: 20}}> 
             {date.toLocaleDateString(undefined, options)} 
           </Button>}
-          
+
+
           {showPicker && (
             <DateTimePicker
               value={date}
