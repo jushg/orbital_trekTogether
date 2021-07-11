@@ -95,16 +95,16 @@ export default ({navigation}) => {
             value={routeName}
             autoCapitalize="words"
             onChangeText={setRouteName}
-            left={<TextInput.Icon name="map-marker"/>}
+            // left={<TextInput.Icon name="map-marker"/>}
             style={{marginBottom: 10,  alignSelf:"center"}}
           />
 
-          <Subheading style={{paddingTop: 10, fontWeight:"bold"}}>PLACES</Subheading>
-          <PlaceSearch place={place} setPlace={setPlace} textPlaceHolder="Where will this trip stop by?" details/>
+          <Subheading style={{paddingVertical: 10, fontWeight:"bold"}}>PLACES</Subheading>
+          <PlaceSearch place={place} setPlace={setPlace} textPlaceHolder="Where will this trip stop by ?" details/>
 
           <Subheading style={{paddingTop:10, fontWeight:"bold"}}>DATE: { Platform.OS === 'ios' && date.toLocaleDateString(undefined, options)}</Subheading>
           {Platform.OS === 'android' && 
-          <Button onPress={() => setShowPicker(true)}  color={colorConst.accent} labelStyle={{fontSize: 20}}> 
+          <Button onPress={() => setShowPicker(true)}  color={colorConst.secondaryDark} labelStyle={{fontSize: 20}}> 
             {date.toLocaleDateString(undefined, options)} 
           </Button>}
 
@@ -124,7 +124,7 @@ export default ({navigation}) => {
             // style={{height: Platform.OS === "ios" ? 132 : 69}}
             // itemStyle={{height: Platform.OS === "ios" ? 132 : 0}}
             selectedValue={buddy}
-            dropdownIconColor={colorConst.accent}
+            dropdownIconColor={colorConst.secondaryDark}
             mode="dropdown"
             onValueChange={(itemValue, itemIndex) => {
               // console.log(itemValue);
@@ -147,7 +147,7 @@ export default ({navigation}) => {
             placeholder="Foods, weather, deadlines,..."
             value={notes}
             onChangeText={setNotes}
-            left={<TextInput.Icon name="note-text"/>}
+            // left={<TextInput.Icon name="note-text"/>}
             multiline={true}
             numberOfLines={3}
             underlineColor={colorConst.secondaryLight}

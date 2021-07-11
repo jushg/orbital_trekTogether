@@ -5,7 +5,6 @@ import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplet
 
 import colorConst from '../constant/color';
 import { MAPS_API_KEY } from "@env";
-
 export default (props) => {
   return (
    <>
@@ -24,7 +23,7 @@ export default (props) => {
             textStyle={{ color:'black', fontSize: 15 }}
             style={{ backgroundColor: colorConst.secondaryDark, borderColor:"black"}}
             onClose={() => {
-                let newPlace = [...place];
+                let newPlace = [...props.place];
                 newPlace.splice(index, 1);
                 props.setPlace(newPlace);
                 console.log('Delete place '+ item.description)
@@ -57,17 +56,18 @@ export default (props) => {
         components: 'country:sg',
         }}
         textInputProps={{   // props for react native's TextInput, not rn paper!
-        clearTextOnFocus: true,     // ios only
-        backgroundColor: colorConst.secondaryLight,
-        clearButtonMode: "always", //ios only ?
-        style: {
-            width: "100%",
-            height: 40,
-            borderWidth: 1,
-            borderRadius: 5,
-            paddingHorizontal: 10,
-            marginVertical: 3
-        }
+            clearTextOnFocus: true,     // ios only
+            backgroundColor: colorConst.secondaryLight,
+            clearButtonMode: "always", //ios only ?
+            placeholderTextColor: colorConst.placeholder,
+            style: {
+                width: "100%",
+                height: 65,
+                borderWidth: 1,
+                borderRadius: 5,
+                paddingHorizontal: 15,
+                fontSize:16
+            }
         }}
         enablePoweredByContainer={false}
     />

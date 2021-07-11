@@ -61,7 +61,7 @@ export default ({navigation}) => {
     return(
       <Card mode="outlined" >
         <Card.Cover source={{ uri: 'https://picsum.photos/700' }} />
-        <Card.Title title={item.place} subtitle={date} right={buddyContent} />
+        <Card.Title title={item.place + ' - ' + date} subtitle={"Place 1 - Place 2 - Place 3"} right={buddyContent} />
         <Card.Content>
           <Paragraph>{item.notes}</Paragraph>
         </Card.Content>
@@ -124,20 +124,3 @@ const styles = StyleSheet.create({
     width:"80%"
   }
 });
-
- {/* <View style={{flexDirection: 'row', justifyContent:"space-between"}}>
-      <Searchbar
-          placeholder="Search Trip"
-          onChangeText={onChangeSearch}
-          value={searchQuery}
-          style={styles.searchBar}
-      />
-        <Menu
-          visible={visible}
-          onDismiss={closeMenu}
-          anchor={<IconButton onPress={openMenu} icon="sort-variant"/>}
-          style={{paddingTop: 30}}>
-          <Menu.Item onPress={sortNewest} title="Newest" />
-          <Menu.Item onPress={sortOldest} title="Oldest" />
-        </Menu>
-      </View>  */}
