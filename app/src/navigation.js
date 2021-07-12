@@ -29,10 +29,10 @@ import ChatListScreen from "./screen/ChatListScreen"
 import ChatScreen from './screen/ChatScreen';
 
 //Journal Screens
-import JournalPhotoScreen from "./screen/JournalPhotoScreen";
+import PhotoCarouselScreen from "./screen/PhotoCarouselScreen";
 import JournalScreen from "./screen/JournalScreen";
 import EditJournalScreen from "./screen/EditJournalScreen";
-import EditPhotosScreen from "./screen/EditPhotosScreen";
+import EditJournalPhotoScreen from "./screen/EditJournalPhotoScreen";
 
 
 import * as Auth from "../utils/auth"
@@ -61,7 +61,9 @@ export const RootScreenStack = () => {
     // <UserContext.Provider value={{user, changeUserState}}>
       <RootStack.Navigator mode="modal" initialRouteName={"Main"}>
         <RootStack.Screen name="Main" component={MainScreenStack} options={{ headerShown: false }} />
-        <RootStack.Screen name="Journal Photos" component={JournalPhotoScreen}/>
+        <RootStack.Screen name="Photo Carousel" component={PhotoCarouselScreen}
+                          options={{headerTitle: "View photos", headerBackTitle: "Back"}}
+        />
       </RootStack.Navigator>
     // </UserContext.Provider>
   );
@@ -122,7 +124,6 @@ export const MainScreenStack = () => {
 
             <MainStack.Screen name={"View Journal"} component={JournalScreen}
               options={({navigation, route}) => ({
-                headerTitle: "Viewing journal",
                 headerStyle: {backgroundColor: colorConst.primary },
                 headerTintColor: colorConst.textHeader,
                 headerRight: () =>
@@ -134,7 +135,9 @@ export const MainScreenStack = () => {
               })}
             />
 
-            <MainStack.Screen name={"Edit Photos"} component={EditPhotosScreen} />
+            <MainStack.Screen name={"Edit Photos"} component={EditJournalPhotoScreen}
+              options={{headerBackTitle: "Back"}}
+            />
 
             <MainStack.Screen name={"Edit Journal"} component={EditJournalScreen}
               options={() => ({

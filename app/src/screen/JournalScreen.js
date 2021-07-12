@@ -65,7 +65,7 @@ export default ({navigation, route}) => {
 
   const onPressThumbnail = () => {
     if (thumbnailUrl)
-      navigation.navigate("Journal Photos", {'photos': journal.photos});
+      navigation.navigate("Photo Carousel", {'photos': journal.photos});
   }
 
   return (
@@ -113,7 +113,7 @@ export default ({navigation, route}) => {
         {/*    height: itemHeight,*/}
         {/*  }}*/}
         {/*  disabled={!thumbnailUrl}*/}
-        {/*  onPress={() => navigation.navigate("Journal Photos", {'photos': journal.photos})}*/}
+        {/*  onPress={() => navigation.navigate("Photo Carousel", {'photos': journal.photos})}*/}
         {/*  activeOpacity={0.8}*/}
         {/*>*/}
         {/*  { thumbnailUrl*/}
