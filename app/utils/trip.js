@@ -91,8 +91,8 @@ export const deleteFutureTripWithUnmatchedBuddy = async (user, otherID) => {
   try {
     const uid = user.uid;
     const today = new Date(new Date().toDateString());
-    const querySnapshot = await
-      db.where("members", "==", [uid, otherID].sort())
+    const querySnapshot = await db.collection("trips")
+      .where("members", "==", [uid, otherID].sort())
       // .where("members", "array-contains", otherID)
       .where("date", ">=", today)
       .get();
