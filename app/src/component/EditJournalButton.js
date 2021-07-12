@@ -7,7 +7,7 @@ export const EditJournalButton = ({navigation, trip}) => {
     <IconButton
       icon={'pencil'}
       onPress={() => navigation.dispatch(CommonActions.navigate({
-          name: 'Edit Journal',
+          name: 'Edit Photos',
           params: {trip: trip} //otherName: otherUsername, otherID: otherID},
         })
       )}

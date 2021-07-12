@@ -1,10 +1,9 @@
-import React, {useState, useEffect, useContext} from 'react';
+import React, {useState, useEffect} from 'react';
 import { createStackNavigator} from "@react-navigation/stack";
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import {useNavigation} from "@react-navigation/native";
-import {Keyboard, Text, TouchableOpacity} from "react-native";
+import {Keyboard, Text, TouchableOpacity, View} from "react-native";
 import {IconButton} from "react-native-paper";
 
 //Auth Stack Screen
@@ -33,13 +32,14 @@ import ChatScreen from './screen/ChatScreen';
 import JournalPhotoScreen from "./screen/JournalPhotoScreen";
 import JournalScreen from "./screen/JournalScreen";
 import EditJournalScreen from "./screen/EditJournalScreen";
+import EditPhotosScreen from "./screen/EditPhotosScreen";
 
 
 import * as Auth from "../utils/auth"
 import {UserContext} from '../utils/context';
 import {DashboardHeader, MessengerButtonHeader} from "./component/header"
 import { DashboardFAB } from './component/fab';
-import {EditJournalButton} from "./component/editJournalButton";
+import {EditJournalButton} from "./component/EditJournalButton";
 import colorConst from './constant/color';
 
 const RootStack = createStackNavigator();
@@ -131,6 +131,8 @@ export const MainScreenStack = () => {
                   />
               })}
             />
+
+            <MainStack.Screen name={"Edit Photos"} component={EditPhotosScreen} />
 
             <MainStack.Screen name={"Edit Journal"} component={EditJournalScreen}
               options={() => ({
