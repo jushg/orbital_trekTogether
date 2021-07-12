@@ -41,6 +41,7 @@ import {DashboardHeader, MessengerButtonHeader} from "./component/header"
 import { DashboardFAB } from './component/fab';
 import {EditJournalButton} from "./component/EditJournalButton";
 import colorConst from './constant/color';
+import EditJournalTextScreen from "./screen/EditJournalTextScreen";
 
 const RootStack = createStackNavigator();
 export const RootScreenStack = () => {
@@ -139,18 +140,25 @@ export const MainScreenStack = () => {
               options={{headerBackTitle: "Back"}}
             />
 
-            <MainStack.Screen name={"Edit Journal"} component={EditJournalScreen}
+            <MainStack.Screen name={"Edit Text"} component={EditJournalTextScreen}
               options={() => ({
-                headerStyle: {backgroundColor: colorConst.primary },
-                headerTintColor: colorConst.textHeader,
-                headerRight: () => (
-                  // <IconButton icon={'check-circle'} size={27} onPress={Keyboard.dismiss}/>
-                  <TouchableOpacity onPress={Keyboard.dismiss}>
-                    <Text style={{marginHorizontal: 15, fontSize: 20, color:colorConst.textHeader}}>Done</Text>
-                  </TouchableOpacity>
-              )
+                headerBackTitle: "Back",
+                headerRight: () => <IconButton icon={'check-circle'} size={27} onPress={Keyboard.dismiss}/>
               })}
             />
+
+            {/*<MainStack.Screen name={"Edit Journal"} component={EditJournalScreen}*/}
+            {/*  options={() => ({*/}
+            {/*    headerStyle: {backgroundColor: colorConst.primary },*/}
+            {/*    headerTintColor: colorConst.textHeader,*/}
+            {/*    headerRight: () => (*/}
+            {/*      // <IconButton icon={'check-circle'} size={27} onPress={Keyboard.dismiss}/>*/}
+            {/*      <TouchableOpacity onPress={Keyboard.dismiss}>*/}
+            {/*        <Text style={{marginHorizontal: 15, fontSize: 20, color:colorConst.textHeader}}>Done</Text>*/}
+            {/*      </TouchableOpacity>*/}
+            {/*  )*/}
+            {/*  })}*/}
+            {/*/>*/}
 
           </>
         )}
