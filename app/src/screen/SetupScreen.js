@@ -1,6 +1,6 @@
 import React, {useState, useContext}  from 'react';
 import {StyleSheet, Text, Image, View, ScrollView, Keyboard} from 'react-native';
-import {Button, RadioButton, TextInput, Chip, Avatar, Headline, Subheading } from "react-native-paper";
+import {Button, RadioButton, TextInput, Chip, Avatar, Headline, Subheading, Divider } from "react-native-paper";
 import { CommonActions } from "@react-navigation/native";
 import { showMessage } from "react-native-flash-message";
 import * as ImagePicker from "expo-image-picker";
@@ -12,7 +12,7 @@ import {UserContext} from "../../utils/context"
 import TextBox from '../component/textbox'
 import colorConst from '../constant/color';
 import { MAPS_API_KEY } from "@env";
-
+import PlaceSearch from "../component/placeSearch"
 
 export default ({navigation}) => {
   const [age, setAge] = useState('');
@@ -101,11 +101,14 @@ export default ({navigation}) => {
           onChangeText={setAge}
           // left={<TextInput.Icon name="email"/>}
         /> 
-        <View style={{justifyContent:"center"}} >
+
         <Subheading style={styles.title}>LEVEL</Subheading>
+        <View style={{justifyContent:"center", borderWidth: 1, borderRadius: 10, backgroundColor:colorConst.secondaryLight}} >
           <RadioButton.Group onValueChange={newLevel => setLevel(newLevel)} value={level}>
             <RadioButton.Item label="Beginner" value="Beginner" color={colorConst.backgroundCard} />
+            <Divider style={{backgroundColor:"black"}}/>
             <RadioButton.Item label="Intermediate" value="Intermediate" color={colorConst.accentLight} />
+            <Divider style={{backgroundColor:"black"}}/>
             <RadioButton.Item label="Advanced" value="Advanced" color={colorConst.accent}/>
           </RadioButton.Group>
         </View>
@@ -118,28 +121,19 @@ export default ({navigation}) => {
           onChangeText={setAbout}
           style={{marginBottom:10, height: 120}}
           multiline={true}
-          // left={<TextInput.Icon name="email"/>}
         />
 
         <Subheading style={styles.title}>DESTINATION PREFERENCES</Subheading>
-        {/*<TextBox*/}
-        {/*  label="Places"*/}
-        {/*  placeholder="Somewhere nice, somewhere nicer,..."*/}
-        {/*  value={place}*/}
-        {/*  multiline={true}*/}
-        {/*  onChangeText={setPlace}*/}
-        {/*  style={{marginBottom:10, height: 120}}*/}
-        {/*  // left={<TextInput.Icon name="email"/>}*/}
-        {/*/>*/}
-
-        <View
+        <PlaceSearch place={place} setPlace={setPlace} textPlaceHolder='Where do you want to visit?' />
+        {/* <View
           style={{
             flexDirection: 'row',
-            // alignItems: 'center',
-            // justifyContent: 'flex-start',
             flexWrap: 'wrap'
           }}
         >
+
+        
+        
         {place.map((item, index) => {
           return (
             <View
@@ -148,11 +142,11 @@ export default ({navigation}) => {
               key={index}
             >
               <Chip
-                mode="outlined"
+                mode="flat"
                 selected={false}
                 height={30}
                 textStyle={{ color:'black', fontSize: 15 }}
-                style={{ backgroundColor: colorConst.secondaryDark }}
+                style={{ backgroundColor: colorConst.secondaryDark, borderColor:"black"}}
                 // selectedColor= {colorConst.accent}
                 onClose={() => {
                   let newPlace = [...place];
@@ -190,6 +184,7 @@ export default ({navigation}) => {
           textInputProps={{   // props for react native's TextInput, not rn paper!
             clearTextOnFocus: true,     // ios only
             backgroundColor: colorConst.secondaryLight,
+            clearButtonMode: "always", //ios only ?
             style: {
               width: "100%",
               height: 40,
@@ -202,25 +197,24 @@ export default ({navigation}) => {
           // suppressDefaultStyles={true}
           enablePoweredByContainer={false}
           // isRowScrollable={false}
-        />
-
-        {/*  Pick dates */}
+        /> */}
         <Subheading style={styles.title}>AVAILABILITY</Subheading>
-        <View style={{flex: 1}}>
+        <View style={{marginBBottom: 3, flexWrap: 'wrap', flexDirection:"row" }}>
         {daysInWeek.map((item, index) => {
           return (
             <View
-            style={{ margin: 5,flexWrap: 'wrap'}}
+            style={{marginHorizontal:2,marginVertical:3 }}
             key={index}
             >
               <Chip
                 key={index}
-                mode="outlined" // changing display mode, default is flat
+                mode="flat" // changing display mode, default is flat
                 height={30} // give desirable height to chip
                 textStyle={{ color:'black', fontSize: 15 }} //label properties
                 // style={{ backgroundColor: colorConst.secondaryDark }}
                 selected={date[index]}
-                selectedColor= {colorConst.accent}
+                style={{ backgroundColor: colorConst.secondaryLight ,borderColor:"black"}}
+                selectedColor= {colorConst.primary}
                 onPress={() => {
                   let newDate = [...date];
                   newDate[index] = !newDate[index];
@@ -254,9 +248,6 @@ const styles = StyleSheet.create({
     marginVertical:20
   },
   container: {
-    // flex: 1,
-    // flexDirection:"column",
-    // alignItems: "center",
     justifyContent: 'flex-start',
   },
 });

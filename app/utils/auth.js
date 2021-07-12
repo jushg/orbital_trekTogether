@@ -40,6 +40,16 @@ export const logout = async(onSuccess, onError) => {
   }
 }
 
+export const resetPassword = async({email},onSuccess, onError) => {
+  try {
+    await auth.sendPasswordResetEmail(email)
+    return onSuccess()
+  }
+  catch (error) {
+    onError(error)
+  }
+}
+
 export const getCurrentUser = () => {
   return auth.currentUser
 }

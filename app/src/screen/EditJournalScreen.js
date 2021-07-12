@@ -10,12 +10,13 @@ import {
 } from "react-native";
 import {ActivityIndicator, Button, Modal, Portal} from "react-native-paper";
 import {TextInput} from "react-native"
+import * as ImagePicker from "expo-image-picker";
+import Carousel from "react-native-snap-carousel";
 
 import firebase from "../../utils/firebase";
 import * as Journal from "../../utils/journal";
 import {UserContext} from "../../utils/context";
-import * as ImagePicker from "expo-image-picker";
-import Carousel from "react-native-snap-carousel";
+import colorConst from "../constant/color";
 
 export default ({navigation, route}) => {
 
@@ -116,7 +117,7 @@ export default ({navigation, route}) => {
       </Pressable>
     )
   }
-  // EXPERIMENTAL
+  // End EXPERIMENTAL
 
   if (!journal) {
     return <View style={styles.loadingContainer}>
@@ -129,52 +130,51 @@ export default ({navigation, route}) => {
       <ScrollView keyboardShouldPersistTaps="handled">
         <View style={styles.container}>
 
+          {/*<Portal>*/}
+          {/*  <Modal*/}
+          {/*    visible={selectedItem}*/}
+          {/*    onDismiss={() => setSelectedItem(null)}*/}
+          {/*    contentContainerStyle={{...styles.modal, width: modalWidth, height: modalHeight}}*/}
+          {/*  >*/}
+          {/*    <Pressable onLongPress={longPress}>*/}
+          {/*      <Image source={{ uri: selectedItem }}*/}
+          {/*             resizeMode={'contain'}*/}
+          {/*             style={{width: modalWidth, height: modalHeight}}*/}
+          {/*      />*/}
+          {/*    </Pressable>*/}
+          {/*  </Modal>*/}
+          {/*</Portal>*/}
 
-          <Portal>
-            <Modal
-              visible={selectedItem}
-              onDismiss={() => setSelectedItem(null)}
-              contentContainerStyle={{...styles.modal, width: modalWidth, height: modalHeight}}
-            >
-              <Pressable onLongPress={longPress}>
-                <Image source={{ uri: selectedItem }}
-                       resizeMode={'contain'}
-                       style={{width: modalWidth, height: modalHeight}}
-                />
-              </Pressable>
-            </Modal>
-          </Portal>
 
+          {/*<Carousel*/}
+          {/*  data={journal.photos}*/}
+          {/*  renderItem={foo}*/}
+          {/*  itemWidth={itemWidth}*/}
+          {/*  sliderWidth={sliderWidth}*/}
+          {/*/>*/}
 
-          <Carousel
-            data={journal.photos}
-            renderItem={foo}
-            itemWidth={itemWidth}
-            sliderWidth={sliderWidth}
+      <TouchableHighlight
+        style={{
+          ...styles.thumbnailContainer,
+          width: photoWidth,
+          height: photoWidth * 2 / 3,
+          backgroundColor: colorConst.secondaryLight,
+          borderColor:colorConst.backgroundCard
+        }}
+        underlayColor={colorConst.secondaryDark}
+        disabled={journal.photos.length === 0}
+        onPress={() => navigation.navigate("Journal Photos", {'photos': journal.photos})}
+      >
+        { journal.photos.length > 0
+          ? <Image
+            // source={require("../../assets/ava1.jpg")}
+            source={{ uri: journal.photos[journal.photos.length - 1] }}
+            resizeMode={'contain'}
+            style={{width: photoWidth, height: photoWidth * 2 / 3}}
           />
-
-
-      {/*<TouchableHighlight*/}
-      {/*  style={{*/}
-      {/*    ...styles.thumbnailContainer,*/}
-      {/*    width: photoWidth,*/}
-      {/*    height: photoWidth * 2 / 3,*/}
-      {/*    backgroundColor: 'silver'*/}
-      {/*  }}*/}
-      {/*  underlayColor={'gray'}*/}
-      {/*  disabled={journal.photos.length === 0}*/}
-      {/*  onPress={() => navigation.navigate("Journal Photos", {'photos': journal.photos})}*/}
-      {/*>*/}
-      {/*  { journal.photos.length > 0*/}
-      {/*    ? <Image*/}
-      {/*      // source={require("../../assets/ava1.jpg")}*/}
-      {/*      source={{ uri: journal.photos[journal.photos.length - 1] }}*/}
-      {/*      resizeMode={'contain'}*/}
-      {/*      style={{width: photoWidth, height: photoWidth * 2 / 3}}*/}
-      {/*    />*/}
-      {/*    : <Text style={{color: 'white', fontSize: 16}}>You haven't uploaded any photos yet!</Text>*/}
-      {/*  }*/}
-      {/*</TouchableHighlight>*/}
+          : <Text style={{color: 'black', fontSize: 16}}>You haven't uploaded any photos yet!</Text>
+        }
+      </TouchableHighlight>
 
       <Button onPress={handlePickImage}>Add photos</Button>
 

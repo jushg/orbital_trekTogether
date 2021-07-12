@@ -1,11 +1,12 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {Divider, ActivityIndicator, Caption} from "react-native-paper";
+import {Divider, ActivityIndicator, Caption, Card, Title,Button,Paragraph, Avatar} from "react-native-paper";
 import { StyleSheet, Text, View, FlatList } from 'react-native';
 
 
 import firebase from "../../utils/firebase";
 import {UserContext} from "../../utils/context";
 import * as Trip from "../../utils/trip";
+import colorConst from '../constant/color';
 
 export default ({navigation}) => {
 
@@ -42,7 +43,32 @@ export default ({navigation}) => {
     return () => unsubscribeTripListener();
   }, []);
 
-
+  const buddyContent =({buddy}) => {
+    return (
+      <Avatar.Image size={40} source={require('../../assets/ava6.jpg')}/>
+    )
+  }
+  const renderDivider= () => {
+    return (
+      <View style={{backgroundColor:colorConst.background}}>
+        <Divider style={{marginBottom:20}}/>
+        
+      </View>
+    )
+  }
+  const renderCard = ({item,user}) => {
+    const date = item.date.toDate().toLocaleDateString();
+    return(
+      <Card mode="outlined" >
+        <Card.Cover source={{ uri: 'https://picsum.photos/700' }} />
+        <Card.Title title={item.place + ' - ' + date} subtitle={"Place 1 - Place 2 - Place 3"} right={buddyContent} />
+        <Card.Content>
+          <Paragraph>{item.notes}</Paragraph>
+        </Card.Content>
+       
+      </Card>
+    )
+  }
   return (
     <>
     {futureTrips == null ? 
@@ -57,9 +83,10 @@ export default ({navigation}) => {
       <FlatList
         data={futureTrips}
         keyExtractor={item => item.id}
-        ItemSeparatorComponent={ () => <Divider/> }
+        ItemSeparatorComponent={ renderDivider}
         // renderItem={renderFutureTrip}
-        renderItem={({item}) => Trip.renderTrip({item, user})}
+        // renderItem={({item}) => Trip.renderTrip({item, user})}
+        renderItem={({item}) => renderCard({item, user})}
       /> 
     </View>
       }
@@ -84,7 +111,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection:"column",
     justifyContent: 'flex-start',
-    paddingHorizontal: 10
+    paddingHorizontal: "1%"
   },
   loadingContainer:{
     flex: 1,
@@ -97,20 +124,3 @@ const styles = StyleSheet.create({
     width:"80%"
   }
 });
-
- {/* <View style={{flexDirection: 'row', justifyContent:"space-between"}}>
-      <Searchbar
-          placeholder="Search Trip"
-          onChangeText={onChangeSearch}
-          value={searchQuery}
-          style={styles.searchBar}
-      />
-        <Menu
-          visible={visible}
-          onDismiss={closeMenu}
-          anchor={<IconButton onPress={openMenu} icon="sort-variant"/>}
-          style={{paddingTop: 30}}>
-          <Menu.Item onPress={sortNewest} title="Newest" />
-          <Menu.Item onPress={sortOldest} title="Oldest" />
-        </Menu>
-      </View>  */}

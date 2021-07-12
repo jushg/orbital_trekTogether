@@ -5,14 +5,9 @@ import { CommonActions } from '@react-navigation/native'
 import { RectButton } from 'react-native-gesture-handler';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 
-// https://docs.expo.io/versions/latest/sdk/permissions/
-// TO CACHE AVATARS ?
-// https://github.com/DylanVann/react-native-fast-image
 
-import Screen from "../component/screen"
 import firebase from "../../utils/firebase";
 import {UserContext} from "../../utils/context";
-import { Headline } from 'react-native-paper';
 import colorConst from '../constant/color';
 
 export default ({navigation}) => {

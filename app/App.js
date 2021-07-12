@@ -26,6 +26,7 @@ const CombinedDefaultTheme = {
     background: colorConstant.background,
     card: colorConstant.card,
     text: colorConstant.text,
+    placeholder: colorConstant.placeholder
   },
 };
 
@@ -39,9 +40,9 @@ export default function App() {
       <PersistGate loading={null} persistor={persistor}>
         <PaperProvider theme={CombinedDefaultTheme}>
           <NavigationContainer theme={CombinedDefaultTheme}>
-            <RootScreenStack/>
-            {/*<MainScreenStack/>*/}
-            {/*<TestScreen/>*/}
+            {/* <RootScreenStack/> */}
+            {/* <MainScreenStack/> */}
+            <TestScreen/>
             <FlashMessage position="top" />
           </NavigationContainer>
         </PaperProvider>

@@ -13,6 +13,7 @@ import {ActivityIndicator, Portal, Modal, Button} from "react-native-paper";
 import Carousel from "react-native-snap-carousel";
 
 import firebase from "../../utils/firebase";
+import colorConst from "../constant/color";
 import CarouselPhotoCard from "../component/CarouselPhotoCard";
 
 export default ({navigation, route}) => {
@@ -42,65 +43,6 @@ export default ({navigation, route}) => {
   const foo = ({item, index}) => {
     // console.log("render " + index + " view");
     return <CarouselPhotoCard item={item} onPress={setSelectedItem} />;
-
-    // return (
-    //   <Pressable style={styles.card}
-    //              onPress={() => setSelectedItem(item)}
-    //   >
-    //     <Image source={{ uri: item }}
-    //            resizeMode={'contain'}
-    //            style={{width: itemWidth, height: itemHeight}}
-    //     />
-    //   </Pressable>
-    // )
-
-    // if (item === 1) {
-    //   return (
-    //     <Pressable style={styles.card}
-    //                onPress={() => showModal(item)}
-    //     >
-    //       <Image source={require("../../assets/ava1.png")}
-    //              resizeMode={'contain'} style={{width: itemWidth, height: itemHeight}}/>
-    //     </Pressable>
-    //   )
-    // }
-    // if (item === 2) {
-    //   return (
-    //     <TouchableOpacity style={styles.card}
-    //                       onLongPress={() => alert("Long press")}
-    //     >
-    //       <Image source={require("../../assets/business_cat.png")}
-    //              resizeMode={'contain'} style={{width: itemWidth, height: itemHeight}}/>
-    //     </TouchableOpacity>
-    //   )
-    // }
-    // if (item === 3) {
-    //   return (
-    //     <TouchableOpacity style={styles.card}>
-    //       <Image source={require("../../assets/pain.jpg")}
-    //              resizeMode={'contain'}
-    //              style={{width: itemWidth, height: itemHeight}}/>
-    //     </TouchableOpacity>
-    //   )
-    // }
-    // if (item === 4) {
-    //   return (
-    //     <TouchableOpacity style={styles.card}>
-    //       <Image source={require("../../assets/account-icon.png")}
-    //              resizeMode={'contain'}
-    //              style={{width: itemWidth, height: itemHeight}}/>
-    //     </TouchableOpacity>
-    //   )
-    // }
-    // if (item === 5) {
-    //   return (
-    //     <TouchableOpacity style={styles.card}>
-    //         <Image source={require("../../assets/splash.png")}
-    //                resizeMode={'contain'}
-    //                style={{width: itemWidth, height: itemHeight}}/>
-    //     </TouchableOpacity>
-    //   )
-    // }
   }
 
   const trip = route.params.trip;
@@ -164,9 +106,10 @@ export default ({navigation, route}) => {
             ...styles.thumbnailContainer,
             width: itemWidth,
             height: itemHeight,
-            backgroundColor: 'silver'
+            backgroundColor: colorConst.secondaryLight,
+            borderColor: colorConst.backgroundCard
           }}
-          underlayColor={'gray'}
+          underlayColor={colorConst.secondaryDark}
           disabled={!thumbnailUrl}
           onPress={() => navigation.navigate("Journal Photos", {'photos': journal.photos})}
         >
@@ -177,7 +120,7 @@ export default ({navigation, route}) => {
             resizeMode={'contain'}
             style={{width: itemWidth, height: itemHeight}}
           />
-          : <Text style={{color: 'white', fontSize: 16}}>You haven't uploaded any photos yet!</Text>
+          : <Text style={{color: 'black', fontSize: 16}}>You haven't uploaded any photos yet!</Text>
           }
         </TouchableHighlight>
         <Text style={styles.thumbnailCaption}>Click the above image to view photos</Text>

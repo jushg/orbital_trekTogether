@@ -6,7 +6,6 @@ import colorConst from '../constant/color'
 export default  (props)  => {
     return (
         <TextInput
-            // mode="outlined"
             underlineColor="transparent"
             {...props}
             style={{...styles.textInput, ...props.style}}

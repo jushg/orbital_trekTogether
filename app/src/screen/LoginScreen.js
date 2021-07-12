@@ -77,16 +77,25 @@ export default ({ navigation }) => {
         </Button>
 
         <View style= {{flexDirection:"row", justifyContent:"center"}}>
-          <Pressable onPress={() => {}}>
-            <Text
-              style={styles.forgotPassword}
-              onPress={() => navigation.navigate("Sign Up")}>
+          <Pressable 
+          onPress={() => navigation.navigate("Reset Password")}
+          style={({ pressed }) => [
+            {
+              backgroundColor: pressed
+                ? colorConst.backgroundCard
+                : colorConst.background
+            },
+            styles.wrapperCustom
+          ]}
+          >
+            <Text style={styles.forgotPassword}>
               Forgot password?
             </Text>
           </Pressable>
         </View>
-          
+        <Text style={{marginBottom:50}}> </Text>
 
+          
           
         <View style= {{flexDirection:"row", justifyContent:"center"}}>
           <Text style={{fontSize:16}}>Don't have an account?  </Text>
@@ -132,11 +141,10 @@ const styles = StyleSheet.create({
     height:50,
     alignItems:"center",
     justifyContent:"center",
-    marginTop:10
+    marginTop:10,
+    marginBottom:30
   },
   forgotPassword: {
-    marginBottom: 50,
-    marginTop: 20,
     fontStyle:"italic",
     fontSize: 16,
     textDecorationLine: "underline",
