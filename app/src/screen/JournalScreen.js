@@ -1,15 +1,15 @@
 import React, {useEffect, useState} from "react";
 import {
-  Alert, FlatList,
+  Alert,
   Image, Pressable,
   ScrollView,
   StyleSheet,
   Text,
-  TouchableHighlight,
+  TouchableOpacity,
   useWindowDimensions,
   View
 } from "react-native";
-import {ActivityIndicator, Portal, Modal, Button} from "react-native-paper";
+import {ActivityIndicator, Portal, Modal, Card} from "react-native-paper";
 import Carousel from "react-native-snap-carousel";
 
 import firebase from "../../utils/firebase";
@@ -63,6 +63,11 @@ export default ({navigation, route}) => {
     return () => unsubscribeJournalListener();
   }, []);
 
+  const onPressThumbnail = () => {
+    if (thumbnailUrl)
+      navigation.navigate("Journal Photos", {'photos': journal.photos});
+  }
+
   return (
     <>
     {journal == null
@@ -91,7 +96,7 @@ export default ({navigation, route}) => {
       <ScrollView style={styles.container}>
         <Text>Place: {trip.place}</Text>
         <Text>{otherName ? "Buddy: " + otherName : "Solo trip"}</Text>
-        <Text style={{fontStyle: 'italic', color: 'green'}}>Last edited by: {journal.lastEditedBy}</Text>
+        <Text style={{fontStyle: 'italic', color: 'green'}}>Latest update: {journal.lastEditedBy}</Text>
 
         {/*<Carousel */}
         {/*  data={journal.photos}*/}
@@ -100,30 +105,42 @@ export default ({navigation, route}) => {
         {/*  sliderWidth={sliderWidth}*/}
         {/*/>*/}
 
-        {/* CONSIDER USING Pressable */}
-        <TouchableHighlight
-          style={{
-            ...styles.thumbnailContainer,
-            width: itemWidth,
-            height: itemHeight,
-            backgroundColor: colorConst.secondaryLight,
-            borderColor: colorConst.backgroundCard
-          }}
-          underlayColor={colorConst.secondaryDark}
-          disabled={!thumbnailUrl}
-          onPress={() => navigation.navigate("Journal Photos", {'photos': journal.photos})}
+
+        {/*<TouchableOpacity*/}
+        {/*  style={{*/}
+        {/*    ...styles.thumbnailContainer,*/}
+        {/*    width: itemWidth,*/}
+        {/*    height: itemHeight,*/}
+        {/*  }}*/}
+        {/*  disabled={!thumbnailUrl}*/}
+        {/*  onPress={() => navigation.navigate("Journal Photos", {'photos': journal.photos})}*/}
+        {/*  activeOpacity={0.8}*/}
+        {/*>*/}
+        {/*  { thumbnailUrl*/}
+        {/*  ? <Image*/}
+        {/*    // source={require("../../assets/ava1.jpg")}*/}
+        {/*    source={{ uri: thumbnailUrl }}*/}
+        {/*    resizeMode={'cover'}*/}
+        {/*    style={{width: itemWidth, height: itemHeight}}*/}
+        {/*  />*/}
+        {/*  : <Text style={{color: 'black', fontSize: 16}}>You haven't uploaded any photos yet!</Text>*/}
+        {/*  }*/}
+        {/*</TouchableOpacity>*/}
+        {/*<Text style={styles.thumbnailCaption}>Click the above image to view photos</Text>*/}
+
+        <Card
+          onPress={onPressThumbnail}
+          style={styles.card}
         >
-          { thumbnailUrl
-          ? <Image
-            // source={require("../../assets/ava1.jpg")}
-            source={{ uri: thumbnailUrl }}
-            resizeMode={'contain'}
-            style={{width: itemWidth, height: itemHeight}}
-          />
-          : <Text style={{color: 'black', fontSize: 16}}>You haven't uploaded any photos yet!</Text>
+          {thumbnailUrl ?
+            <Card.Cover
+              source={{uri: thumbnailUrl}}
+              resizeMode={'cover'}
+              style={{width: itemWidth, height: itemHeight}}
+            />
+            : <Card.Title title="No photos yet!"/>
           }
-        </TouchableHighlight>
-        <Text style={styles.thumbnailCaption}>Click the above image to view photos</Text>
+        </Card>
 
         <Text>{journal.text}</Text>
 
@@ -144,12 +161,20 @@ const styles = StyleSheet.create({
     alignItems:"center",
     justifyContent:"center"
   },
+  card: {
+    marginTop: 10,
+    marginBottom: 20,
+    shadowColor: 'black',
+    shadowOpacity: 0.6,
+    elevation: 5
+  },
   thumbnailContainer: {
-    // overflow: 'hidden',  // (?)
+    overflow: 'hidden',  // (?)
     marginVertical: 8,
     borderRadius: 15,
     borderWidth: 3,
-    borderColor: 'green',
+    backgroundColor: colorConst.secondaryLight,
+    borderColor: colorConst.backgroundCard,
     justifyContent: 'center',
     alignItems: 'center'
   },
@@ -158,16 +183,6 @@ const styles = StyleSheet.create({
     fontStyle: 'italic',
     color: 'green',
     marginBottom: 5
-  },
-  card: {
-    // flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    marginVertical: 8,
-    borderRadius: 15,
-    borderWidth: 3,
-    borderColor: 'green',
-    backgroundColor: 'gray'
   },
   modal: {
     backgroundColor: 'white',
