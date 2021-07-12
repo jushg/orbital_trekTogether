@@ -99,7 +99,7 @@ export default ({navigation}) => {
             style={{marginBottom: 10,  alignSelf:"center"}}
           />
 
-          <Subheading style={{paddingVertical: 10, fontWeight:"bold"}}>PLACES</Subheading>
+          <Subheading style={{paddingTop: 10, fontWeight:"bold"}}>PLACES</Subheading>
           <PlaceSearch place={place} setPlace={setPlace} textPlaceHolder="Where will this trip stop by ?" details/>
 
           <Subheading style={{paddingTop:10, fontWeight:"bold"}}>DATE: { Platform.OS === 'ios' && date.toLocaleDateString(undefined, options)}</Subheading>

@@ -42,8 +42,8 @@ export default (props) => {
         // fetchDetails={true}
         onPress={(data, details = null) => {
         // 'details' is provided when fetchDetails = true
-        const arr = [...props.place, data];
-        props.setPlace(arr);
+            const arr = [...props.place, data];
+            props.setPlace(arr);
         // console.log(data, details);
         }}
         // returnKeyType="search"
@@ -60,13 +60,29 @@ export default (props) => {
             backgroundColor: colorConst.secondaryLight,
             clearButtonMode: "always", //ios only ?
             placeholderTextColor: colorConst.placeholder,
-            style: {
+            // style: {
+            //     width: "100%",
+            //     height: 65,
+            //     borderWidth: 1,
+            //     borderRadius: 5,
+            //     paddingHorizontal: 15,
+            //     fontSize:16,
+            //     marginVertical: 10
+            // }
+        }}
+        styles={{
+            textInput: {
                 width: "100%",
                 height: 65,
                 borderWidth: 1,
                 borderRadius: 5,
                 paddingHorizontal: 15,
-                fontSize:16
+                fontSize:16,
+                marginVertical: 10
+            },
+            listView:{
+                borderRadius:5,
+                borderWidth:0.75
             }
         }}
         enablePoweredByContainer={false}

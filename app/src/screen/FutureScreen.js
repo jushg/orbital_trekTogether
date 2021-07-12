@@ -50,16 +50,24 @@ export default ({navigation}) => {
   }
   const renderDivider= () => {
     return (
-      <View style={{backgroundColor:colorConst.background}}>
-        <Divider style={{marginBottom:20}}/>
+      <View style={{backgroundColor:colorConst.background, marginBottom:20}}>
+        {/* <Divider style={{marginBottom:20}}/> */}
         
       </View>
+    )
+  }
+
+  const renderFootnote = () => {
+    return (
+     <Caption style={{alignSelf:"center", paddingVertical: 25}}>
+       Press and hold to view the trip details
+     </Caption>
     )
   }
   const renderCard = ({item,user}) => {
     const date = item.date.toDate().toLocaleDateString();
     return(
-      <Card mode="outlined" >
+      <Card mode="outlined"style={{elevation:5 , borderWidth:1, borderRadius: 10}} onLongPress={() => console.log("Edit trip")} >
         <Card.Cover source={{ uri: 'https://picsum.photos/700' }} />
         <Card.Title title={item.place + ' - ' + date} subtitle={"Place 1 - Place 2 - Place 3"} right={buddyContent} />
         <Card.Content>
@@ -87,6 +95,7 @@ export default ({navigation}) => {
         // renderItem={renderFutureTrip}
         // renderItem={({item}) => Trip.renderTrip({item, user})}
         renderItem={({item}) => renderCard({item, user})}
+        ListFooterComponent={renderFootnote}
       /> 
     </View>
       }

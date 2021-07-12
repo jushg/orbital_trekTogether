@@ -119,7 +119,6 @@ export const MainScreenStack = () => {
                 ) })
               }
             />
-
             <MainStack.Screen name={"View Journal"} component={JournalScreen}
               options={({navigation, route}) => ({
                 headerTitle: "Viewing journal",
@@ -154,7 +153,6 @@ export const MainScreenStack = () => {
   )
 }
 
-
 const AuthStack = createStackNavigator();
 
 export const AuthScreenStack = () => {
@@ -181,10 +179,8 @@ export const HomeScreenTab = () => {
   return (
     <HomeTab.Navigator 
     initialRouteName="Home"
-    // activeColor= {colorConst.accent}
-    
-    >
-      
+    // activeColor= {colorConst.accent}   
+    >    
       <HomeTab.Screen
         name="Home"
         component={DashboardScreenStack}
@@ -224,8 +220,6 @@ export const HomeScreenTab = () => {
 }
 
 
-
-
 const DashboardStack = createStackNavigator();
 
 export const DashboardScreenStack = ({navigation}) => {
@@ -260,7 +254,6 @@ const DashboardTab = createMaterialTopTabNavigator();
 export const DashboardScreenTab = () => {
   return (
     <DashboardTab.Navigator>
-
       <DashboardTab.Screen 
         name="Future" 
         component={FutureScreen}
@@ -273,7 +266,6 @@ export const DashboardScreenTab = () => {
         options={{
           tabBarLabel: 'Your journals'
         }}/>
-
     </DashboardTab.Navigator>
   )
 } 
