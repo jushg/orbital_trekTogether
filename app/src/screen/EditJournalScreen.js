@@ -1,15 +1,17 @@
 import React, {useContext, useEffect, useState} from "react";
 import {
+  Alert,
   Image,
-  KeyboardAvoidingView,
+  KeyboardAvoidingView, Pressable,
   ScrollView,
   StyleSheet,
   Text, TouchableHighlight, useWindowDimensions,
   View
 } from "react-native";
-import {ActivityIndicator, Button} from "react-native-paper";
+import {ActivityIndicator, Button, Modal, Portal} from "react-native-paper";
 import {TextInput} from "react-native"
 import * as ImagePicker from "expo-image-picker";
+import Carousel from "react-native-snap-carousel";
 
 import firebase from "../../utils/firebase";
 import * as Journal from "../../utils/journal";
@@ -80,6 +82,43 @@ export default ({navigation, route}) => {
     }
   };
 
+  // EXPERIMENTAL
+  const sliderWidth = useWindowDimensions().width;
+  const itemWidth = sliderWidth - 2 * styles.container.padding - 60;
+  const itemHeight = itemWidth * 9/16;
+
+  const [selectedItem, setSelectedItem] = useState(null);
+  const modalHeight = useWindowDimensions().height * 3/5;
+  const modalWidth = useWindowDimensions().width * 9/10;
+  const longPress = () => {
+    Alert.alert(
+      'Long press?',
+      'Should delete...',
+      [
+        { text: "No", style: 'cancel', onPress: () => {} },
+        {
+          text: 'Yes',
+          style: 'destructive',
+          onPress: () => {},
+        },
+      ]
+    );
+  }
+  const foo = ({item, index}) => {
+    // console.log("render " + index + " edit");
+    return (
+      <Pressable style={styles.card}
+                 onPress={() => setSelectedItem(item)}
+      >
+        <Image source={{uri: item}}
+               resizeMode={'contain'}
+               style={{width: itemWidth, height: itemHeight}}
+        />
+      </Pressable>
+    )
+  }
+  // End EXPERIMENTAL
+
   if (!journal) {
     return <View style={styles.loadingContainer}>
       <ActivityIndicator size="large" color="black"/>
@@ -90,6 +129,29 @@ export default ({navigation, route}) => {
     <KeyboardAvoidingView style={{flex: 1}} behavior="padding" keyboardVerticalOffset={75} >
       <ScrollView keyboardShouldPersistTaps="handled">
         <View style={styles.container}>
+
+          {/*<Portal>*/}
+          {/*  <Modal*/}
+          {/*    visible={selectedItem}*/}
+          {/*    onDismiss={() => setSelectedItem(null)}*/}
+          {/*    contentContainerStyle={{...styles.modal, width: modalWidth, height: modalHeight}}*/}
+          {/*  >*/}
+          {/*    <Pressable onLongPress={longPress}>*/}
+          {/*      <Image source={{ uri: selectedItem }}*/}
+          {/*             resizeMode={'contain'}*/}
+          {/*             style={{width: modalWidth, height: modalHeight}}*/}
+          {/*      />*/}
+          {/*    </Pressable>*/}
+          {/*  </Modal>*/}
+          {/*</Portal>*/}
+
+
+          {/*<Carousel*/}
+          {/*  data={journal.photos}*/}
+          {/*  renderItem={foo}*/}
+          {/*  itemWidth={itemWidth}*/}
+          {/*  sliderWidth={sliderWidth}*/}
+          {/*/>*/}
 
       <TouchableHighlight
         style={{
@@ -169,4 +231,18 @@ const styles = StyleSheet.create({
     textAlignVertical: 'top',
     backgroundColor: 'gray'
   },
+  card: {
+    // flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginVertical: 8,
+    borderRadius: 15,
+    borderWidth: 3,
+    borderColor: 'green',
+    backgroundColor: 'gray'
+  },
+  modal: {
+    backgroundColor: 'white',
+    alignSelf: 'center'
+  }
 });

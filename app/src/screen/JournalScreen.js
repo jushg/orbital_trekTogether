@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {
-  Image,
+  Alert, FlatList,
+  Image, Pressable,
   ScrollView,
   StyleSheet,
   Text,
@@ -8,14 +9,41 @@ import {
   useWindowDimensions,
   View
 } from "react-native";
-import {ActivityIndicator} from "react-native-paper";
+import {ActivityIndicator, Portal, Modal, Button} from "react-native-paper";
+import Carousel from "react-native-snap-carousel";
 
 import firebase from "../../utils/firebase";
 import colorConst from "../constant/color";
+import CarouselPhotoCard from "../component/CarouselPhotoCard";
 
 export default ({navigation, route}) => {
 
-  const photoWidth = useWindowDimensions().width - 2 * styles.container.padding;
+  const sliderWidth = useWindowDimensions().width;
+  const itemWidth = sliderWidth - 2 * styles.container.padding;
+  const itemHeight = itemWidth * 9/16;
+
+  const [selectedItem, setSelectedItem] = useState(null);
+  const modalHeight = useWindowDimensions().height * 3/5;
+  const modalWidth = useWindowDimensions().width * 9/10;
+
+  const longPress = () => {
+    Alert.alert(
+      'Long press?',
+      'Should delete...',
+      [
+        { text: "No", style: 'cancel', onPress: () => {} },
+        {
+          text: 'Yes',
+          style: 'destructive',
+          onPress: () => {},
+        },
+      ]
+    );
+  }
+  const foo = ({item, index}) => {
+    // console.log("render " + index + " view");
+    return <CarouselPhotoCard item={item} onPress={setSelectedItem} />;
+  }
 
   const trip = route.params.trip;
   const otherName = route.params.otherName;
@@ -43,27 +71,41 @@ export default ({navigation, route}) => {
         <ActivityIndicator size="large" color="black"/>
       </View>
       :
+      <>
+        {/*<Portal>*/}
+        {/*  <Modal*/}
+        {/*    visible={selectedItem}*/}
+        {/*    onDismiss={() => setSelectedItem(null)}*/}
+        {/*    contentContainerStyle={{...styles.modal, width: modalWidth, height: modalHeight}}*/}
+        {/*  >*/}
+        {/*    <Pressable onLongPress={longPress}>*/}
+        {/*      <Image source={{ uri: selectedItem }}*/}
+        {/*             resizeMode={'contain'}*/}
+        {/*             style={{width: modalWidth, height: modalHeight}}*/}
+        {/*      />*/}
+        {/*    </Pressable>*/}
+        {/*  </Modal>*/}
+        {/*</Portal>*/}
+
+
       <ScrollView style={styles.container}>
         <Text>Place: {trip.place}</Text>
         <Text>{otherName ? "Buddy: " + otherName : "Solo trip"}</Text>
         <Text style={{fontStyle: 'italic', color: 'green'}}>Last edited by: {journal.lastEditedBy}</Text>
 
-        {/*<View style={{justifyContent: 'center', alignItems: 'center', flex: 1}}>*/}
-        {/*  <Text>Move edit button to headerRight.</Text>*/}
-        {/*  <Button*/}
-        {/*    onPress={() => navigation.dispatch(CommonActions.navigate({*/}
-        {/*        name: 'Edit Journal',*/}
-        {/*        params: {journal: journal} //otherName: otherUsername, otherID: otherID},*/}
-        {/*      })*/}
-        {/*    )}>Press to edit</Button>*/}
-        {/*</View>*/}
+        {/*<Carousel */}
+        {/*  data={journal.photos}*/}
+        {/*  renderItem={foo}*/}
+        {/*  itemWidth={itemWidth}*/}
+        {/*  sliderWidth={sliderWidth}*/}
+        {/*/>*/}
 
         {/* CONSIDER USING Pressable */}
         <TouchableHighlight
           style={{
             ...styles.thumbnailContainer,
-            width: photoWidth,
-            height: photoWidth * 2 / 3,
+            width: itemWidth,
+            height: itemHeight,
             backgroundColor: colorConst.secondaryLight,
             borderColor: colorConst.backgroundCard
           }}
@@ -76,7 +118,7 @@ export default ({navigation, route}) => {
             // source={require("../../assets/ava1.jpg")}
             source={{ uri: thumbnailUrl }}
             resizeMode={'contain'}
-            style={{width: photoWidth, height: photoWidth * 2 / 3}}
+            style={{width: itemWidth, height: itemHeight}}
           />
           : <Text style={{color: 'black', fontSize: 16}}>You haven't uploaded any photos yet!</Text>
           }
@@ -86,6 +128,7 @@ export default ({navigation, route}) => {
         <Text>{journal.text}</Text>
 
       </ScrollView>
+      </>
     }
     </>
   )
@@ -102,7 +145,7 @@ const styles = StyleSheet.create({
     justifyContent:"center"
   },
   thumbnailContainer: {
-    overflow: 'hidden',  // (?)
+    // overflow: 'hidden',  // (?)
     marginVertical: 8,
     borderRadius: 15,
     borderWidth: 3,
@@ -115,5 +158,19 @@ const styles = StyleSheet.create({
     fontStyle: 'italic',
     color: 'green',
     marginBottom: 5
+  },
+  card: {
+    // flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginVertical: 8,
+    borderRadius: 15,
+    borderWidth: 3,
+    borderColor: 'green',
+    backgroundColor: 'gray'
+  },
+  modal: {
+    backgroundColor: 'white',
+    alignSelf: 'center'
   }
 });
