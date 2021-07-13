@@ -50,10 +50,11 @@ export default (props) => {
         onEndEditing={Keyboard.dismiss}
         onFail={console.error}
         onNotFound={console.error}
+        fetchDetails={moreDetails}
         query={{
-        key: MAPS_API_KEY,
-        language: 'en',
-        components: 'country:sg',
+            key: MAPS_API_KEY,
+            language: 'en',
+            components: 'country:sg',
         }}
         textInputProps={{   // props for react native's TextInput, not rn paper!
             clearTextOnFocus: true,     // ios only

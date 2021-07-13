@@ -63,6 +63,12 @@ const renderTrip = ({item, user, navigation}) => {
   if (hasBuddy) {
     buddyDesc += `${item.otherMemberName[user.uid]}`;
   }
+  const placeDesc = "Place 1 - Place 2"
+  // if(item.place.length > 1){
+  //   item.place.forEach(place => {
+  //     placeDesc += place + " "
+  //   });
+  // }
   return (
     <Card 
       mode="outlined"
@@ -74,8 +80,8 @@ const renderTrip = ({item, user, navigation}) => {
       ) : null} 
       >
         <Card.Title 
-          title={item.routeName?item.routeName+ " - " + date:"Somewhere nice" } 
-          subtitle={"Place 1 - Place 2 - Place 3"} 
+          title={item.routeName?item.routeName+ " - " + date:"Some nice place <3" } 
+          subtitle={placeDesc} 
           right={(props) => {
             if (hasBuddy)
               return (

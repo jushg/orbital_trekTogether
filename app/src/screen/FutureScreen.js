@@ -42,14 +42,7 @@ export default ({navigation}) => {
 
     return () => unsubscribeTripListener();
   }, []);
-
-  const buddyContent =({buddy}) => {
-    return (
-      <Avatar.Image size={40} source={require('../../assets/ava6.jpg')}/>
-    )
-  }
   
-
   const renderFootnote = () => {
     return (
      <Caption style={{alignSelf:"center", paddingVertical: 25}}>
@@ -59,13 +52,28 @@ export default ({navigation}) => {
   }
   const renderCard = ({item,user}) => {
     const date = item.date.toDate().toLocaleDateString();
+    const hasBuddy = item.members.length === 2;
+    let buddyDesc = '';
+    if (hasBuddy) {
+      buddyDesc += `${item.otherMemberName[user.uid]}`;
+    }
     return(
       <Card 
       mode="outlined"
       style={{marginVertical:"1.5%", backgroundColor:"white", borderWidth:0.5, borderRadius:10, elevation:5}}
       onLongPress={() => console.log("Edit trip")} >
         <Card.Cover source={{ uri: 'https://picsum.photos/600' }} />
-        <Card.Title title={item.place + ' - ' + date} subtitle={"Place 1 - Place 2 - Place 3"} right={buddyContent} />
+        <Card.Title 
+          title={item.routeName?item.routeName+ " - " + date:"Some nice place <3" } 
+          subtitle={"Place 1 - Place 2 - Place 3"} 
+          right={(props) => {
+            if (hasBuddy)
+              return (
+                <View style={{justifyContent:'center'}}>
+                  <Avatar.Image {...props} size={50} source={{uri: item.otherAvatarURL[user.uid]}}/>
+                </View>
+              );
+          }} />
         <Card.Content>
           <Paragraph>{item.notes}</Paragraph>
         </Card.Content>
