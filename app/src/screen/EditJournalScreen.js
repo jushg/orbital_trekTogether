@@ -15,6 +15,7 @@ import Carousel from "react-native-snap-carousel";
 
 import firebase from "../../utils/firebase";
 import * as Journal from "../../utils/journal";
+import { handlePickImage } from "../../utils/imagepicker";
 import {UserContext} from "../../utils/context";
 import colorConst from "../constant/color";
 
@@ -60,25 +61,11 @@ export default ({navigation, route}) => {
   // }, [journal])
   // // }, [photos])
 
-  let hasCameraRollPermission = false;
-  const handlePickImage = async () => {
-    if (!hasCameraRollPermission) {
-      let permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
-      if (!permissionResult.granted) {
-        alert('Please enable access permission for camera roll!');
-        return;
-      }
-      else hasCameraRollPermission = true;
-    }
-
-    let pickerResult = await ImagePicker.launchImageLibraryAsync({quality: 0.25});
-    if (!pickerResult.cancelled) {
-      Journal.uploadOnePhoto(trip.id, user.displayName, pickerResult.uri)
+  const handlePickPhoto = async () => {
+    const uri = await handlePickImage(0.25);
+    if (uri != null) {
+      Journal.uploadOnePhoto(trip.id, user.displayName, uri)
         .then(console.log);
-
-      // const photos = [...journal.photos];
-      // photos.push(pickerResult.uri);
-      // setJournal({...journal, photos});
     }
   };
 
@@ -176,7 +163,7 @@ export default ({navigation, route}) => {
         }
       </TouchableHighlight>
 
-      <Button onPress={handlePickImage}>Add photos</Button>
+      <Button onPress={handlePickPhoto}>Add photos</Button>
 
       <TextInput
         style={styles.input}

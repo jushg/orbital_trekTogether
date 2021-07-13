@@ -1,10 +1,11 @@
-import React, {useContext, useEffect, useLayoutEffect, useRef, useState} from "react";
+import React, {useCallback, useContext, useEffect, useLayoutEffect, useRef, useState} from "react";
 import {FlatList, StyleSheet, useWindowDimensions, View} from "react-native";
 import {ActivityIndicator, Button, IconButton} from "react-native-paper";
 import * as ImagePicker from "expo-image-picker";
 
 import firebase from "../../utils/firebase";
 import * as Journal from "../../utils/journal";
+import { handlePickImage } from "../../utils/imagepicker";
 import {UserContext} from "../../utils/context";
 import SelectablePhotoTile from "../component/SelectablePhotoTile";
 
@@ -16,6 +17,9 @@ export default ({navigation, route}) => {
 
   const trip = route.params.trip;
   const [photos, setPhotos] = useState(null);
+  const photosAdded = useRef(new Set());     // local uri of added photos
+  let photosSelected = useRef(new Set());     // uri of currently selected photos
+  const toBeDeleted = useRef([]);     // uri of remote photos to be deleted
 
   useEffect(() => {
     firebase.firestore()
@@ -29,7 +33,16 @@ export default ({navigation, route}) => {
       });
   }, []);
 
-  let photosSelected = useRef(new Set());
+
+  const onSelection = useCallback(
+    (isSelected, uri) => {
+      isSelected
+        ? photosSelected.current.add(uri)
+        : photosSelected.current.delete(uri);
+      console.log("tick total: " + photosSelected.current.size);
+    },
+    [photosSelected.current]
+  );
   const renderItem = ({item, index}) => {
     return (
       <View style={[ { borderColor: 'black'},
@@ -40,12 +53,7 @@ export default ({navigation, route}) => {
           uri={item.uri}
           photoWidth={photoWidth}
           selected={item.selected}
-          onSelection={(isSelected, uri) => {
-            isSelected
-              ? photosSelected.current.add(uri)
-              : photosSelected.current.delete(uri);
-            // console.log("tick total: " + photosSelected.current.size);
-          }}
+          onSelection={onSelection}
         />
       </View>
     )
@@ -55,35 +63,22 @@ export default ({navigation, route}) => {
     <View style={{backgroundColor: 'black', height: 2}}/>
   );
 
-  const photosAdded = useRef(new Set());     // local uri of added photos
-  let hasCameraRollPermission = false;
-  const handlePickImage = async () => {
-    if (!hasCameraRollPermission) {
-      let permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
-      if (!permissionResult.granted) {
-        alert('Please enable access permission for camera roll!');
-        return;
+  const handlePickPhoto = async () => {
+    const uri = await handlePickImage(0.25);
+    if (uri == null) return;
+    const newObj = {...photos};
+    newObj[uri] =
+      {
+        uri: uri,    // local uri
+        selected: false,
+        origin: "local"
       }
-      else hasCameraRollPermission = true;
-    }
-
-    let pickerResult = await ImagePicker.launchImageLibraryAsync({quality: 0.25});
-    if (!pickerResult.cancelled) {
-      const newObj = {...photos};
-      newObj[pickerResult.uri] =
-        {
-          uri: pickerResult.uri,    // local uri
-          selected: false,
-          origin: "local"
-        }
-      ;
-      setPhotos(newObj);
-      photosAdded.current.add(pickerResult.uri);
-      // console.log("added total: " + photosAdded.current.size);
-    }
+    ;
+    setPhotos(newObj);
+    photosAdded.current.add(uri);
+    photosSelected.current.clear();
   };
 
-  const toBeDeleted = useRef([]);
   const handlePressDelete = () => {
     const newObj = {...photos};
     for (const uri of photosSelected.current.values()) {
@@ -96,14 +91,14 @@ export default ({navigation, route}) => {
       delete newObj[uri];
     }
     setPhotos(newObj);
-    photosSelected.current = new Set();
+    photosSelected.current.clear();
   }
 
   useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
         <View style={{flexDirection: 'row-reverse'}}>
-          <IconButton icon={'plus'} size={24} onPress={handlePickImage} />
+          <IconButton icon={'plus'} size={24} onPress={handlePickPhoto} />
           <IconButton icon={'delete'} size={24} onPress={handlePressDelete} />
         </View>
       ),
@@ -138,7 +133,7 @@ export default ({navigation, route}) => {
       :
       <>
         {/*<View style={{flexDirection: 'row-reverse'}}>*/}
-        {/*  <IconButton icon={'plus'} size={24} onPress={handlePickImage} />*/}
+        {/*  <IconButton icon={'plus'} size={24} onPress={handlePickPhoto} />*/}
         {/*  <IconButton icon={'delete'} size={24} onPress={handlePressDelete} />*/}
         {/*</View>*/}
         <FlatList

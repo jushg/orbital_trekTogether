@@ -27,10 +27,10 @@ export const setUpProfile = async ({age, level, about, place, date, avatar}, onS
         place.map(item => item.structured_formatting.main_text)
       )].sort();
 
-      const response = await fetch(avatar.uri);
+      const response = await fetch(avatar);
       const blob = await response.blob();
       const fileRef = firebase.storage().ref().child(
-          uid + "/" + avatar.uri.substr(avatar.uri.indexOf('ImagePicker/'))
+          uid + "/" + avatar.substr(avatar.indexOf('ImagePicker/'))
       );
       await fileRef.put(blob);    // put avatar blob to Cloud Storage
       const avatarUrl = await fileRef.getDownloadURL();     // downloadURL to put in user profile

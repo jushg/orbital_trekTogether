@@ -9,6 +9,7 @@ import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplet
 import Screen from "../component/screen"
 import * as Setup from "../../utils/setup";
 import {UserContext} from "../../utils/context"
+import { handlePickImage } from "../../utils/imagepicker";
 import TextBox from '../component/textbox'
 import colorConst from '../constant/color';
 import { MAPS_API_KEY } from "@env";
@@ -53,23 +54,9 @@ export default ({navigation}) => {
 
   // state & callback function to handle user's avatar picking
   const [avatar, setAvatar] = useState(null);
-  let hasCameraRollPermission = false;
-  const handlePickImage = async () => {
-    if (!hasCameraRollPermission) {
-      let permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
-      if (!permissionResult.granted) {
-        alert('Please enable access permission for camera roll!');
-        return;
-      }
-      else hasCameraRollPermission = true;
-    }
-
-    let pickerResult = await ImagePicker.launchImageLibraryAsync({quality: 0.3});
-    if (!pickerResult.cancelled) {
-      // console.log(pickerResult);
-      setAvatar({ uri: pickerResult.uri });
-      // console.log(`avatar is null? ${avatar == null}`);
-    }
+  const handlePickAvatar = () => {
+    handlePickImage(0.3)
+      .then(uri => setAvatar(uri));
   };
 
   return (
@@ -88,7 +75,7 @@ export default ({navigation}) => {
             }
             style={{marginTop: 10}}
           />
-          <Button icon="camera" mode="contained" onPress={handlePickImage} style={styles.button}>
+          <Button icon="camera" mode="contained" onPress={handlePickAvatar} style={styles.button}>
             Add profile picture
           </Button>
         </View>
