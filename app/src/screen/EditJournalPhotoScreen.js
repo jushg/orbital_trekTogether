@@ -32,7 +32,7 @@ export default ({navigation, route}) => {
   let photosSelected = useRef(new Set());
   const renderItem = ({item, index}) => {
     return (
-      <View style={[ { borderColor: 'red'},
+      <View style={[ { borderColor: 'black'},
                     index % numColumns === 0 ? {borderRightWidth: 1} :
                     index % numColumns === numColumns-1 ? {borderLeftWidth: 1} :
                       {borderRightWidth: 1, borderLeftWidth: 1} ]} >
@@ -52,7 +52,7 @@ export default ({navigation, route}) => {
   }
 
   const renderSeparator = () => (
-    <View style={{backgroundColor: 'red', height: 2}}/>
+    <View style={{backgroundColor: 'black', height: 2}}/>
   );
 
   const photosAdded = useRef(new Set());     // local uri of added photos

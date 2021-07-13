@@ -163,7 +163,7 @@ export default ({navigation, route}) => {
         }}
         underlayColor={colorConst.secondaryDark}
         disabled={journal.photos.length === 0}
-        onPress={() => navigation.navigate("Journal Photos", {'photos': journal.photos})}
+        onPress={() => navigation.navigate("Photo Carousel", {'photos': journal.photos})}
       >
         { journal.photos.length > 0
           ? <Image

@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react';
-import { StyleSheet, Text, FlatList, View, Animated } from 'react-native'
+import { StyleSheet, FlatList, View, Animated } from 'react-native'
 import {List, Avatar, ActivityIndicator, Divider, Searchbar, Appbar, Caption, Button, } from "react-native-paper";
 import { CommonActions } from '@react-navigation/native'
 import { RectButton } from 'react-native-gesture-handler';
@@ -9,6 +9,9 @@ import Swipeable from 'react-native-gesture-handler/Swipeable';
 import firebase from "../../utils/firebase";
 import {UserContext} from "../../utils/context";
 import colorConst from '../constant/color';
+import * as Match from "../../utils/match";
+import * as Trip from "../../utils/trip";
+import {showMessage} from "react-native-flash-message";
 
 export default ({navigation}) => {
   const {user} = useContext(UserContext);
@@ -49,20 +52,36 @@ export default ({navigation}) => {
       : { otherID: x[1], otherUsername: s[1]};
   }
 
-  const renderRightActions = () => {
-    
+  function renderRightActions(otherName, otherID) {
+    const handleUnmatch = async () => {
+      // Unmatch + Delete all trips with ex-buddy
+      try {
+        Promise.all([
+          Match.unmatchBetween(user, otherID),
+          Trip.deleteFutureTripWithUnmatchedBuddy(user, otherID)
+        ]).then(console.log);
+        showMessage({
+          "message": `Unmatched with ${otherName}`,
+          type: "info", icon: "auto", floating: true
+        });
+      } catch (e) {
+        console.error(e);
+      }
+    }
+
     return (
-      <Button  
-        onPress={() => console.log("Meowmeow please do sth here")} 
-        compact={true} 
-        style={{justifyContent:"center", borderRadius:0, backgroundColor:colorConst.accent}} 
-        mode="contained" 
+      <Button
+        onPress={handleUnmatch}
+        compact={true}
+        style={{justifyContent:"center", borderRadius:0, backgroundColor:colorConst.accent}}
+        mode="contained"
         labelStyle={{paddingVertical:"100%"}}
-        >
-        Delete
+      >
+        Unmatch
       </Button>
     );
-  };
+  }
+
   const renderChat = ({item}) => {
     let {otherID, otherUsername} = getChatName(item._id, item.name);
     if (item.lastMessage.system) otherUsername += " 👋";   // new buddy? Add an emoji :)
@@ -74,7 +93,7 @@ export default ({navigation}) => {
         : "You")
       + `: ${item.lastMessage.text}`;
     return (
-      <Swipeable renderRightActions={renderRightActions} overshootRight={false} >
+      <Swipeable renderRightActions={() => renderRightActions(otherUsername, otherID)} overshootRight={false} >
         <List.Item
           title={otherUsername}
           description={lastMessage}
