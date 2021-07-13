@@ -43,7 +43,8 @@ export default ({navigation}) => {
 
     return () => unsubscribeChatListener();
   }, []);
-  10
+
+
   function getChatName(itemID, itemName) {
     const x = itemID.split("_");
     const s = itemName.split("_");

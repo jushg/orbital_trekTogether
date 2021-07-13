@@ -1,7 +1,8 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { GiftedChat, Bubble, Send, SystemMessage } from 'react-native-gifted-chat';
-import { View, StyleSheet} from 'react-native';
+import {View, StyleSheet, Image} from 'react-native';
 import { ActivityIndicator, IconButton, TextInput } from 'react-native-paper';
+import * as FileSystem from "expo-file-system";
 
 import firebase from "../../utils/firebase";
 import Screen from "../component/screen"
@@ -12,9 +13,9 @@ import TextBox from '../component/textbox'
 // https://github.com/amandeepmittal/react-native-examples
 
 export default ({ route }) => {
-  const [messages, setMessages] = useState([
+  const [messages, setMessages] = useState(null
     // example of system message
-    // {
+    // [{
     //   _id: 0,
     //   text: 'New room created.',
     //   createdAt: new Date().getTime(),
@@ -29,14 +30,33 @@ export default ({ route }) => {
     //     _id: 2,
     //     name: 'Test User'
     //   }
-    // }
-  ]);
+    // }]
+  );
+  const [otherAvatar, setOtherAvatar] = useState(null);
 
-  const { chat } = route.params;
+  const { chat, otherID } = route.params;
   const { user } = useContext(UserContext);
-  // useEffect(() => {
-  //   console.log(user);
-  // })
+
+  useEffect(() => {
+    const otherAvatarListener = firebase.firestore()
+      .collection("users")
+      .doc(otherID)
+      .onSnapshot(async (doc) => {
+        const uri = doc.data().photoURL;
+        await FileSystem.downloadAsync(
+          uri,
+          FileSystem.cacheDirectory + otherID
+        )
+          .then(({ uri }) => {
+            setOtherAvatar(uri);
+          })
+          .catch(error => {
+            console.error(error);
+          });
+      });
+
+    return () => otherAvatarListener();
+  }, [])
 
   useEffect(() => {
     const messagesListener = firebase.firestore()
@@ -98,6 +118,17 @@ export default ({ route }) => {
     ]);
   }
 
+  const renderAvatar = () => {
+    const size = 36;
+    return (
+      <Image
+        source={{ uri: otherAvatar }}
+        resizeMode={"cover"}
+        style={{ width: size, height: size, borderRadius: size/2 }}
+      />
+    )
+  };
+
   const renderBubble = (props) => {
     return (
       <Bubble
@@ -116,7 +147,9 @@ export default ({ route }) => {
           right: {
             color: colorConst.text
           },
-          left: { color: colorConst.text }
+          left: {
+            color: colorConst.text
+          }
         }}
         // tickStyle={{ color: props.currentMessage.sent ? '#34B7F1' : '#999' }}
       />
@@ -131,13 +164,14 @@ export default ({ route }) => {
     );
   }
 
-  const renderComposer = () => {
-    return (
-      <TextInput 
-      style={{flex:1}}
-      />
-    )
-  }
+  // const renderComposer = () => {
+  //   return (
+  //     <TextInput
+  //     style={{flex:1}}
+  //     />
+  //   )
+  // }
+
   const renderSend = (props) => {
     return (
       <Send {...props}>
@@ -166,6 +200,12 @@ export default ({ route }) => {
     );
   }
 
+  if (messages == null || otherAvatar == null) {
+    return <View style={styles.loadingContainer}>
+      <ActivityIndicator size="large" color="black"/>
+    </View>
+  }
+
   return (
     <GiftedChat
       messages={messages}
@@ -174,8 +214,9 @@ export default ({ route }) => {
       alwaysShowSend
       // showUserAvatar
       scrollToBottom
+      renderAvatar={renderAvatar}
       renderBubble={renderBubble}
-      renderLoading={renderLoading}
+      // renderLoading={renderLoading}
       renderSend={renderSend}
       scrollToBottomComponent={scrollToBottomComponent}
       renderSystemMessage={renderSystemMessage}
