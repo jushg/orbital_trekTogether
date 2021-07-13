@@ -7,6 +7,7 @@ import firebase from "../../utils/firebase";
 import * as Journal from "../../utils/journal";
 import {UserContext} from "../../utils/context";
 import SelectablePhotoTile from "../component/SelectablePhotoTile";
+import colorConst from "../constant/color";
 
 export default ({navigation, route}) => {
 
@@ -103,8 +104,8 @@ export default ({navigation, route}) => {
     navigation.setOptions({
       headerRight: () => (
         <View style={{flexDirection: 'row-reverse'}}>
-          <IconButton icon={'plus'} size={24} onPress={handlePickImage} />
-          <IconButton icon={'delete'} size={24} onPress={handlePressDelete} />
+          <IconButton icon={'plus'} size={24} onPress={handlePickImage} color={colorConst.textHeader} />
+          <IconButton icon={'delete'} size={24} onPress={handlePressDelete} color={colorConst.textHeader}/>
         </View>
       ),
     });

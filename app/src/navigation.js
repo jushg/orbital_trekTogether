@@ -136,13 +136,18 @@ export const MainScreenStack = () => {
             />
 
             <MainStack.Screen name={"Edit Photos"} component={EditJournalPhotoScreen}
-              options={{headerBackTitle: "Back"}}
+              options={{
+                headerBackTitle: "Back",
+                headerStyle: {backgroundColor: colorConst.primary },
+                headerTintColor: colorConst.textHeader}}
             />
 
             <MainStack.Screen name={"Edit Text"} component={EditJournalTextScreen}
               options={() => ({
                 headerBackTitle: "Back",
-                headerRight: () => <IconButton icon={'check-circle'} size={27} onPress={Keyboard.dismiss}/>
+                headerStyle: {backgroundColor: colorConst.primary },
+                headerTintColor: colorConst.textHeader,
+                headerRight: () => <IconButton icon={'check-circle'} color={colorConst.textHeader} size={27} onPress={Keyboard.dismiss}/>
               })}
             />
 

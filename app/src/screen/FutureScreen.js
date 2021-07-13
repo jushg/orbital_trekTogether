@@ -48,14 +48,7 @@ export default ({navigation}) => {
       <Avatar.Image size={40} source={require('../../assets/ava6.jpg')}/>
     )
   }
-  const renderDivider= () => {
-    return (
-      <View style={{backgroundColor:colorConst.background, marginBottom:20}}>
-        {/* <Divider style={{marginBottom:20}}/> */}
-        
-      </View>
-    )
-  }
+  
 
   const renderFootnote = () => {
     return (
@@ -67,8 +60,11 @@ export default ({navigation}) => {
   const renderCard = ({item,user}) => {
     const date = item.date.toDate().toLocaleDateString();
     return(
-      <Card mode="outlined"style={{elevation:5 , borderWidth:1, borderRadius: 10}} onLongPress={() => console.log("Edit trip")} >
-        <Card.Cover source={{ uri: 'https://picsum.photos/700' }} />
+      <Card 
+      mode="outlined"
+      style={{marginVertical:"1.5%", backgroundColor:"white", borderWidth:0.5, borderRadius:10, elevation:5}}
+      onLongPress={() => console.log("Edit trip")} >
+        <Card.Cover source={{ uri: 'https://picsum.photos/600' }} />
         <Card.Title title={item.place + ' - ' + date} subtitle={"Place 1 - Place 2 - Place 3"} right={buddyContent} />
         <Card.Content>
           <Paragraph>{item.notes}</Paragraph>
@@ -91,7 +87,7 @@ export default ({navigation}) => {
       <FlatList
         data={futureTrips}
         keyExtractor={item => item.id}
-        ItemSeparatorComponent={ renderDivider}
+        // ItemSeparatorComponent={ renderDivider}
         // renderItem={renderFutureTrip}
         // renderItem={({item}) => Trip.renderTrip({item, user})}
         renderItem={({item}) => renderCard({item, user})}
@@ -120,7 +116,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection:"column",
     justifyContent: 'flex-start',
-    paddingHorizontal: "1%"
+    paddingHorizontal: "1.5%"
   },
   loadingContainer:{
     flex: 1,

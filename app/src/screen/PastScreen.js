@@ -1,14 +1,13 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {StyleSheet,  View, FlatList } from 'react-native';
-import {Caption, ActivityIndicator, Divider} from "react-native-paper";
+import {Caption, ActivityIndicator, Card, Paragraph, Avatar} from "react-native-paper";
+import {CommonActions} from "@react-navigation/native";
 
 import firebase from "../../utils/firebase";
 import {UserContext} from "../../utils/context";
 import * as Trip from "../../utils/trip";
 
 export default ({navigation}) => {
-
-
   const {user} = useContext(UserContext);
   const [pastTrips, setPastTrips] = useState(null);
 
@@ -45,15 +44,51 @@ export default ({navigation}) => {
       </View> :
       <View style={styles.container}>
         <FlatList
+          style={{paddingHorizontal:"2%"}}
           data={pastTrips}
           keyExtractor={item => item.id}
-          ItemSeparatorComponent={ () => <Divider/> }
-          renderItem={({item}) => Trip.renderTrip({item, user, navigation})}
+          renderItem={({item}) => renderTrip({item, user, navigation})}
         />
       </View>
       }
     </>
     
+  )
+}
+
+const renderTrip = ({item, user, navigation}) => {
+  const date = item.date.toDate().toLocaleDateString();
+  const hasBuddy = item.members.length === 2;
+  let buddyDesc = '';
+  if (hasBuddy) {
+    buddyDesc += `${item.otherMemberName[user.uid]}`;
+  }
+  return (
+    <Card 
+      mode="outlined"
+      style={{marginVertical:"1.5%", backgroundColor:"white", borderWidth:0.5, borderRadius:10, elevation:5}}
+      onPress={ navigation ? () => navigation.dispatch(CommonActions.navigate({
+        name: 'View Journal',
+        params: {trip: item, otherName: buddyDesc,} //otherID: otherID},
+      })
+      ) : null} 
+      >
+        <Card.Title 
+          title={item.routeName?item.routeName+ " - " + date:"Somewhere nice" } 
+          subtitle={"Place 1 - Place 2 - Place 3"} 
+          right={(props) => {
+            if (hasBuddy)
+              return (
+                <View style={{justifyContent:'center'}}>
+                  <Avatar.Image {...props} size={50} source={{uri: item.otherAvatarURL[user.uid]}}/>
+                </View>
+              );
+          }} />
+        <Card.Content>
+          <Paragraph>{item.notes}</Paragraph>
+        </Card.Content>
+       
+    </Card>
   )
 }
 
@@ -68,7 +103,6 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection:"column",
     justifyContent: 'flex-start',
-    paddingHorizontal: 10
   },
   loadingContainer:{
     flex: 1,

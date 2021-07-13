@@ -65,7 +65,7 @@ export default ({navigation}) => {
   const handleAddTrip = () => {
     // let time = date.toLocaleDateString(undefined, options);
     Trip.addTrip(
-      {user, buddy, place, date, notes},
+      {user, buddy, place, routeName, date, notes},
       (source) => {
         console.log("Added trip successfully");
         navigation.navigate(source);

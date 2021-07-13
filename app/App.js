@@ -40,8 +40,8 @@ export default function App() {
       <PersistGate loading={null} persistor={persistor}>
         <PaperProvider theme={CombinedDefaultTheme}>
           <NavigationContainer theme={CombinedDefaultTheme}>
-            {/* <RootScreenStack/> */}
-            <MainScreenStack/>
+            <RootScreenStack/>
+            {/* <MainScreenStack/> */}
             {/* <TestScreen/> */}
             <FlashMessage position="top" />
           </NavigationContainer>

@@ -9,7 +9,7 @@ import {
   useWindowDimensions,
   View
 } from "react-native";
-import {ActivityIndicator, Portal, Modal, Card} from "react-native-paper";
+import {ActivityIndicator, Portal, Modal, Card, Caption, Paragraph, Subheading} from "react-native-paper";
 import Carousel from "react-native-snap-carousel";
 
 import firebase from "../../utils/firebase";
@@ -94,9 +94,9 @@ export default ({navigation, route}) => {
 
 
       <ScrollView style={styles.container}>
-        <Text>Place: {trip.place}</Text>
-        <Text>{otherName ? "Buddy: " + otherName : "Solo trip"}</Text>
-        <Text style={{fontStyle: 'italic', color: 'green'}}>Latest update: {journal.lastEditedBy}</Text>
+        <Subheading>Place: {trip.place}</Subheading>
+        <Subheading>{otherName ? "Buddy: " + otherName : "Solo trip"}</Subheading>
+        <Caption style={{fontStyle: 'italic', color: 'green'}}>Latest update: {journal.lastEditedBy}</Caption>
 
         {/*<Carousel */}
         {/*  data={journal.photos}*/}
@@ -142,7 +142,7 @@ export default ({navigation, route}) => {
           }
         </Card>
 
-        <Text>{journal.text}</Text>
+        <Paragraph style={styles.textBox}>{journal.text}</Paragraph>
 
       </ScrollView>
       </>
@@ -187,5 +187,13 @@ const styles = StyleSheet.create({
   modal: {
     backgroundColor: 'white',
     alignSelf: 'center'
+  },
+  textBox: {
+    borderColor:"black",
+    padding:'2%',
+    borderRadius: 5,
+    borderWidth:0.75,
+    elevation:5,
+    backgroundColor: colorConst.secondaryLight
   }
 });

@@ -114,6 +114,7 @@ export default ({navigation}) => {
           titleStyle={item.lastMessage.system ? {fontWeight:'bold', color:'black'} : {}}
           // titleStyle={{fontWeight:"bold"}}
           descriptionStyle={item.lastMessage.system ? {fontWeight:'bold', color:'teal'} : {}}
+          
           // style={{backgroundColor:colorConst}}
         />
       </Swipeable>
