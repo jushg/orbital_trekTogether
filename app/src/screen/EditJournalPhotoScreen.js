@@ -8,6 +8,7 @@ import * as Journal from "../../utils/journal";
 import { handlePickImage } from "../../utils/imagepicker";
 import {UserContext} from "../../utils/context";
 import SelectablePhotoTile from "../component/SelectablePhotoTile";
+import colorConst from "../constant/color";
 
 export default ({navigation, route}) => {
 
@@ -98,8 +99,8 @@ export default ({navigation, route}) => {
     navigation.setOptions({
       headerRight: () => (
         <View style={{flexDirection: 'row-reverse'}}>
-          <IconButton icon={'plus'} size={24} onPress={handlePickPhoto} />
-          <IconButton icon={'delete'} size={24} onPress={handlePressDelete} />
+          <IconButton icon={'plus'} size={24} onPress={handlePickPhoto} color={colorConst.textHeader} />
+          <IconButton icon={'delete'} size={24} onPress={handlePressDelete} color={colorConst.textHeader} />
         </View>
       ),
     });

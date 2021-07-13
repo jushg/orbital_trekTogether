@@ -15,7 +15,7 @@ export const DashboardHeader = ({navigation, screenName}) => {
         title="Dashboard" 
         // subtitle={user.displayName}
        />
-      <Appbar.Action icon="magnify"  disabled />
+      {/* <Appbar.Action icon="magnify"  disabled /> */}
       <Appbar.Action icon="account-cog" onPress={() => navigation.navigate(screenName)} />
     </Appbar.Header>
   )

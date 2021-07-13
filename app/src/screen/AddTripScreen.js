@@ -65,7 +65,7 @@ export default ({navigation}) => {
   const handleAddTrip = () => {
     // let time = date.toLocaleDateString(undefined, options);
     Trip.addTrip(
-      {user, buddy, place, date, notes},
+      {user, buddy, place, routeName, date, notes},
       (source) => {
         console.log("Added trip successfully");
         navigation.navigate(source);
@@ -99,8 +99,8 @@ export default ({navigation}) => {
             style={{marginBottom: 10,  alignSelf:"center"}}
           />
 
-          <Subheading style={{paddingVertical: 10, fontWeight:"bold"}}>PLACES</Subheading>
-          <PlaceSearch place={place} setPlace={setPlace} textPlaceHolder="Where will this trip stop by ?" details/>
+          <Subheading style={{paddingTop: 10, fontWeight:"bold"}}>PLACES</Subheading>
+          <PlaceSearch place={place} setPlace={setPlace} textPlaceHolder="Where will this trip stop by ?" moreDetails/>
 
           <Subheading style={{paddingTop:10, fontWeight:"bold"}}>DATE: { Platform.OS === 'ios' && date.toLocaleDateString(undefined, options)}</Subheading>
           {Platform.OS === 'android' && 

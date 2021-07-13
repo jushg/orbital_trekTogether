@@ -43,7 +43,7 @@ export default ({navigation}) => {
 
     return () => unsubscribeChatListener();
   }, []);
-
+  10
   function getChatName(itemID, itemName) {
     const x = itemID.split("_");
     const s = itemName.split("_");
@@ -114,6 +114,7 @@ export default ({navigation}) => {
           titleStyle={item.lastMessage.system ? {fontWeight:'bold', color:'black'} : {}}
           // titleStyle={{fontWeight:"bold"}}
           descriptionStyle={item.lastMessage.system ? {fontWeight:'bold', color:'teal'} : {}}
+          
           // style={{backgroundColor:colorConst}}
         />
       </Swipeable>
@@ -124,8 +125,8 @@ export default ({navigation}) => {
       <>
         <Appbar.Header>
           <Appbar.Content title="Messages"  />
-            <Appbar.Action icon="magnify" disabled  />
-            <Appbar.Action icon="cog" disabled/>
+            {/* <Appbar.Action icon="magnify" disabled  /> */}
+            {/* <Appbar.Action icon="cog" disabled/> */}
         </Appbar.Header>  
 
         {chats == null ?

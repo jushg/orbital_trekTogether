@@ -122,7 +122,6 @@ export const MainScreenStack = () => {
                 ) })
               }
             />
-
             <MainStack.Screen name={"View Journal"} component={JournalScreen}
               options={({navigation, route}) => ({
                 headerStyle: {backgroundColor: colorConst.primary },
@@ -137,13 +136,18 @@ export const MainScreenStack = () => {
             />
 
             <MainStack.Screen name={"Edit Photos"} component={EditJournalPhotoScreen}
-              options={{headerBackTitle: "Back"}}
+              options={{
+                headerBackTitle: "Back",
+                headerStyle: {backgroundColor: colorConst.primary },
+                headerTintColor: colorConst.textHeader}}
             />
 
             <MainStack.Screen name={"Edit Text"} component={EditJournalTextScreen}
               options={() => ({
                 headerBackTitle: "Back",
-                headerRight: () => <IconButton icon={'check-circle'} size={27} onPress={Keyboard.dismiss}/>
+                headerStyle: {backgroundColor: colorConst.primary },
+                headerTintColor: colorConst.textHeader,
+                headerRight: () => <IconButton icon={'check-circle'} color={colorConst.textHeader} size={27} onPress={Keyboard.dismiss}/>
               })}
             />
 
@@ -166,7 +170,6 @@ export const MainScreenStack = () => {
     </UserContext.Provider>
   )
 }
-
 
 const AuthStack = createStackNavigator();
 
@@ -194,10 +197,8 @@ export const HomeScreenTab = () => {
   return (
     <HomeTab.Navigator 
     initialRouteName="Home"
-    // activeColor= {colorConst.accent}
-    
-    >
-      
+    // activeColor= {colorConst.accent}   
+    >    
       <HomeTab.Screen
         name="Home"
         component={DashboardScreenStack}
@@ -237,8 +238,6 @@ export const HomeScreenTab = () => {
 }
 
 
-
-
 const DashboardStack = createStackNavigator();
 
 export const DashboardScreenStack = ({navigation}) => {
@@ -273,7 +272,6 @@ const DashboardTab = createMaterialTopTabNavigator();
 export const DashboardScreenTab = () => {
   return (
     <DashboardTab.Navigator>
-
       <DashboardTab.Screen 
         name="Future" 
         component={FutureScreen}
@@ -286,7 +284,6 @@ export const DashboardScreenTab = () => {
         options={{
           tabBarLabel: 'Your journals'
         }}/>
-
     </DashboardTab.Navigator>
   )
 } 
