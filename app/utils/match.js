@@ -21,15 +21,6 @@ export const getAllUsers = async () => {
   }
 };
 
-// export const getCurrentUserData = async () => {
-//   const snapshot = await db.doc(Auth.getCurrentUser().uid).get();
-//   if (snapshot.exists) {
-//     console.log("currData= " + snapshot.data());
-//     return snapshot.data();
-//   }
-//   else throw new Error("Data for current user does not exist");
-// };
-
 export const getUserData = async (user) => {
   const snapshot = await db.doc(user).get();
   if (snapshot.exists) return snapshot.data();

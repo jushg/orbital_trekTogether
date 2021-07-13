@@ -26,7 +26,7 @@ export default (props) => {
                 let newPlace = [...props.place];
                 newPlace.splice(index, 1);
                 props.setPlace(newPlace);
-                console.log('Delete place '+ item.description)
+                // console.log('Delete place '+ item.description)
             }}>
             { item.structured_formatting.main_text }
             </Chip>
@@ -50,7 +50,7 @@ export default (props) => {
         onEndEditing={Keyboard.dismiss}
         onFail={console.error}
         onNotFound={console.error}
-        fetchDetails={moreDetails}
+        fetchDetails={props.moreDetails}
         query={{
             key: MAPS_API_KEY,
             language: 'en',

@@ -12,6 +12,7 @@ import WelcomeScreen from "./screen/WelcomeScreen"
 import SignupScreen from "./screen/SignupScreen"
 import SetupScreen from "./screen/SetupScreen"
 import ForgotPasswordScreen from './screen/ForgotPasswordScreen';
+
 //Match Buddy Screen
 import MatchScreen from "./screen/MatchScreen"
 
@@ -33,6 +34,9 @@ import PhotoCarouselScreen from "./screen/PhotoCarouselScreen";
 import JournalScreen from "./screen/JournalScreen";
 import EditJournalScreen from "./screen/EditJournalScreen";
 import EditJournalPhotoScreen from "./screen/EditJournalPhotoScreen";
+
+//Edit Profile Screen
+import EditProfileScreen from "./screen/EditProfileScreen";
 
 
 import * as Auth from "../utils/auth"
@@ -163,6 +167,8 @@ export const MainScreenStack = () => {
             {/*  )*/}
             {/*  })}*/}
             {/*/>*/}
+
+            <MainStack.Screen name={"Edit Profile"} component={EditProfileScreen} />
 
           </>
         )}

@@ -11,8 +11,6 @@ import {UserContext} from "../../utils/context";
 //https://callstack.github.io/react-native-paper/toggle-button.html
 
 export default ({navigation}) => {
-  // const [checked1, setChecked1] = useState(true) 
-  // const [checked2, setChecked2] = useState(false) //example
 
   const handleLogout = () => {
     Auth.logout(
@@ -23,7 +21,7 @@ export default ({navigation}) => {
     )
   }
 
-  // const userApi = useContext(UserContext);
+  const handleEditProfile = () => navigation.navigate("Edit Profile");
 
   return (
     <Screen style={styles.container}>
@@ -34,25 +32,16 @@ export default ({navigation}) => {
           source={{ uri: Auth.getCurrentUser().photoURL }}
         />
         <Subheading style={{fontWeight:"bold"}}>{Auth.getCurrentUser().displayName}</Subheading>
-        <Button disabled mode="contained" style={styles.button}>Edit Profile</Button>
-        <Caption>Under Development</Caption>
+        <Button
+          onPress={handleEditProfile}
+          mode="contained"
+          style={styles.button}
+        >
+          Edit Profile
+        </Button>
+        {/*<Caption>Under Development</Caption>*/}
 
       </View>
-      
-      {/* <Checkbox.Item
-        label="Under Development"
-        status={checked1 ? 'checked' : 'unchecked'}
-        onPress={() => {
-          setChecked1(!checked1);
-        }}
-      /> */}
-      {/* <Checkbox.Item
-        label="Under Development"
-        status={checked2 ? 'checked' : 'unchecked'}
-        onPress={() => {
-          setChecked2(!checked2);
-        }}
-      /> */}
       <Button onPress={handleLogout} style={styles.button} mode="contained">Log Out</Button>
     </Screen>
   )

@@ -70,7 +70,7 @@ export default ({navigation}) => {
             size={105}
             source={
               avatar !== null
-                ? ({ uri: avatar.uri })
+                ? ({ uri: avatar })
                 : require('../../assets/account-icon.png')
             }
             style={{marginTop: 10}}
@@ -186,7 +186,7 @@ export default ({navigation}) => {
           // isRowScrollable={false}
         /> */}
         <Subheading style={styles.title}>AVAILABILITY</Subheading>
-        <View style={{marginBBottom: 3, flexWrap: 'wrap', flexDirection:"row" }}>
+        <View style={{marginBottom: 3, flexWrap: 'wrap', flexDirection:"row" }}>
         {daysInWeek.map((item, index) => {
           return (
             <View
