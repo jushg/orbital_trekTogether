@@ -147,7 +147,7 @@ export default ({navigation}) => {
                   textStyle={{ color:'black', fontSize: 15 }} //label properties
                   // style={{ backgroundColor: colorConst.secondaryDark }}
                   selected={date[index]}
-                  style={{ backgroundColor: colorConst.secondaryLight ,borderColor:"black"}}
+                  style={{ backgroundColor: colorConst.secondaryLight ,borderColor:"black", elevation: 2}}
                   selectedColor= {colorConst.primary}
                   onPress={() => {
                     let newDate = [...date];
@@ -189,6 +189,7 @@ const styles = StyleSheet.create({
   },
   button: {
     borderRadius:25,
-    marginVertical:20
+    marginVertical:20,
+    elevation:3
   }
 });

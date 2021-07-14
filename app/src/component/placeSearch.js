@@ -79,7 +79,8 @@ export default (props) => {
                 borderRadius: 5,
                 paddingHorizontal: 15,
                 fontSize:16,
-                marginVertical: 10
+                marginVertical: 10,
+                elevation: 5
             },
             listView:{
                 borderRadius:5,

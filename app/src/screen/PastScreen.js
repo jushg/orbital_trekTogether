@@ -48,6 +48,7 @@ export default ({navigation}) => {
           data={pastTrips}
           keyExtractor={item => item.id}
           renderItem={({item}) => renderTrip({item, user, navigation})}
+          ListFooterComponent={renderFootnote}
         />
       </View>
       }
@@ -55,20 +56,28 @@ export default ({navigation}) => {
     
   )
 }
-
+const renderFootnote = () => {
+  return (
+   <Caption style={{alignSelf:"center", paddingVertical: 25}}>
+     Press to view the trip details
+   </Caption>
+  )
+}
 const renderTrip = ({item, user, navigation}) => {
   const date = item.date.toDate().toLocaleDateString();
   const hasBuddy = item.members.length === 2;
+  
   let buddyDesc = '';
   if (hasBuddy) {
     buddyDesc += `${item.otherMemberName[user.uid]}`;
   }
-  const placeDesc = "Place 1 - Place 2"
-  // if(item.place.length > 1){
-  //   item.place.forEach(place => {
-  //     placeDesc += place + " "
-  //   });
-  // }
+  let placeDesc = ""
+  if(Array.isArray(item.place)){
+    item.place.forEach(place => {
+      placeDesc += place + " - "
+    });
+  }
+  placeDesc = placeDesc.slice(0,-3)
   return (
     <Card 
       mode="outlined"
@@ -80,18 +89,19 @@ const renderTrip = ({item, user, navigation}) => {
       ) : null} 
       >
         <Card.Title 
-          title={item.routeName?item.routeName+ " - " + date:"Some nice place <3" } 
-          subtitle={placeDesc} 
+          title={item.routeName?item.routeName:item.place} 
+          subtitle={hasBuddy?'Going with '+ buddyDesc + ' on ' + date:'Solo trip on ' + date} 
+          subtitleNumberOfLines={3}
           right={(props) => {
             if (hasBuddy)
               return (
-                <View style={{justifyContent:'center'}}>
+                <View style={{justifyContent:'center', padding:'0.5%'}}>
                   <Avatar.Image {...props} size={50} source={{uri: item.otherAvatarURL[user.uid]}}/>
                 </View>
               );
           }} />
         <Card.Content>
-          <Paragraph>{item.notes}</Paragraph>
+          <Paragraph>{placeDesc}</Paragraph>
         </Card.Content>
        
     </Card>

@@ -32,7 +32,7 @@ import ChatScreen from './screen/ChatScreen';
 //Journal Screens
 import PhotoCarouselScreen from "./screen/PhotoCarouselScreen";
 import JournalScreen from "./screen/JournalScreen";
-import EditJournalScreen from "./screen/EditJournalScreen";
+// import EditJournalScreen from "./screen/EditJournalScreen";
 import EditJournalPhotoScreen from "./screen/EditJournalPhotoScreen";
 
 //Edit Profile Screen
@@ -130,12 +130,12 @@ export const MainScreenStack = () => {
               options={({navigation, route}) => ({
                 headerStyle: {backgroundColor: colorConst.primary },
                 headerTintColor: colorConst.textHeader,
-                headerRight: () =>
-                  <EditJournalButton
-                    navigation={navigation}
-                    // journal={route.params.journal}
-                    trip={route.params.trip}
-                  />
+                // headerRight: () =>
+                //   <EditJournalButton
+                //     navigation={navigation}
+                //     // journal={route.params.journal}
+                //     trip={route.params.trip}
+                //   />
               })}
             />
 
@@ -168,7 +168,14 @@ export const MainScreenStack = () => {
             {/*  })}*/}
             {/*/>*/}
 
-            <MainStack.Screen name={"Edit Profile"} component={EditProfileScreen} />
+            <MainStack.Screen name={"Edit Profile"} component={EditProfileScreen}
+            options={() => ({
+              // headerBackTitle: "Back",
+              headerStyle: {backgroundColor: colorConst.primary },
+              headerTintColor: colorConst.textHeader,
+              
+            })}
+             />
 
           </>
         )}
