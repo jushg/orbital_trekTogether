@@ -10,7 +10,7 @@ import {IconButton} from "react-native-paper";
 import LoginScreen from "./screen/LoginScreen"
 import WelcomeScreen from "./screen/WelcomeScreen"
 import SignupScreen from "./screen/SignupScreen"
-import SetupScreen from "./screen/SetupScreen"
+import SetupProfileScreen from "./screen/SetupProfileScreen"
 import ForgotPasswordScreen from './screen/ForgotPasswordScreen';
 
 //Match Buddy Screen
@@ -192,7 +192,7 @@ export const AuthScreenStack = () => {
         options={{
           headerStyle: {backgroundColor: colorConst.primary },
           headerTintColor:colorConst.textHeader}}/>
-      <AuthStack.Screen name="Setup" key = "setup" component = {SetupScreen} options={{headerShown:false}}/>
+      <AuthStack.Screen name="Setup" key = "setup" component = {SetupProfileScreen} options={{headerShown:false}}/>
     </AuthStack.Navigator>
   )
 }

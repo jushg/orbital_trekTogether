@@ -10,7 +10,7 @@ import {
   Subheading
 } from "react-native-paper";
 
-import * as Setup from "../../utils/setup";
+import * as Profile from "../../utils/profile";
 import TextBox from "../component/textbox";
 import PlaceSearch from "../component/placeSearch";
 import Screen from "../component/screen";
@@ -32,7 +32,7 @@ export default ({navigation}) => {
   const daysInWeek = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
 
   useEffect(() => {
-    Setup.getCurrentUserData(currUser.uid)
+    Profile.getCurrentUserData(currUser.uid)
       .then(user => {
         setAvatar(user.photoURL);
         setAge(user.age.toString());
@@ -61,7 +61,7 @@ export default ({navigation}) => {
       message: "Updating your profile...\nThis might take a while",
       type: "info", duration: 1600, floating: true
     })
-    Setup.updateProfile({currUser, age, level, about, place, date, avatar, isAvatarChanged},
+    Profile.updateProfile({currUser, age, level, about, place, date, avatar, isAvatarChanged},
       () => {
         navigation.navigate("Setting");
       },

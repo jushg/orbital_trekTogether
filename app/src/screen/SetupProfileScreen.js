@@ -7,7 +7,7 @@ import * as ImagePicker from "expo-image-picker";
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 
 import Screen from "../component/screen"
-import * as Setup from "../../utils/setup";
+import * as Profile from "../../utils/profile";
 import {UserContext} from "../../utils/context"
 import { handlePickImage } from "../../utils/imagepicker";
 import TextBox from '../component/textbox'
@@ -34,7 +34,7 @@ export default ({navigation}) => {
        message: "Setting up your profile...",
        type: "info", duration: 1500, floating: true
      })
-     Setup.setUpProfile({age, level, about, place, date, avatar},
+     Profile.setUpProfile({age, level, about, place, date, avatar},
       () => {
         // console.log("Success")
         // console.log(userAPI.user)
