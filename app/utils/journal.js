@@ -1,5 +1,6 @@
 import firebaseApp from "./firebase";
 import firebase from "firebase/app";
+import { uploadImage } from "./imagepicker";
 
 const db = firebaseApp.firestore().collection('journals');
 
@@ -39,24 +40,18 @@ export const updateText = async (tripID, username, text) => {
 // }
 
 // Might not need this
-export const uploadOnePhoto = async (tripID, username, photoUri) => {
-  try {
-    const response = await fetch(photoUri);
-    const blob = await response.blob();
-    const fileRef = firebase.storage().ref().child(
-      tripID + "/" + photoUri.substr(photoUri.indexOf('ImagePicker/'))
-    );
-    await fileRef.put(blob);
-    const downloadUrl = await fileRef.getDownloadURL();
-    await db.doc(tripID).update({
-      lastEditedBy: username + " uploaded 1 photo",
-      photos: firebase.firestore.FieldValue.arrayUnion(downloadUrl)
-    });
-    return "uploaded 1 photo";
-  } catch (e) {
-    console.error(e);
-  }
-}
+// export const uploadOnePhoto = async (tripID, username, photoUri) => {
+//   try {
+//     const downloadUrl = uploadImage(tripID, photoUri);
+//     await db.doc(tripID).update({
+//       lastEditedBy: username + " uploaded 1 photo",
+//       photos: firebase.firestore.FieldValue.arrayUnion(downloadUrl)
+//     });
+//     return "uploaded 1 photo";
+//   } catch (e) {
+//     console.error(e);
+//   }
+// }
 
 export const uploadManyPhotos = async (tripID, username, photos) => {
   try {
@@ -64,13 +59,7 @@ export const uploadManyPhotos = async (tripID, username, photos) => {
 
     const arr = [];
     for (const uri of photos) {
-      const response = await fetch(uri);
-      const blob = await response.blob();
-      const fileRef = firebase.storage().ref().child(
-        tripID + "/" + uri.substr(uri.indexOf('ImagePicker/'))
-      );
-      await fileRef.put(blob);
-      const downloadUrl = await fileRef.getDownloadURL();
+      const downloadUrl = uploadImage(tripID, uri);
       arr.push(downloadUrl);
     }
     // Should put storage address for deletion?

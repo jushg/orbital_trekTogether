@@ -1,5 +1,6 @@
 import React from "react";
 import * as ImagePicker from "expo-image-picker";
+import firebase from "./firebase";
 
 let hasCameraRollPermission = false;
 export const handlePickImage = async (quality) => {
@@ -18,3 +19,17 @@ export const handlePickImage = async (quality) => {
   }
   return null;
 };
+
+export const uploadImage = async (docID, uri) => {
+  try {
+    const response = await fetch(uri);
+    const blob = await response.blob();
+    const fileRef = firebase.storage().ref().child(
+      docID + "/" + uri.substr(uri.indexOf('ImagePicker/'))
+    );
+    await fileRef.put(blob);
+    return await fileRef.getDownloadURL();
+  } catch (error) {
+    console.log(error);
+  }
+}

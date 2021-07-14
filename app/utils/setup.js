@@ -1,4 +1,5 @@
 import firebase from "./firebase";
+import { uploadImage } from "./imagepicker";
 
 const db = firebase.firestore();
 
@@ -10,19 +11,6 @@ export const getCurrentUserData = async (currID) => {
   throw new Error("Data for current user does not exist");
 };
 
-const uploadImage = async (docID, uri) => {
-  try {
-    const response = await fetch(uri);
-    const blob = await response.blob();
-    const fileRef = firebase.storage().ref().child(
-      docID + "/" + uri.substr(uri.indexOf('ImagePicker/'))
-    );
-    await fileRef.put(blob);
-    return await fileRef.getDownloadURL();
-  } catch (error) {
-    console.log(error);
-  }
-}
 
 // push profile data to db
 export const setUpProfile = async ({age, level, about, place, date, avatar}, onSuccess, onError) => {
@@ -145,6 +133,6 @@ export const updateProfile = async ({currUser, age, level, about, place, date, a
     await Promise.all(promisesArray);
     return onSuccess();
   } catch (error) {
-    return console.log(error);
+    return onError(error);
   }
 };
