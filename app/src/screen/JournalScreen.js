@@ -20,7 +20,7 @@ import CarouselPhotoCard from "../component/CarouselPhotoCard";
 export default ({navigation, route}) => {
 
   const sliderWidth = useWindowDimensions().width;
-  const itemWidth = sliderWidth - 2 * styles.container.padding;
+  const itemWidth = sliderWidth*0.96;
   const itemHeight = itemWidth * 9/16;
   const onPressPhotos = () => {
     navigation.navigate("Edit Photos", {trip: trip})
@@ -117,11 +117,12 @@ export default ({navigation, route}) => {
                 );
             }} 
             />
-          <Card.Content>
-            <Paragraph>{otherName ? "Buddy: " + otherName : "Solo trip"}</Paragraph>
-            <Caption style={{fontStyle: 'italic', color: 'green'}}>Latest update: {journal.lastEditedBy}</Caption>
-          </Card.Content>
-          <Card.Title 
+            <Card.Content>
+              <Paragraph>{otherName ? "Buddy: " + otherName : "Solo trip"}</Paragraph>
+              <Caption style={{fontStyle: 'italic', color: 'green'}}>Latest update: {journal.lastEditedBy}</Caption>
+            </Card.Content>
+          </Card> 
+          {/* <Card.Title 
             title="Your photos"
             subtitle={thumbnailUrl?"":"You have no photos yet!"}
             right={() => <IconButton icon="camera-outline" onPress={onPressPhotos} size={25}/>}
@@ -130,17 +131,18 @@ export default ({navigation, route}) => {
           <Card.Cover
             source={{uri: thumbnailUrl}}
             resizeMode={'cover'}
-            style={{width: itemWidth, height: itemHeight}}
+            // style={{width: itemWidth, height: itemHeight}}
             onPress={onPressThumbnail}
-          /> }
-          <Card.Title 
+          /> 
+          } */}
+          {/* <Card.Title 
             title="Your notes"
             right={() => <IconButton icon="pencil-outline" onPress={onPressText} size={25}/>}
           />
           <Card.Content>
             <Paragraph style={styles.textBox}>{journal.text? journal.text: "Wanna write some memories down?"}</Paragraph>
-          </Card.Content>
-        </Card>
+          </Card.Content>*/}
+        
         {/* <Title> {trip.routeName?trip.routeName:trip.place}</Title>
         <Subheading>{trip.date.toDate().toLocaleDateString()}</Subheading>
         <Subheading>{otherName ? "Buddy: " + otherName : "Solo trip"}</Subheading>
@@ -197,24 +199,29 @@ export default ({navigation, route}) => {
         {/*</Touc/IconButton>hableOpacity>*/}
         {/*<Text style={styles.thumbnailCaption}>Click the above image to view photos</Text>*/}
 
-        {/* <Card
-          onPress={onPressThumbnail}
-          style={styles.card}
-        >
-          {thumbnailUrl ?
-            <Card.Cover
-              source={{uri: thumbnailUrl}}
-              resizeMode={'cover'}
-              style={{width: itemWidth, height: itemHeight}}
-              //Add onPress here ?
-            />
-            : <Card.Title title="No photos yet!"/>
+        <Card onPress={onPressThumbnail} style={styles.card} >
+          <Card.Title 
+            title="Your photos"
+            subtitle={thumbnailUrl?"":"You have no photos yet!"}
+            right={() => <IconButton icon="camera-outline" onPress={onPressPhotos} size={25}/>}
+          />
+          {thumbnailUrl &&
+          <Card.Cover
+            source={{uri: thumbnailUrl}}
+            resizeMode={'cover'}
+            style={{ margin: "1%", borderWidth: 1, height:itemHeight, width:itemWidth}}
+          /> 
           }
+        </Card>
+        <Card style={styles.card}>
+          <Card.Title 
+            title="Your notes"
+            right={() => <IconButton icon="pencil-outline" onPress={onPressText} size={25}/>}
+          />
           <Card.Content>
-          <Paragraph style={styles.textBox}>{journal.text? journal.text: trip.notes}</Paragraph>
-
+            <Paragraph style={styles.textBox}>{journal.text? journal.text: "Wanna write some memories down?"}</Paragraph>
           </Card.Content>
-        </Card> */}
+        </Card>     
       </ScrollView>
       </>
     }
@@ -225,7 +232,7 @@ export default ({navigation, route}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // paddingHorizontal: "1%",
+    backgroundColor:colorConst.background
   },
   loadingContainer:{
     flex: 1,
@@ -237,7 +244,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.6,
     elevation: 5,
     borderWidth:0.75,
-    margin:"0.75%",
+    margin:"1%",
   },
   thumbnailContainer: {
     overflow: 'hidden',  // (?)

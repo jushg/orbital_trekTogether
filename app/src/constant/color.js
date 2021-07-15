@@ -2,7 +2,7 @@
 import color from 'color';
 
 export default {
-    primary: '#6e7b31',
+    primary: '#6e7b31',//'#718355',
     accent: '#b66924', 
     background: 'rgb(250, 250, 250)',//'#fefae0',
     card: 'rgb(255, 255, 255)',
