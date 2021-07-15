@@ -162,7 +162,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection:"column",
     justifyContent: 'flex-start',
-    paddingHorizontal: 20
+    paddingHorizontal: 20,
   },
   loadingContainer:{
     flex: 1,

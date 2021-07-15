@@ -11,11 +11,7 @@ export const DashboardHeader = ({navigation, screenName}) => {
   const {user} = useContext(UserContext);
   return (
     <Appbar.Header>
-      <Appbar.Content 
-        title="Dashboard" 
-        // subtitle={user.displayName}
-       />
-      {/* <Appbar.Action icon="magnify"  disabled /> */}
+      <Appbar.Content title="Dashboard" />
       <Appbar.Action icon="account-cog" onPress={() => navigation.navigate(screenName)} />
     </Appbar.Header>
   )

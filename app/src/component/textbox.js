@@ -17,7 +17,8 @@ const styles = StyleSheet.create({
     textInput: {
         width: "100%",
         backgroundColor: colorConst.secondaryLight,
-        borderWidth: 1,
-        borderRadius: 5
+        borderWidth: 0.75,
+        borderRadius: 5,
+        elevation: 5
     }
 });

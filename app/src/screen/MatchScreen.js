@@ -197,12 +197,12 @@ const styles = StyleSheet.create({
   card: {
     flex: 1,
     borderRadius: 25,
-    borderWidth: 2,
-    // borderColor: "#E8E8E8",
+    borderWidth: 1,
     justifyContent: "space-around",
     alignItems:"center",
     backgroundColor: colorConst.background,
-    padding:20
+    padding:20,
+    elevation:5
   },
   verticalLine: {
     height: '100%',

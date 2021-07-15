@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {Divider, ActivityIndicator, Caption, Card, Title,Button,Paragraph, Avatar} from "react-native-paper";
-import { StyleSheet, Text, View, FlatList } from 'react-native';
+import {ActivityIndicator, Caption, Card, Paragraph, Avatar} from "react-native-paper";
+import {StyleSheet, View, FlatList } from 'react-native';
 
 
 import firebase from "../../utils/firebase";
@@ -9,16 +9,6 @@ import * as Trip from "../../utils/trip";
 import colorConst from '../constant/color';
 
 export default ({navigation}) => {
-
-  // const [searchQuery, setSearchQuery] = useState(''); // Example
-  // const onChangeSearch = query => setSearchQuery(query); // Example
-
-  // const [visible, setVisible] = useState(false);
-  // const openMenu = () => setVisible(true);
-  // const closeMenu = () => setVisible(false);
-  // const sortNewest = () => {console.log("sortNewest")};
-  // const sortOldest = () => {};
-
   const {user} = useContext(UserContext);
   const [futureTrips, setFutureTrips] = useState(null);
 
@@ -43,44 +33,7 @@ export default ({navigation}) => {
     return () => unsubscribeTripListener();
   }, []);
   
-  const renderFootnote = () => {
-    return (
-     <Caption style={{alignSelf:"center", paddingVertical: 25}}>
-       Press and hold to view the trip details
-     </Caption>
-    )
-  }
-  const renderCard = ({item,user}) => {
-    const date = item.date.toDate().toLocaleDateString();
-    const hasBuddy = item.members.length === 2;
-    let buddyDesc = '';
-    if (hasBuddy) {
-      buddyDesc += `${item.otherMemberName[user.uid]}`;
-    }
-    return(
-      <Card 
-      mode="outlined"
-      style={{marginVertical:"1.5%", backgroundColor:"white", borderWidth:0.5, borderRadius:10, elevation:5}}
-      onLongPress={() => console.log("Edit trip")} >
-        <Card.Cover source={{ uri: 'https://picsum.photos/600' }} />
-        <Card.Title 
-          title={item.routeName?item.routeName+ " - " + date:"Some nice place <3" } 
-          subtitle={"Place 1 - Place 2 - Place 3"} 
-          right={(props) => {
-            if (hasBuddy)
-              return (
-                <View style={{justifyContent:'center'}}>
-                  <Avatar.Image {...props} size={50} source={{uri: item.otherAvatarURL[user.uid]}}/>
-                </View>
-              );
-          }} />
-        <Card.Content>
-          <Paragraph>{item.notes}</Paragraph>
-        </Card.Content>
-       
-      </Card>
-    )
-  }
+  
   return (
     <>
     {futureTrips == null ? 
@@ -107,6 +60,52 @@ export default ({navigation}) => {
   )
 }
 
+const renderFootnote = () => {
+  return (
+   <Caption style={{alignSelf:"center", paddingVertical: 25}}>
+     Press and hold to view the trip details
+   </Caption>
+  )
+}
+const renderCard = ({item,user}) => {
+  const date = item.date.toDate().toLocaleDateString();
+  const hasBuddy = item.members.length === 2;
+  let buddyDesc = '';
+  if (hasBuddy) {
+    buddyDesc += `${item.otherMemberName[user.uid]}`;
+  }
+  let placeDesc = ""
+  if(Array.isArray(item.place)){
+    item.place.forEach(place => {
+      placeDesc += place + " - "
+    });
+  }
+  placeDesc = placeDesc.slice(0,-3)
+  return(
+    <Card 
+    mode="outlined"
+    style={{marginVertical:"1.5%", backgroundColor:"white", borderWidth:0.5, borderRadius:10, elevation:5}}
+    onLongPress={() => console.log("Edit trip")} >
+      <Card.Cover source={{ uri: 'https://picsum.photos/600' }} />
+      <Card.Title 
+        title={item.routeName?item.routeName+ " - " + date:"This is the past now :(" } 
+        subtitle={placeDesc?placeDesc:"My legacy will live on"} 
+        subtitleNumberOfLines={3}
+        right={(props) => {
+          if (hasBuddy)
+            return (
+              <View style={{justifyContent:'center', padding:'0.5%'}}>
+                <Avatar.Image {...props} size={50} source={{uri: item.otherAvatarURL[user.uid]}}/>
+              </View>
+            );
+        }} />
+      <Card.Content>
+        <Paragraph>{item.notes}</Paragraph>
+      </Card.Content>
+     
+    </Card>
+  )
+}
 const styles = StyleSheet.create({
   title: {
     fontSize: 30,

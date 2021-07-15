@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useState, useContext} from "react";
 import {
   Alert,
   Image, Pressable,
@@ -9,9 +9,10 @@ import {
   useWindowDimensions,
   View
 } from "react-native";
-import {ActivityIndicator, Portal, Modal, Card, Caption, Paragraph, Subheading} from "react-native-paper";
+import {ActivityIndicator, Avatar, Card, Caption, Paragraph, Subheading, Title, IconButton} from "react-native-paper";
 import Carousel from "react-native-snap-carousel";
 
+import { UserContext } from "../../utils/context";
 import firebase from "../../utils/firebase";
 import colorConst from "../constant/color";
 import CarouselPhotoCard from "../component/CarouselPhotoCard";
@@ -19,9 +20,15 @@ import CarouselPhotoCard from "../component/CarouselPhotoCard";
 export default ({navigation, route}) => {
 
   const sliderWidth = useWindowDimensions().width;
-  const itemWidth = sliderWidth - 2 * styles.container.padding;
+  const itemWidth = sliderWidth*0.96;
   const itemHeight = itemWidth * 9/16;
+  const onPressPhotos = () => {
+    navigation.navigate("Edit Photos", {trip: trip})
+  }
 
+  const onPressText = () => {
+    navigation.navigate("Edit Text", {trip: trip})
+  }
   const [selectedItem, setSelectedItem] = useState(null);
   const modalHeight = useWindowDimensions().height * 3/5;
   const modalWidth = useWindowDimensions().width * 9/10;
@@ -47,7 +54,7 @@ export default ({navigation, route}) => {
 
   const trip = route.params.trip;
   const otherName = route.params.otherName;
-
+  const {user} = useContext(UserContext);
   const [journal, setJournal] = useState(null);
   const [thumbnailUrl, setThumbnailUrl] = useState(null);
   useEffect(() => {
@@ -94,9 +101,52 @@ export default ({navigation, route}) => {
 
 
       <ScrollView style={styles.container}>
-        <Subheading>Place: {trip.place}</Subheading>
+        <Card style={styles.card}>
+          <Card.Title 
+            title={trip.routeName?trip.routeName:trip.place} 
+            titleStyle={{color:colorConst.accent}}
+            subtitle={trip.date.toDate().toLocaleDateString()} 
+            // subtitleStyle={{color:colorConst.secondaryDark}}
+            subtitleNumberOfLines={4}
+            right={(props) => {
+              if (trip.members.length === 2)
+                return (
+                  <View style={{justifyContent:'center', padding:'0.5%'}}>
+                    <Avatar.Image {...props} size={50} source={{uri: trip.otherAvatarURL[user.uid]}}/>
+                  </View>
+                );
+            }} 
+            />
+            <Card.Content>
+              <Paragraph>{otherName ? "Buddy: " + otherName : "Solo trip"}</Paragraph>
+              <Caption style={{fontStyle: 'italic', color: 'green'}}>Latest update: {journal.lastEditedBy}</Caption>
+            </Card.Content>
+          </Card> 
+          {/* <Card.Title 
+            title="Your photos"
+            subtitle={thumbnailUrl?"":"You have no photos yet!"}
+            right={() => <IconButton icon="camera-outline" onPress={onPressPhotos} size={25}/>}
+          />
+          {thumbnailUrl &&
+          <Card.Cover
+            source={{uri: thumbnailUrl}}
+            resizeMode={'cover'}
+            // style={{width: itemWidth, height: itemHeight}}
+            onPress={onPressThumbnail}
+          /> 
+          } */}
+          {/* <Card.Title 
+            title="Your notes"
+            right={() => <IconButton icon="pencil-outline" onPress={onPressText} size={25}/>}
+          />
+          <Card.Content>
+            <Paragraph style={styles.textBox}>{journal.text? journal.text: "Wanna write some memories down?"}</Paragraph>
+          </Card.Content>*/}
+        
+        {/* <Title> {trip.routeName?trip.routeName:trip.place}</Title>
+        <Subheading>{trip.date.toDate().toLocaleDateString()}</Subheading>
         <Subheading>{otherName ? "Buddy: " + otherName : "Solo trip"}</Subheading>
-        <Caption style={{fontStyle: 'italic', color: 'green'}}>Latest update: {journal.lastEditedBy}</Caption>
+        <Caption style={{fontStyle: 'italic', color: 'green'}}>Latest update: {journal.lastEditedBy}</Caption> */}
 
         {/*<Carousel */}
         {/*  data={journal.photos}*/}
@@ -118,32 +168,60 @@ export default ({navigation, route}) => {
         {/*>*/}
         {/*  { thumbnailUrl*/}
         {/*  ? <Image*/}
-        {/*    // source={require("../../assets/ava1.jpg")}*/}
+        {/*    // source={require("../.. <Card>
+        <Card.Title 
+          title={trip.routeName?trip.routeName:trip.place} 
+          subtitle={trip.date.toDate().toLocaleDateString()} 
+          subtitleNumberOfLines={4}
+          // right={(props) => {
+          //   if (hasBuddy)
+          //     return (
+          //       <View st<Card.Actions>
+            <IconButton icon="camera" onPress={onPressPhotos}/>
+          </Card.Actions>yle={{justifyContent:'center', padding:'0.5%'}}>
+          //         <Avatar.Image {...props} size={50} source={{uri: item.otherAvatarURL[user.uid]}}/>
+          //       </View>
+          //     );
+          // }} 
+          />
+        <Card.Content>
+          <Paragraph>{otherName ? "Buddy: " + otherName : "Solo trip"}</Paragraph>
+          <Caption style={{fontStyle: 'italic', color: 'green'}}>Latest update: {journal.lastEditedBy}</Caption>
+          <Paragraph>{trip.notes}</Paragraph>
+        </Card.Content>
+        </Card>/assets/ava1.jpg")}*/}
         {/*    source={{ uri: thumbnailUrl }}*/}
         {/*    resizeMode={'cover'}*/}
         {/*    style={{width: itemWidth, height: itemHeight}}*/}
         {/*  />*/}
         {/*  : <Text style={{color: 'black', fontSize: 16}}>You haven't uploaded any photos yet!</Text>*/}
         {/*  }*/}
-        {/*</TouchableOpacity>*/}
+        {/*</Touc/IconButton>hableOpacity>*/}
         {/*<Text style={styles.thumbnailCaption}>Click the above image to view photos</Text>*/}
 
-        <Card
-          onPress={onPressThumbnail}
-          style={styles.card}
-        >
-          {thumbnailUrl ?
-            <Card.Cover
-              source={{uri: thumbnailUrl}}
-              resizeMode={'cover'}
-              style={{width: itemWidth, height: itemHeight}}
-            />
-            : <Card.Title title="No photos yet!"/>
+        <Card onPress={onPressThumbnail} style={styles.card} >
+          <Card.Title 
+            title="Your photos"
+            subtitle={thumbnailUrl?"":"You have no photos yet!"}
+            right={() => <IconButton icon="camera-outline" onPress={onPressPhotos} size={25}/>}
+          />
+          {thumbnailUrl &&
+          <Card.Cover
+            source={{uri: thumbnailUrl}}
+            resizeMode={'cover'}
+            style={{ margin: "1%", borderWidth: 1, height:itemHeight, width:itemWidth}}
+          /> 
           }
         </Card>
-
-        <Paragraph style={styles.textBox}>{journal.text}</Paragraph>
-
+        <Card style={styles.card}>
+          <Card.Title 
+            title="Your notes"
+            right={() => <IconButton icon="pencil-outline" onPress={onPressText} size={25}/>}
+          />
+          <Card.Content>
+            <Paragraph style={styles.textBox}>{journal.text? journal.text: "Wanna write some memories down?"}</Paragraph>
+          </Card.Content>
+        </Card>     
       </ScrollView>
       </>
     }
@@ -154,7 +232,7 @@ export default ({navigation, route}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 10,
+    backgroundColor:colorConst.background
   },
   loadingContainer:{
     flex: 1,
@@ -162,11 +240,11 @@ const styles = StyleSheet.create({
     justifyContent:"center"
   },
   card: {
-    marginTop: 10,
-    marginBottom: 20,
     shadowColor: 'black',
     shadowOpacity: 0.6,
-    elevation: 5
+    elevation: 5,
+    borderWidth:0.75,
+    margin:"1%",
   },
   thumbnailContainer: {
     overflow: 'hidden',  // (?)
