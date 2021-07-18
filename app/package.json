@@ -19,6 +19,7 @@
     "@reduxjs/toolkit": "^1.5.1",
     "@types/react-native-dotenv": "^0.2.0",
     "dotenv": "^10.0.0",
+    "eslint": "^7.31.0",
     "expo": "~41.0.1",
     "expo-blur": "~9.0.3",
     "expo-cli": "^4.5.0",
