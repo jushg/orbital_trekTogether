@@ -113,50 +113,6 @@ export default ({navigation}) => {
     }
   }
 
-  // to be put in a separate file
-  const createChatBetween = async (user, newBuddy) => {
-    const [u1, u2] = [user.uid, newBuddy.id];
-    const [n1, n2] = [user.displayName, newBuddy.data().name];
-    let chatID, chatName;
-    if (u1 < u2) {
-      chatID = `${u1}_${u2}`;
-      chatName = `${n1}_${n2}`;
-    } else {
-      chatID = `${u2}_${u1}`;
-      chatName = `${n2}_${n1}`;
-    }
-    const announcement = {    // system message
-      text: "You matched with a new buddy!",
-      createdAt: new Date().getTime(),
-      system: true,
-    };
-    try {
-      await Promise.all([
-        // set last message as the system message
-        firebase.firestore().collection("chats")
-          .doc(chatID)
-          .set({
-            lastMessage: {
-              ...announcement,
-              // user: { _id: newBuddy.id, name: newBuddy.name }
-            },
-            members: [u1, u2],
-            avatarURL: {[u1]: user.photoURL, [u2]: newBuddy.data().photoURL},
-            name: chatName,
-            isActive: true
-          }, {merge: true}),
-        // initialize message history with the system message
-        firebase.firestore().collection("chats")
-          .doc(chatID)
-          .collection("messages")
-          .add(announcement)
-      ]);
-      return true;
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
   return (
     <Screen style={styles.container}>
       {buddies == null ? <ActivityIndicator/>
