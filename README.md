@@ -19,7 +19,7 @@ Ngo Ngoc Phuong Uyen &amp; Hoang Trong Tan
 `npm install` or `yarn install`
 
 3. Create a [Firebase](https://firebase.google.com) application  
-Since this app only uses Firebase Authentication and Realtime Database (for now), [Spark plan](https://firebase.google.com/pricing) (without credit card) is sufficient.
+Since this app only uses Firebase Authentication and Cloud Firestore (for now), [Spark plan](https://firebase.google.com/pricing) (without credit card) is sufficient.
 
 4. Add a _web application_ on your Firebase project  
 
