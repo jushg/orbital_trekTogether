@@ -1,29 +1,46 @@
 import React, {useContext, useEffect, useState} from 'react';
 import { Avatar, Paragraph, ActivityIndicator, Subheading ,Headline, Caption, IconButton, Button } from "react-native-paper"
 import Swiper from "react-native-deck-swiper"
-import {Image, StyleSheet, Text, View} from 'react-native';
+import {Image, StyleSheet, View} from 'react-native';
 import { showMessage } from "react-native-flash-message";
 
 import Screen from "../component/screen"
 import { getAllPotentialBuddies } from "../../utils/computeBuddy";
 import * as Match from '../../utils/match';
 import {UserContext} from "../../utils/context";
-import firebase from "../../utils/firebase";
-
+import * as Notifications from "../../utils/notifications";
 import colorConst from '../constant/color';
+
+
 export default ({navigation}) => {
+
+  const { user } = useContext(UserContext);
+  const [swipedAll, setSwipedAll] = useState(false);
+  const [buddies, setBuddies] = useState(null);   // array of potential buddy DOCUMENTS
+
+  useEffect(() => {
+    const setUpPushNotifications = async () => {
+      await Notifications.registerForPushNotificationsAsync(user);
+      Notifications.setForegroundNotificationHandler();
+    };
+    setUpPushNotifications();
+  }, []);
+
+  useEffect(() => {
+    getAllPotentialBuddies(user)
+      .then(docArray => setBuddies(docArray))
+  }, []);
 
   const computeDate = (date) => {
     let value = 0;
     for (let index = 0; index < date.length; index++) {
-      if(date[index]) value += 1;
+      if (date[index]) value += 1;
     }
     return value;
   }
-  // doc is not data yet!
+
   const renderCard = (doc) => {
     const data = doc.data();
-    // console.log("Item is " + data.email);
     return(
       <View style={styles.card}>
         <View style={{justifyContent:"center", alignItems:"center"}}>
@@ -70,17 +87,6 @@ export default ({navigation}) => {
     )
   }
 
-  
-  const { user } = useContext(UserContext);
-  const [swipedAll, setSwipedAll] = useState(false);
-  const [buddies, setBuddies] = useState(null);   // array of potential buddy DOCUMENTS
-
-  // Does not have a listener! One time use
-  useEffect(() => {
-    getAllPotentialBuddies(user)
-      .then(docArray => setBuddies(docArray))
-  }, []);
-
   function handleSwipeLeft(cardIndex) {
     const other = buddies[cardIndex];
     Match.addPassUser(user.uid, other.id).then(console.log);
@@ -97,9 +103,9 @@ export default ({navigation}) => {
         Match.addBuddy(user.uid, other.id),
         Match.addBuddy(other.id, user.uid)
       ]);
-      // create chat with new buddy
-      const chatCreated = await createChatBetween(user, other);
+      const chatCreated = await Match.createChatBetween(user, other);
       if (chatCreated) {
+        Notifications.sendPushNotificationToBuddy(other.id, user.displayName);
         showMessage({
           message: `It's a match!\nYou and ${otherData.name} are now buddies 🎉 `,
           type: "success",
@@ -118,7 +124,8 @@ export default ({navigation}) => {
       {buddies == null ? <ActivityIndicator/>
         : (buddies.length === 0 || swipedAll)
           ? <Image style={{width: 250, height: 270}} source={require("../../assets/business_cat.png")}/>
-          : <Swiper
+          :
+          <Swiper
             verticalSwipe={false}
             cards={buddies}
             renderCard={renderCard}
@@ -130,13 +137,11 @@ export default ({navigation}) => {
             stackSize= {3}
             // marginBottom={30}
             // style={{cardVer}}
-        >
-        </Swiper>
+          />
       }
-
     </Screen>
-  ) 
-    
+  )
+
 }
 
 const styles = StyleSheet.create({
