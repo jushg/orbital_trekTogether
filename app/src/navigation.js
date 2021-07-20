@@ -3,7 +3,7 @@ import { createStackNavigator} from "@react-navigation/stack";
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import {Keyboard, Text, TouchableOpacity, View} from "react-native";
+import {Keyboard} from "react-native";
 import {IconButton} from "react-native-paper";
 
 //Auth Stack Screen
@@ -32,8 +32,8 @@ import ChatScreen from './screen/ChatScreen';
 //Journal Screens
 import PhotoCarouselScreen from "./screen/PhotoCarouselScreen";
 import JournalScreen from "./screen/JournalScreen";
-// import EditJournalScreen from "./screen/EditJournalScreen";
 import EditJournalPhotoScreen from "./screen/EditJournalPhotoScreen";
+import EditJournalTextScreen from "./screen/EditJournalTextScreen";
 
 //Edit Profile Screen
 import EditProfileScreen from "./screen/EditProfileScreen";
@@ -43,34 +43,19 @@ import * as Auth from "../utils/auth"
 import {UserContext} from '../utils/context';
 import {DashboardHeader, MessengerButtonHeader} from "./component/header"
 import { DashboardFAB } from './component/fab';
-import {EditJournalButton} from "./component/EditJournalButton";
 import colorConst from './constant/color';
-import EditJournalTextScreen from "./screen/EditJournalTextScreen";
+
 
 const RootStack = createStackNavigator();
+
 export const RootScreenStack = () => {
-
-  // const [user, setUser] = useState("loading");
-  // const changeUserState = () => {
-  //   setUser(Auth.getCurrentUser())
-  // }
-
-  // useEffect(() => {
-  //   return Auth.setOnAuthStateChanged(
-  //     (user) => setUser(user),
-  //     () => setUser(null),
-  //   );
-  // }, []);
-
   return (
-    // <UserContext.Provider value={{user, changeUserState}}>
       <RootStack.Navigator mode="modal" initialRouteName={"Main"}>
         <RootStack.Screen name="Main" component={MainScreenStack} options={{ headerShown: false }} />
         <RootStack.Screen name="Photo Carousel" component={PhotoCarouselScreen}
                           options={{headerTitle: "View photos", headerBackTitle: "Back"}}
         />
       </RootStack.Navigator>
-    // </UserContext.Provider>
   );
 }
 
@@ -155,27 +140,11 @@ export const MainScreenStack = () => {
               })}
             />
 
-            {/*<MainStack.Screen name={"Edit Journal"} component={EditJournalScreen}*/}
-            {/*  options={() => ({*/}
-            {/*    headerStyle: {backgroundColor: colorConst.primary },*/}
-            {/*    headerTintColor: colorConst.textHeader,*/}
-            {/*    headerRight: () => (*/}
-            {/*      // <IconButton icon={'check-circle'} size={27} onPress={Keyboard.dismiss}/>*/}
-            {/*      <TouchableOpacity onPress={Keyboard.dismiss}>*/}
-            {/*        <Text style={{marginHorizontal: 15, fontSize: 20, color:colorConst.textHeader}}>Done</Text>*/}
-            {/*      </TouchableOpacity>*/}
-            {/*  )*/}
-            {/*  })}*/}
-            {/*/>*/}
-
             <MainStack.Screen name={"Edit Profile"} component={EditProfileScreen}
-            options={() => ({
-              // headerBackTitle: "Back",
-              headerStyle: {backgroundColor: colorConst.primary },
-              headerTintColor: colorConst.textHeader,
-              
-            })}
-             />
+              options={{
+                headerStyle: {backgroundColor: colorConst.primary },
+                headerTintColor: colorConst.textHeader}}
+            />
 
           </>
         )}
@@ -235,11 +204,11 @@ export const HomeScreenTab = () => {
         }}
       />
       <HomeTab.Screen
-        name="Message"
+        name="Messages"
         component={ChatListScreen}
         options={
           {
-            tabBarLabel: 'Message',
+            tabBarLabel: 'Messages',
             tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons name="message" color={color} size={26} />
             ),
