@@ -1,6 +1,7 @@
 {
   "expo": {
     "owner": "orbital-trektogether",
+    "scheme": "myapp",
     "name": "trek-together",
     "slug": "trek-together",
     "version": "2.0.1",

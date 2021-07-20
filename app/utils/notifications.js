@@ -49,6 +49,7 @@ export const sendPushNotificationToBuddy = async (otherID, currentUsername) => {
     alert('Buddy does not have a push token (old account)');
     return;
   }
+  const badgeCount = await Notifications.getBadgeCountAsync();
   fetch('https://exp.host/--/api/v2/push/send', {
     method: 'POST',
     headers: {
@@ -58,9 +59,10 @@ export const sendPushNotificationToBuddy = async (otherID, currentUsername) => {
     body: JSON.stringify({
       to: buddyPushToken,
       sound: 'default',
-      badge: 1,
+      badge: badgeCount + 1,
       title: 'New Buddy',
       body: `It's a match with ${currentUsername} 🎉`,
+      // data: { url: "myapp://messages" },
     })
   });
   console.log("fetched");
