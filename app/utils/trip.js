@@ -4,6 +4,7 @@ import {Avatar, List} from "react-native-paper";
 import {CommonActions} from "@react-navigation/native";
 
 import firebase from "../utils/firebase";
+import * as Notifications from "../utils/notifications";
 import colorConst from "../src/constant/color";
 
 const db = firebase.firestore();
@@ -29,6 +30,7 @@ export const addTrip =
     };
     if (buddy !== "None") {
       obj.inviting = buddy.uid;
+      Notifications.sendInviteTripNotification(buddy.uid, user.displayName);
     }
 
     const docRef = await db.collection("trips").add(obj);
@@ -124,6 +126,9 @@ export const acceptInvitations = async (user, array) => {
       promises.push(updateAction);
     });
     await Promise.all(promises);
+    array.forEach(trip => {
+      Notifications.sendInvitationAcceptedNotification(trip.inviterID, user.displayName);
+    })
     return "accept updated " + array.length;
   } catch (e) {
     console.error(e);

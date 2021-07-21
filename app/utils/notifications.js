@@ -49,7 +49,7 @@ export const sendNewMatchNotification = async (otherID, currentUsername) => {
     alert('Buddy does not have a push token (old account)');
     return;
   }
-  const badgeCount = await Notifications.getBadgeCountAsync();
+  // const badgeCount = await Notifications.getBadgeCountAsync();
   fetch('https://exp.host/--/api/v2/push/send', {
     method: 'POST',
     headers: {
@@ -59,11 +59,64 @@ export const sendNewMatchNotification = async (otherID, currentUsername) => {
     body: JSON.stringify({
       to: buddyPushToken,
       sound: 'default',
-      badge: badgeCount + 1,
+      // badge: badgeCount + 1,
       title: 'New Buddy',
       body: `It's a match with ${currentUsername} 🎉`,
-      // data: { url: "myapp://messages" },
+      data: { url: "myapp://messages" },
     })
   });
-  console.log("fetched");
+};
+
+
+export const sendInviteTripNotification = async (otherID, currentUsername) => {
+  let buddyPushToken;
+  await firebase.firestore().collection("users").doc(otherID).get()
+    .then(doc => buddyPushToken = doc.data().pushToken);
+  if (!buddyPushToken) {
+    alert('Buddy does not have a push token (old account)');
+    return;
+  }
+  // const badgeCount = await Notifications.getBadgeCountAsync();
+  fetch('https://exp.host/--/api/v2/push/send', {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      to: buddyPushToken,
+      sound: 'default',
+      // badge: badgeCount + 1,
+      title: 'New invite',
+      body: `${currentUsername} is inviting you to their trip`,
+      data: { url: "myapp://invitations" },
+    })
+  });
+};
+
+
+export const sendInvitationAcceptedNotification = async (otherID, currentUsername) => {
+  let buddyPushToken;
+  await firebase.firestore().collection("users").doc(otherID).get()
+    .then(doc => buddyPushToken = doc.data().pushToken);
+  if (!buddyPushToken) {
+    alert('Buddy does not have a push token (old account)');
+    return;
+  }
+  // const badgeCount = await Notifications.getBadgeCountAsync();
+  fetch('https://exp.host/--/api/v2/push/send', {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      to: buddyPushToken,
+      sound: 'default',
+      // badge: badgeCount + 1,
+      title: 'Trip invite accepted',
+      body: `${currentUsername} accepted your invitation`,
+      data: { url: "myapp://future" },
+    })
+  });
 };

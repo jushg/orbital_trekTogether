@@ -4,12 +4,21 @@ import {StyleSheet, View, FlatList } from 'react-native';
 
 import firebase from "../../utils/firebase";
 import {UserContext} from "../../utils/context";
+import * as Notifications from "../../utils/notifications";
 import * as Trip from "../../utils/trip";
 import colorConst from '../constant/color';
 
 export default ({navigation}) => {
   const {user} = useContext(UserContext);
   const [futureTrips, setFutureTrips] = useState(null);
+
+  useEffect(() => {
+    const setUpPushNotifications = async () => {
+      await Notifications.registerForPushNotificationsAsync(user);
+      Notifications.setForegroundNotificationHandler();
+    };
+    setUpPushNotifications();
+  }, []);
 
   useEffect(() => {
     const now = new Date();

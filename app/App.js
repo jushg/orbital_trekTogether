@@ -43,9 +43,19 @@ export default function App() {
           screens: {
             Home: {
               screens: {
+                Home: {
+                  screens: {
+                    Dashboard: {
+                      screens: {
+                        Future: 'future'
+                      }
+                    }
+                  }
+                },
                 Messages: 'messages'
               }
-            }
+            },
+            Invitations: 'invitations'
           },
         },
       },
@@ -54,9 +64,7 @@ export default function App() {
       const onReceiveURL = ({url}) => listener(url);
       Linking.addEventListener('url', onReceiveURL);
       const subscription = Notifications.addNotificationResponseReceivedListener(response => {
-        // const url = response.notification.request.content.data.url;
-        // const url = prefix + "messages";
-        const url = "myapp://messages";
+        const url = response.notification.request.content.data.url;
         listener(url);
       });
 
@@ -68,13 +76,13 @@ export default function App() {
   }
 
   return (
-  <PaperProvider theme={CombinedDefaultTheme}>
-    <NavigationContainer linking={linking} theme={CombinedDefaultTheme}>
-      <RootScreenStack/>
-      {/* <MainScreenStack/> */}
-      {/* <TestScreen/> */}
-      <FlashMessage position="top" />
-    </NavigationContainer>
-  </PaperProvider>
+    <PaperProvider theme={CombinedDefaultTheme}>
+      <NavigationContainer linking={linking} theme={CombinedDefaultTheme}>
+        <RootScreenStack/>
+        {/* <MainScreenStack/> */}
+        {/* <TestScreen/> */}
+        <FlashMessage position="top" />
+      </NavigationContainer>
+    </PaperProvider>
   );
 }
