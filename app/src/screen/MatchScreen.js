@@ -21,7 +21,7 @@ export default ({navigation}) => {
   useEffect(() => {
     const setUpPushNotifications = async () => {
       await Notifications.registerForPushNotificationsAsync(user);
-      Notifications.setForegroundNotificationHandler();
+      // Notifications.setForegroundNotificationHandler();
     };
     setUpPushNotifications();
   }, []);
@@ -105,7 +105,7 @@ export default ({navigation}) => {
       ]);
       const chatCreated = await Match.createChatBetween(user, other);
       if (chatCreated) {
-        Notifications.sendPushNotificationToBuddy(other.id, user.displayName);
+        Notifications.sendNewMatchNotification(other.id, user.displayName);
         showMessage({
           message: `It's a match!\nYou and ${otherData.name} are now buddies 🎉 `,
           type: "success",

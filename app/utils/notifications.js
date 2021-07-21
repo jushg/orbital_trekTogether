@@ -41,7 +41,7 @@ export const registerForPushNotificationsAsync = async (user) => {
 };
 
 
-export const sendPushNotificationToBuddy = async (otherID, currentUsername) => {
+export const sendNewMatchNotification = async (otherID, currentUsername) => {
   let buddyPushToken;
   await firebase.firestore().collection("users").doc(otherID).get()
     .then(doc => buddyPushToken = doc.data().pushToken);
