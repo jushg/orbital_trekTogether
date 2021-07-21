@@ -1,8 +1,9 @@
 import React from "react";
 import {View} from "react-native";
 import {Avatar, List} from "react-native-paper";
-import firebase from "firebase";
 import {CommonActions} from "@react-navigation/native";
+
+import firebase from "../utils/firebase";
 import colorConst from "../src/constant/color";
 
 const db = firebase.firestore();
@@ -16,35 +17,22 @@ export const addTrip =
       place.map(item => item.structured_formatting.main_text)
     )].sort();
 
-    let docRef;
-    if (buddy === 'None') {   // individual trip
-      const uid = user.uid;
-      docRef = await db
-        .collection('trips')
-        .add({
-          members: [uid,],
-          otherMemberName: {[uid]: ''},     // Key-this user; value-other user
-          otherAvatarURL: {[uid]: ''},      // Key-this user; value-other user
-          notes: notes,
-          place: uniquePlace,
-          routeName: routeName,
-          date: date
-        });
+    const uid = user.uid;
+    const obj = {
+      members: [uid],
+      otherMemberName: {[uid]: user.displayName},   // Both key and value are data of this user
+      otherAvatarURL: {[uid]: user.photoURL},   // Later if a buddy is added, then change to cross data
+      notes: notes,
+      place: uniquePlace,
+      routeName: routeName,
+      date: date
+    };
+    if (buddy !== "None") {
+      obj.inviting = buddy.uid;
     }
-    else {    // trip with buddy
-      const [u1, u2] = [user.uid, buddy.uid];
-      docRef = await db
-        .collection('trips')
-        .add({
-          members: [u1, u2].sort(),
-          otherMemberName: {[u1]: buddy.name, [u2]: user.displayName},   // cross-name!!
-          otherAvatarURL: {[u1]: buddy.photoURL, [u2]: user.photoURL},     // cross-name!!
-          notes: notes,
-          place: uniquePlace,
-          routeName: routeName,
-          date: date
-        });
-    }
+
+    const docRef = await db.collection("trips").add(obj);
+
     await db.collection('journals')
       .doc(docRef.id)
       .set({
@@ -101,7 +89,6 @@ export const deleteFutureTripWithUnmatchedBuddy = async (user, otherID) => {
     const today = new Date(new Date().toDateString());
     const querySnapshot = await db.collection("trips")
       .where("members", "==", [uid, otherID].sort())
-      // .where("members", "array-contains", otherID)
       .where("date", ">=", today)
       .get();
     querySnapshot.forEach(doc => doc.ref.delete());
@@ -110,3 +97,53 @@ export const deleteFutureTripWithUnmatchedBuddy = async (user, otherID) => {
     console.error(e);
   }
 }
+
+export const acceptInvitations = async (user, array) => {
+  try {
+    const promises = [];
+    array.forEach(trip => {
+      const addedMembers = [trip.members[0], user.uid].sort();
+
+      const crossAvatarURL = {...trip.otherAvatarURL};
+      crossAvatarURL[user.uid] = crossAvatarURL[trip.inviterID];
+      crossAvatarURL[trip.inviterID] = user.photoURL;
+
+      const crossMemberName = {...trip.otherMemberName};
+      crossMemberName[user.uid] = crossMemberName[trip.inviterID];
+      crossMemberName[trip.inviterID] = user.displayName;
+
+      const updateAction = db.collection("trips")
+        .doc(trip.id)
+        .update({
+          members: addedMembers,
+          inviting: "",
+          otherAvatarURL: crossAvatarURL,
+          otherMemberName: crossMemberName
+        });
+
+      promises.push(updateAction);
+    });
+    await Promise.all(promises);
+    return "accept updated " + array.length;
+  } catch (e) {
+    console.error(e);
+  }
+};
+
+export const declineInvitations = async (user, array) => {
+  try {
+    const promises = [];
+    array.forEach(trip => {
+      const updateAction = db.collection("trips")
+        .doc(trip.id)
+        .update({
+          inviting: ""
+        });
+      promises.push(updateAction);
+    });
+    await Promise.all(promises);
+    return "decline updated " + array.length;
+  } catch (e) {
+    console.error(e);
+  }
+};

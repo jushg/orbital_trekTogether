@@ -7,12 +7,17 @@ import * as Match from "../../utils/match";
 import * as Trip from "../../utils/trip";
 import {showMessage} from "react-native-flash-message";
 
-export const DashboardHeader = ({navigation, screenName}) => {
+export const DashboardHeader = ({navigation}) => {
   const {user} = useContext(UserContext);
+  const hasInvitations = true;
   return (
     <Appbar.Header>
       <Appbar.Content title="Dashboard" />
-      <Appbar.Action icon="account-cog" onPress={() => navigation.navigate(screenName)} />
+      {hasInvitations
+        ? <Appbar.Action icon="bell-ring" onPress={() => navigation.navigate("Invitations")} />
+        : <Appbar.Action icon="bell" disabled/>
+      }
+      <Appbar.Action icon="cog" onPress={() => navigation.navigate("Setting")} />
     </Appbar.Header>
   )
 }

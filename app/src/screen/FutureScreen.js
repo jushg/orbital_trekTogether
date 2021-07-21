@@ -2,7 +2,6 @@ import React, {useContext, useEffect, useState} from 'react';
 import {ActivityIndicator, Caption, Card, Paragraph, Avatar} from "react-native-paper";
 import {StyleSheet, View, FlatList } from 'react-native';
 
-
 import firebase from "../../utils/firebase";
 import {UserContext} from "../../utils/context";
 import * as Trip from "../../utils/trip";
@@ -67,6 +66,15 @@ const renderFootnote = () => {
    </Caption>
   )
 }
+
+/*
+Trip invitation:
+render trip:
+    if members.length == 2 then “Going with” / “Went with” + buddy name
+		elif inviting == "" then “Solo trip”
+		else “Pending reply from buddy_uid”
+*/
+
 const renderCard = ({item,user}) => {
   const date = item.date.toDate().toLocaleDateString();
   const hasBuddy = item.members.length === 2;

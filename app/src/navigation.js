@@ -24,6 +24,7 @@ import PastScreen from "./screen/PastScreen"
 import FutureScreen from './screen/FutureScreen'
 import SettingScreen from "./screen/SettingScreen"
 import AddTripScreen from './screen/AddTripScreen';
+import InvitationsScreen from "./screen/InvitationsScreen";
 
 //Chat Screens
 import ChatListScreen from "./screen/ChatListScreen"
@@ -87,18 +88,34 @@ export const MainScreenStack = () => {
         ):(
           <>
             <MainStack.Screen name="Home" component = {HomeScreenTab} options={{headerShown:false}}/>
+
             <MainStack.Screen name="Setting" component={SettingScreen}
+              options={{
+                headerTitle: "Settings",
+                headerStyle: {backgroundColor: colorConst.primary },
+                headerTintColor: colorConst.textHeader}}
+            />
+
+            <MainStack.Screen name={"Edit Profile"} component={EditProfileScreen}
               options={{
                 headerStyle: {backgroundColor: colorConst.primary },
                 headerTintColor: colorConst.textHeader}}
             />
-            <MainStack.Screen name="Add Trip" component={AddTripScreen} 
+
+            <MainStack.Screen name="Add Trip" component={AddTripScreen}
               options={{
                 headerStyle: {backgroundColor: colorConst.primary },
-                headerTintColor: colorConst.textHeader}}/>
-            <MainStack.Screen 
-              name="Chat" 
-              component = {ChatScreen}
+                headerTintColor: colorConst.textHeader}}
+            />
+
+            <MainStack.Screen name={"Invitations"} component={InvitationsScreen}
+              options={{
+                headerStyle: {backgroundColor: colorConst.primary },
+                headerTintColor: colorConst.textHeader
+              }}
+            />
+
+            <MainStack.Screen name="Chat" component = {ChatScreen}
               options={({ navigation, route }) => ({
                 headerStyle: {backgroundColor: colorConst.primary },
                 headerTitle: route.params.otherName,
@@ -111,6 +128,7 @@ export const MainScreenStack = () => {
                 ) })
               }
             />
+
             <MainStack.Screen name={"View Journal"} component={JournalScreen}
               options={({navigation, route}) => ({
                 headerStyle: {backgroundColor: colorConst.primary },
@@ -138,12 +156,6 @@ export const MainScreenStack = () => {
                 headerTintColor: colorConst.textHeader,
                 headerRight: () => <IconButton icon={'check-circle'} color={colorConst.textHeader} size={27} onPress={Keyboard.dismiss}/>
               })}
-            />
-
-            <MainStack.Screen name={"Edit Profile"} component={EditProfileScreen}
-              options={{
-                headerStyle: {backgroundColor: colorConst.primary },
-                headerTintColor: colorConst.textHeader}}
             />
 
           </>
@@ -177,9 +189,10 @@ const HomeTab = createMaterialBottomTabNavigator();
 
 export const HomeScreenTab = () => {
   return (
-    <HomeTab.Navigator 
-    initialRouteName="Home"
-    // activeColor= {colorConst.accent}   
+    <HomeTab.Navigator
+      // shifting={true}
+      initialRouteName="Home"
+      // activeColor= {colorConst.accent}
     >    
       <HomeTab.Screen
         name="Home"
@@ -239,7 +252,7 @@ export const DashboardScreenStack = ({navigation}) => {
           //     ? options.title
           //     : scene.route.name;
           return (
-            <DashboardHeader navigation={navigation} screenName="Setting"/>
+            <DashboardHeader navigation={navigation} />
           )
         },
       })}/>
@@ -258,7 +271,7 @@ export const DashboardScreenTab = () => {
         name="Future" 
         component={FutureScreen}
         options={{
-          tabBarLabel: 'Your plan'
+          tabBarLabel: 'Your plans'
         }}/>
       <DashboardTab.Screen 
         name="Past" 
