@@ -59,7 +59,7 @@ export default ({navigation}) => {
         // ItemSeparatorComponent={ renderDivider}
         // renderItem={renderFutureTrip}
         // renderItem={({item}) => Trip.renderTrip({item, user})}
-        renderItem={({item}) => renderCard({item, user})}
+        renderItem={({item}) => renderCard({item, user, navigation})}
         ListFooterComponent={renderFootnote}
       /> 
     </View>
@@ -84,7 +84,7 @@ render trip:
 		else “Pending reply from buddy_uid”
 */
 
-const renderCard = ({item,user}) => {
+const renderCard = ({item,user, navigation}) => {
   const date = item.date.toDate().toLocaleDateString();
   const hasBuddy = item.members.length === 2;
   let buddyDesc = '';
@@ -102,7 +102,7 @@ const renderCard = ({item,user}) => {
     <Card 
     mode="outlined"
     style={{marginVertical:"1.5%", backgroundColor:"white", borderWidth:0.5, borderRadius:10, elevation:5}}
-    onLongPress={() => console.log("Edit trip")} >
+    onPress={() => navigation.navigate("Edit Trip")} >
       <Card.Cover source={{ uri: 'https://picsum.photos/600' }} />
       <Card.Title 
         title={item.routeName?item.routeName+ " - " + date:"This is the past now :(" } 

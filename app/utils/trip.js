@@ -51,6 +51,22 @@ export const addTrip =
   }
 };
 
+export const updateTrip = async ({tripID, buddy, place, routeName, date, notes}, onSuccess, onError) => {
+  try {
+    
+    return onSuccess();
+  } catch (error) {
+    return onError(error);
+  }
+};
+
+export const getCurrentTripData = async (tripID) => {
+  const snapshot = await db.collection("trips").doc(tripID).get();
+  if (snapshot.exists) {
+    return snapshot.data();
+  }
+  throw new Error("Data for current trip does not exist");
+};
 // export const renderTrip = ({item, user, navigation}) => {
 //   const date = item.date.toDate().toLocaleDateString();
 //   const hasBuddy = item.members.length === 2;
