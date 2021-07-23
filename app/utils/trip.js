@@ -29,7 +29,7 @@ export const addTrip =
       date: date
     };
     if (buddy !== "None") {
-      obj.inviting = buddy.uid;
+      obj.inviting = {uid: buddy.uid, name: buddy.name};
       Notifications.sendInviteTripNotification(buddy.uid, user.displayName);
     }
 
@@ -134,7 +134,7 @@ export const acceptInvitations = async (user, array) => {
         .doc(trip.id)
         .update({
           members: addedMembers,
-          inviting: "",
+          inviting: {},
           otherAvatarURL: crossAvatarURL,
           otherMemberName: crossMemberName
         });
@@ -158,7 +158,7 @@ export const declineInvitations = async (user, array) => {
       const updateAction = db.collection("trips")
         .doc(trip.id)
         .update({
-          inviting: ""
+          inviting: {}
         });
       promises.push(updateAction);
     });

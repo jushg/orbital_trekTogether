@@ -17,7 +17,7 @@ export default ({navigation}) => {
 
   useEffect(() => {
     firebase.firestore().collection("trips")
-      .where("inviting", "==", user.uid)
+      .where("inviting.uid", "==", user.uid)
       .orderBy("date", "asc")
       .get()
       .then(querySnapshot => {
