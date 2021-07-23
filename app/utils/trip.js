@@ -9,6 +9,15 @@ import colorConst from "../src/constant/color";
 
 const db = firebase.firestore();
 
+export const getCurrentTripData = async (tripID) => {
+  const snapshot = await db.collection("trips").doc(tripID).get();
+  if (snapshot.exists) {
+    return snapshot.data();
+  }
+  throw new Error("Data for current trip does not exist");
+};
+
+
 export const addTrip =
     async ({user, buddy, place, routeName, date, notes}, onSuccess, onError) => {
   try {
@@ -29,7 +38,7 @@ export const addTrip =
       date: date
     };
     if (buddy !== "None") {
-      obj.inviting = buddy.uid;
+      obj.inviting = {uid: buddy.uid, name: buddy.name};
       Notifications.sendInviteTripNotification(buddy.uid, user.displayName);
     }
 
@@ -51,22 +60,51 @@ export const addTrip =
   }
 };
 
-export const updateTrip = async ({tripID, buddy, place, routeName, date, notes}, onSuccess, onError) => {
+
+export const updateTrip = async (
+    {tripID, user, date, isBuddyChanged, buddyStatus, buddy, originalBuddyID, routeName, place, notes},
+    onSuccess,
+    onError
+) => {
   try {
-    
+    if (routeName === "") return onError("Please provide a trip name");
+    if (place.length === 0) return onError("Please provide a destination");
+    const uniquePlace = [... new Set(
+      place.map(item => item.structured_formatting.main_text)
+    )].sort();
+
+    const obj = {
+      date: date,
+      routeName: routeName,
+      place: uniquePlace,
+      notes: notes
+    };
+
+    if (isBuddyChanged) {   // no => yes, yes => another buddy, yes => None
+      if (buddy !== "None") {
+        obj.inviting = {uid: buddy.uid, name: buddy.name};
+        Notifications.sendInviteTripNotification(buddy.uid, user.displayName);
+      }
+      if (buddyStatus === "yes") {
+        // revert trip to pre-buddy state
+        const uid = user.uid;
+        obj.members = [uid];
+        obj.otherMemberName = {[uid]: user.displayName};
+        obj.otherAvatarURL = {[uid]: user.photoURL};
+        Notifications.sendCancelTripNotification(originalBuddyID, user.displayName);
+      }
+    }
+
+    await db.collection("trips")
+      .doc(tripID)
+      .update(obj);
+    console.log("update trip done")
     return onSuccess();
   } catch (error) {
     return onError(error);
   }
 };
 
-export const getCurrentTripData = async (tripID) => {
-  const snapshot = await db.collection("trips").doc(tripID).get();
-  if (snapshot.exists) {
-    return snapshot.data();
-  }
-  throw new Error("Data for current trip does not exist");
-};
 // export const renderTrip = ({item, user, navigation}) => {
 //   const date = item.date.toDate().toLocaleDateString();
 //   const hasBuddy = item.members.length === 2;
@@ -77,7 +115,7 @@ export const getCurrentTripData = async (tripID) => {
 //   return (
 //     <View>
 //       <List.Item
-//         title={item.routeName?item.routeName+ " - " + date:"Somewhere nice"  } 
+//         title={item.routeName?item.routeName+ " - " + date:"Somewhere nice"  }
 //         // description={date + buddyDesc}
 //         description = {buddyDesc ? 'Buddy: ' + buddyDesc + '\n' + item.notes : 'Solo Trip \n' + item.notes}
 //         descriptionNumberOfLines = {2}
@@ -101,6 +139,16 @@ export const getCurrentTripData = async (tripID) => {
 //   )
 // };
 
+export const deleteTrip = async (tripID) => {
+  try {
+    await db.collection("trips").doc(tripID).delete();
+    console.log("deleted trip");
+  } catch (e) {
+    console.error(e);
+  }
+};
+
+
 export const deleteFutureTripWithUnmatchedBuddy = async (user, otherID) => {
   try {
     const uid = user.uid;
@@ -114,7 +162,8 @@ export const deleteFutureTripWithUnmatchedBuddy = async (user, otherID) => {
   } catch (e) {
     console.error(e);
   }
-}
+};
+
 
 export const acceptInvitations = async (user, array) => {
   try {
@@ -134,7 +183,7 @@ export const acceptInvitations = async (user, array) => {
         .doc(trip.id)
         .update({
           members: addedMembers,
-          inviting: "",
+          inviting: {},
           otherAvatarURL: crossAvatarURL,
           otherMemberName: crossMemberName
         });
@@ -151,6 +200,7 @@ export const acceptInvitations = async (user, array) => {
   }
 };
 
+
 export const declineInvitations = async (user, array) => {
   try {
     const promises = [];
@@ -158,7 +208,7 @@ export const declineInvitations = async (user, array) => {
       const updateAction = db.collection("trips")
         .doc(trip.id)
         .update({
-          inviting: ""
+          inviting: {}
         });
       promises.push(updateAction);
     });

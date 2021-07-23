@@ -59,7 +59,7 @@ export default ({navigation}) => {
 const renderFootnote = () => {
   return (
    <Caption style={{alignSelf:"center", paddingVertical: 25}}>
-     Press to view the trip details
+     Press a trip to view its journal entry
    </Caption>
   )
 }

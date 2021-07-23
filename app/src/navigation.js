@@ -151,11 +151,10 @@ export const MainScreenStack = () => {
             />
 
             <MainStack.Screen name={"Edit Trip"} component={EditTripScreen}
-              options={({navigation, route}) => ({
+              options={{
                 headerStyle: {backgroundColor: colorConst.primary },
                 headerTintColor: colorConst.textHeader,
-                headerRight: () => <IconButton icon={'delete'} color={colorConst.textHeader} size={27} onPress={()=> navigation.navigate("Future")}/>
-              })}
+              }}
             />
 
             <MainStack.Screen name={"Edit Text"} component={EditJournalTextScreen}
