@@ -76,13 +76,13 @@ const renderFootnote = () => {
   )
 }
 
-const renderCard = ({item,user, navigation}) => {
+const renderCard = ({item, user, navigation}) => {
   const date = item.date.toDate().toLocaleDateString();
   const hasBuddy = item.members.length === 2;
   let buddyDesc;
   if (hasBuddy) {
     buddyDesc = `Going with ${item.otherMemberName[user.uid]}`;
-  } else if (item.inviting === {}) {
+  } else if (!item.inviting.name) {
     buddyDesc = "Solo trip";
   } else {
     buddyDesc = `Pending reply from ${item.inviting.name}`;
