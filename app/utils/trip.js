@@ -51,9 +51,44 @@ export const addTrip =
   }
 };
 
-export const updateTrip = async ({tripID, buddy, place, routeName, date, notes}, onSuccess, onError) => {
+export const updateTrip = async (
+    {tripID, user, date, isBuddyChanged, buddyStatus, buddy, originalBuddyID, routeName, place, notes},
+    onSuccess,
+    onError
+) => {
   try {
-    
+    if (routeName === "") return onError("Please provide a trip name");
+    if (place.length === 0) return onError("Please provide a destination");
+    const uniquePlace = [... new Set(
+      place.map(item => item.structured_formatting.main_text)
+    )].sort();
+
+    const obj = {
+      date: date,
+      routeName: routeName,
+      place: uniquePlace,
+      notes: notes
+    };
+
+    if (isBuddyChanged) {   // no => yes, yes => another buddy, yes => None
+      if (buddy !== "None") {
+        obj.inviting = {uid: buddy.uid, name: buddy.name};
+        Notifications.sendInviteTripNotification(buddy.uid, user.displayName);
+      }
+      if (buddyStatus === "yes") {
+        // revert trip to pre-buddy state
+        const uid = user.uid;
+        obj.members = [uid];
+        obj.otherMemberName = {[uid]: user.displayName};
+        obj.otherAvatarURL = {[uid]: user.photoURL};
+        // Notifications.sendCancelTripNotification(originalBuddyID, user.displayName);
+      }
+    }
+
+    await db.collection("trips")
+      .doc(tripID)
+      .update(obj);
+    console.log("update trip done")
     return onSuccess();
   } catch (error) {
     return onError(error);
@@ -67,6 +102,7 @@ export const getCurrentTripData = async (tripID) => {
   }
   throw new Error("Data for current trip does not exist");
 };
+
 // export const renderTrip = ({item, user, navigation}) => {
 //   const date = item.date.toDate().toLocaleDateString();
 //   const hasBuddy = item.members.length === 2;
@@ -77,7 +113,7 @@ export const getCurrentTripData = async (tripID) => {
 //   return (
 //     <View>
 //       <List.Item
-//         title={item.routeName?item.routeName+ " - " + date:"Somewhere nice"  } 
+//         title={item.routeName?item.routeName+ " - " + date:"Somewhere nice"  }
 //         // description={date + buddyDesc}
 //         description = {buddyDesc ? 'Buddy: ' + buddyDesc + '\n' + item.notes : 'Solo Trip \n' + item.notes}
 //         descriptionNumberOfLines = {2}
