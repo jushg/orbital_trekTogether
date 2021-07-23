@@ -3,6 +3,9 @@ import { View, StyleSheet } from "react-native";
 import { Card, Avatar,Paragraph } from "react-native-paper"
 import { MAPS_API_KEY } from "@env";
 
+import * as Trip from "../../utils/trip";
+import colorConst from '../constant/color';
+
 export default (props) => {
     const date = item.date.toDate().toLocaleDateString();
     const hasBuddy = item.members.length === 2;

@@ -2,7 +2,6 @@ import React, {useContext, useEffect, useState} from 'react';
 import { StyleSheet, FlatList, View, Animated } from 'react-native'
 import {List, Avatar, ActivityIndicator, Divider, Searchbar, Appbar, Caption, Button, } from "react-native-paper";
 import { CommonActions } from '@react-navigation/native'
-import { RectButton } from 'react-native-gesture-handler';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 
 

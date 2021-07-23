@@ -1,12 +1,10 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {ActivityIndicator, Caption, Card, Text, Paragraph, Avatar} from "react-native-paper";
+import {ActivityIndicator, Caption} from "react-native-paper";
 import {StyleSheet, View, FlatList} from 'react-native';
 
 import firebase from "../../utils/firebase";
 import {UserContext} from "../../utils/context";
 import * as Notifications from "../../utils/notifications";
-import * as Trip from "../../utils/trip";
-import colorConst from '../constant/color';
 import FutureCard from '../component/FutureCard';
 
 

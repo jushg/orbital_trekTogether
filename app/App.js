@@ -79,7 +79,6 @@ export default function App() {
     <PaperProvider theme={CombinedDefaultTheme}>
       <NavigationContainer linking={linking} theme={CombinedDefaultTheme}>
         <RootScreenStack/>
-        {/* <MainScreenStack/> */}
         {/* <TestScreen/> */}
         <FlashMessage position="top" />
       </NavigationContainer>
