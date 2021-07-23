@@ -81,7 +81,7 @@ export const updateTrip = async (
         obj.members = [uid];
         obj.otherMemberName = {[uid]: user.displayName};
         obj.otherAvatarURL = {[uid]: user.photoURL};
-        // Notifications.sendCancelTripNotification(originalBuddyID, user.displayName);
+        Notifications.sendCancelTripNotification(originalBuddyID, user.displayName);
       }
     }
 

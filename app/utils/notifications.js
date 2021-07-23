@@ -120,3 +120,28 @@ export const sendInvitationAcceptedNotification = async (otherID, currentUsernam
     })
   });
 };
+
+
+export const sendCancelTripNotification = async (originalBuddyID, currentUsername) => {
+  let buddyPushToken;
+  await firebase.firestore().collection("users").doc(originalBuddyID).get()
+    .then(doc => buddyPushToken = doc.data().pushToken);
+  if (!buddyPushToken) {
+    alert('Buddy does not have a push token (old account)');
+    return;
+  }
+  fetch('https://exp.host/--/api/v2/push/send', {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      to: buddyPushToken,
+      sound: 'default',
+      title: 'Trip cancelled',
+      body: `${currentUsername} cancelled a trip with you`,
+      data: { url: "myapp://future" },
+    })
+  });
+};
