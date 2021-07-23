@@ -56,7 +56,7 @@ export default ({navigation}) => {
       });
   };
 
-  const handleUpdateProfile = async () => {
+  const handleUpdateProfile = () => {
     showMessage({
       message: "Updating your profile...\nThis might take a while",
       type: "info", duration: 1600, floating: true
@@ -70,7 +70,6 @@ export default ({navigation}) => {
         type: "warning",
         duration: 1600,
         floating: true,
-        icon: "auto"
       });
       }
     )
