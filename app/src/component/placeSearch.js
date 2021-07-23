@@ -5,6 +5,7 @@ import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplet
 
 import colorConst from '../constant/color';
 import { MAPS_API_KEY } from "@env";
+
 export default (props) => {
   return (
    <>
@@ -44,7 +45,9 @@ export default (props) => {
         // 'details' is provided when fetchDetails = true
             const arr = [...props.place, data];
             props.setPlace(arr);
-        // console.log(data, details);
+            if(details != null) {
+                props.coverPhoto == null && props.setCoverPhoto(details)
+            }
         }}
         // returnKeyType="search"
         onEndEditing={Keyboard.dismiss}
@@ -61,15 +64,6 @@ export default (props) => {
             backgroundColor: colorConst.secondaryLight,
             clearButtonMode: "always", //ios only ?
             placeholderTextColor: colorConst.placeholder,
-            // style: {
-            //     width: "100%",
-            //     height: 65,
-            //     borderWidth: 1,
-            //     borderRadius: 5,
-            //     paddingHorizontal: 15,
-            //     fontSize:16,
-            //     marginVertical: 10
-            // }
         }}
         styles={{
             textInput: {

@@ -7,6 +7,7 @@ import {UserContext} from "../../utils/context";
 import * as Notifications from "../../utils/notifications";
 import * as Trip from "../../utils/trip";
 import colorConst from '../constant/color';
+import FutureCard from '../component/FutureCard';
 
 export default ({navigation}) => {
   const {user} = useContext(UserContext);
@@ -20,6 +21,7 @@ export default ({navigation}) => {
     setUpPushNotifications();
   }, []);
 
+  
   useEffect(() => {
     const now = new Date();
     const today = new Date(now.toDateString());
@@ -85,42 +87,8 @@ render trip:
 */
 
 const renderCard = ({item,user, navigation}) => {
-  const date = item.date.toDate().toLocaleDateString();
-  const hasBuddy = item.members.length === 2;
-  let buddyDesc = '';
-  if (hasBuddy) {
-    buddyDesc += `${item.otherMemberName[user.uid]}`;
-  }
-  let placeDesc = ""
-  if(Array.isArray(item.place)){
-    item.place.forEach(place => {
-      placeDesc += place + " - "
-    });
-  }
-  placeDesc = placeDesc.slice(0,-3)
   return(
-    <Card 
-    mode="outlined"
-    style={{marginVertical:"1.5%", backgroundColor:"white", borderWidth:0.5, borderRadius:10, elevation:5}}
-    onPress={() => navigation.navigate("Edit Trip")} >
-      <Card.Cover source={{ uri: 'https://picsum.photos/600' }} />
-      <Card.Title 
-        title={item.routeName?item.routeName+ " - " + date:"This is the past now :(" } 
-        subtitle={placeDesc?placeDesc:"My legacy will live on"} 
-        subtitleNumberOfLines={3}
-        right={(props) => {
-          if (hasBuddy)
-            return (
-              <View style={{justifyContent:'center', padding:'0.5%'}}>
-                <Avatar.Image {...props} size={50} source={{uri: item.otherAvatarURL[user.uid]}}/>
-              </View>
-            );
-        }} />
-      <Card.Content>
-        <Paragraph>{item.notes}</Paragraph>
-      </Card.Content>
-     
-    </Card>
+    <FutureCard item={item} user={user} navigation={navigation}/>
   )
 }
 const styles = StyleSheet.create({
