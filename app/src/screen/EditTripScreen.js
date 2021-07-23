@@ -1,6 +1,6 @@
-import React, {useContext, useEffect, useRef, useState} from "react";
+import React, {useContext, useEffect, useLayoutEffect, useRef, useState} from "react";
 import {Platform, ScrollView, StyleSheet, View} from "react-native";
-import {ActivityIndicator, Button, Subheading} from "react-native-paper";
+import {ActivityIndicator, Button, IconButton, Subheading} from "react-native-paper";
 import {showMessage} from "react-native-flash-message";
 import DateTimePicker from '@react-native-community/datetimepicker';
 import {Picker} from "@react-native-picker/picker";
@@ -32,6 +32,19 @@ export default ({navigation, route}) => {
   }));
   const [notes, setNotes] = useState(trip.notes);
   const [myBuddies, setMyBuddies] = useState(null);
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <IconButton icon={'delete'} onPress={onPressDelete} size={27} color={colorConst.textHeader} />
+      )
+    });
+  }, [navigation]);
+
+  const onPressDelete = async () => {
+    await Trip.deleteTrip(trip.id);
+    navigation.navigate("Future");
+  };
 
   useEffect(() => {
     firebase.firestore()

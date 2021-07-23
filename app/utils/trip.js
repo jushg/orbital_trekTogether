@@ -9,6 +9,15 @@ import colorConst from "../src/constant/color";
 
 const db = firebase.firestore();
 
+export const getCurrentTripData = async (tripID) => {
+  const snapshot = await db.collection("trips").doc(tripID).get();
+  if (snapshot.exists) {
+    return snapshot.data();
+  }
+  throw new Error("Data for current trip does not exist");
+};
+
+
 export const addTrip =
     async ({user, buddy, place, routeName, date, notes}, onSuccess, onError) => {
   try {
@@ -50,6 +59,7 @@ export const addTrip =
     return onError(err);
   }
 };
+
 
 export const updateTrip = async (
     {tripID, user, date, isBuddyChanged, buddyStatus, buddy, originalBuddyID, routeName, place, notes},
@@ -95,14 +105,6 @@ export const updateTrip = async (
   }
 };
 
-export const getCurrentTripData = async (tripID) => {
-  const snapshot = await db.collection("trips").doc(tripID).get();
-  if (snapshot.exists) {
-    return snapshot.data();
-  }
-  throw new Error("Data for current trip does not exist");
-};
-
 // export const renderTrip = ({item, user, navigation}) => {
 //   const date = item.date.toDate().toLocaleDateString();
 //   const hasBuddy = item.members.length === 2;
@@ -137,6 +139,16 @@ export const getCurrentTripData = async (tripID) => {
 //   )
 // };
 
+export const deleteTrip = async (tripID) => {
+  try {
+    await db.collection("trips").doc(tripID).delete();
+    console.log("deleted trip");
+  } catch (e) {
+    console.error(e);
+  }
+};
+
+
 export const deleteFutureTripWithUnmatchedBuddy = async (user, otherID) => {
   try {
     const uid = user.uid;
@@ -150,7 +162,8 @@ export const deleteFutureTripWithUnmatchedBuddy = async (user, otherID) => {
   } catch (e) {
     console.error(e);
   }
-}
+};
+
 
 export const acceptInvitations = async (user, array) => {
   try {
@@ -186,6 +199,7 @@ export const acceptInvitations = async (user, array) => {
     console.error(e);
   }
 };
+
 
 export const declineInvitations = async (user, array) => {
   try {
