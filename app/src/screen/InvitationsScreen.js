@@ -16,11 +16,13 @@ export default ({navigation}) => {
   const declinedTrips = [];
 
   useEffect(() => {
-    firebase.firestore().collection("trips")
+    const today = new Date(new Date().toDateString());
+    firebase.firestore()
+      .collection("trips")
       .where("inviting.uid", "==", user.uid)
+      .where("date", ">=", today)
       .orderBy("date", "asc")
-      .get()
-      .then(querySnapshot => {
+      .onSnapshot(querySnapshot => {
         const results = querySnapshot.docs.map(doc => {
           return {
             id: doc.id,
