@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {StyleSheet,  View, FlatList } from 'react-native';
-import {Caption, ActivityIndicator, Card, Paragraph, Avatar} from "react-native-paper";
+import {Caption, ActivityIndicator, Card, Paragraph, Avatar, Subheading} from "react-native-paper";
 import {CommonActions} from "@react-navigation/native";
 
 import firebase from "../../utils/firebase";
@@ -65,19 +65,21 @@ const renderFootnote = () => {
 }
 const renderTrip = ({item, user, navigation}) => {
   const date = item.date.toDate().toLocaleDateString();
+
   const hasBuddy = item.members.length === 2;
-  
   let buddyDesc = '';
   if (hasBuddy) {
-    buddyDesc += `${item.otherMemberName[user.uid]}`;
+    buddyDesc = `Going with ${item.otherMemberName[user.uid]}`;
+  } else if (!item.inviting.name) {
+    buddyDesc = "Solo trip";
+  } else {
+    buddyDesc = `Pending reply from ${item.inviting.name}`;
   }
-  let placeDesc = ""
-  if(Array.isArray(item.place)){
-    item.place.forEach(place => {
-      placeDesc += place + " - "
-    });
+
+  let placeDesc = item.place;
+  if (Array.isArray(item.place)) {
+    placeDesc = item.place.join(", ");
   }
-  placeDesc = placeDesc.slice(0,-3)
   return (
     <Card 
       mode="outlined"
@@ -90,7 +92,7 @@ const renderTrip = ({item, user, navigation}) => {
       >
         <Card.Title 
           title={item.routeName?item.routeName:item.place} 
-          subtitle={hasBuddy?'Going with '+ buddyDesc + ' on ' + date:'Solo trip on ' + date} 
+          subtitle={`${date} - ${buddyDesc}`} 
           subtitleNumberOfLines={3}
           right={(props) => {
             if (hasBuddy)
@@ -101,7 +103,7 @@ const renderTrip = ({item, user, navigation}) => {
               );
           }} />
         <Card.Content>
-          <Paragraph>{placeDesc}</Paragraph>
+          <Paragraph style={{fontStyle: "italic"}}>{`Destination: ${placeDesc}`}</Paragraph>
         </Card.Content>
        
     </Card>
