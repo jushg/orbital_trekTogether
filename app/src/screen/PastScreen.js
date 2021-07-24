@@ -128,28 +128,3 @@ const styles = StyleSheet.create({
     justifyContent:"center"
   },
 });
-{/* <View style={{flexDirection: 'row', justifyContent:"space-between"}}>
-      <Searchbar
-          placeholder="Search Trip"
-          onChangeText={onChangeSearch}
-          value={searchQuery}
-          style={styles.searchBar}
-      />
-        <Menu
-          visible={visible}
-          onDismiss={closeMenu}
-          anchor={<IconButton onPress={openMenu} icon="sort-variant"/>}
-          style={{paddingTop: 30}}>
-          <Menu.Item onPress={sortNewest} title="Newest" />
-          <Menu.Item onPress={sortOldest} title="Oldest" />
-        </Menu>
-      </View>  */}
-
-  // const [searchQuery, setSearchQuery] = useState(''); //Example
-  // const onChangeSearch = query => setSearchQuery(query); // Example
-
-  // const [visible, setVisible] = useState(false);
-  // const openMenu = () => setVisible(true);
-  // const closeMenu = () => setVisible(false);
-  // const sortNewest = () => {console.log("sortNewest")};
-  // const sortOldest = () => {};

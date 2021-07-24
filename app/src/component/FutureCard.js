@@ -16,12 +16,12 @@ export default (props) => {
   } else {
     buddyDesc = `Pending reply from ${item.inviting.name}`;
   }
+  
   let placeDesc = item.place;
   if (Array.isArray(item.place)) {
     placeDesc = item.place.join(", ");
   }
 
-  
   // photoRef is the result of the initial Place Search query
   const photoRef = item.coverPhotoRef[0]
   let imageLookupURL
@@ -30,17 +30,6 @@ export default (props) => {
     imageLookupURL = `https://maps.googleapis.com/maps/api/place/photo?photoreference=${photoRef}&key=${MAPS_API_KEY}&maxwidth=700&maxheight=700`;
   }
   const [imageURL,setImageURL] = useState("none")
-  // useEffect(() => {
-  //   async function fetchImage() {
-  //     try {
-  //       let response = await fetch(imageLookupURL)
-  //       setImageURL(response.url)
-  //       console.log(imageURL)
-  //     } 
-  //     catch (error) { console.error(error) }
-  //   }
-  //   fetchImage()
-  // }, [])
 
   useEffect(() => {
     fetch(imageLookupURL)

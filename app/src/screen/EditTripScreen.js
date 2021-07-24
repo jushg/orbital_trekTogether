@@ -78,7 +78,7 @@ export default ({navigation, route}) => {
       originalBuddyID.current = trip.members[0] === user.uid ? trip.members[1] : trip.members[0];
       setBuddy(myBuddies[originalBuddyID.current]);
       setBuddyStatus("yes");
-    } else if (!trip.inviting.name) {
+    } else if (trip.inviting === "") {
       setBuddy("None");
       setBuddyStatus("no");
     } else {
@@ -133,7 +133,6 @@ export default ({navigation, route}) => {
           onChangeText={setRouteName}
           style={{marginBottom: 10, alignSelf: "center"}}
         />
-
         <Subheading style={{paddingTop: 10, fontWeight: "bold"}}>
           PLACES
         </Subheading>

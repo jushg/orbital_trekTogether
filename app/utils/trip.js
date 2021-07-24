@@ -28,6 +28,7 @@ export const addTrip =
     const uid = user.uid;
     const obj = {
       members: [uid],
+      inviting: {},
       otherMemberName: {[uid]: user.displayName},   // Both key and value are data of this user
       otherAvatarURL: {[uid]: user.photoURL},   // Later if a buddy is added, then change to cross data
       notes: notes,
