@@ -13,13 +13,17 @@ export const getCurrentTripData = async (tripID) => {
 
 
 export const addTrip =
-    async ({user, buddy, place, routeName, date, notes}, onSuccess, onError) => {
+    async ({user, buddy, place, routeName, date, notes, coverPhotoRef}, onSuccess, onError) => {
   try {
     if (routeName === '') return onError("Please provide the trip name");
     if (place.length === 0) return onError("Please provide some destination")
     const uniquePlace = [... new Set(
       place.map(item => item.structured_formatting.main_text)
     )].sort();
+    if (coverPhotoRef.length === 0) return onError("Some unexpected issues")
+    // const uniqueCoverPhotoRef = [... new Set(
+    //   coverPhotoRef.map(item => item.structured_formatting.main_text)
+    // )].sort();
 
     const uid = user.uid;
     const obj = {
@@ -28,6 +32,7 @@ export const addTrip =
       otherAvatarURL: {[uid]: user.photoURL},   // Later if a buddy is added, then change to cross data
       notes: notes,
       place: uniquePlace,
+      coverPhotoRef: coverPhotoRef,
       routeName: routeName,
       date: date
     };

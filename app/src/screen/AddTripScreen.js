@@ -25,7 +25,7 @@ export default ({navigation}) => {
   const [place, setPlace] = useState([]);
   const [notes, setNotes] = useState("");
   const [myBuddies, setMyBuddies] = useState(null);
-
+  const [coverPhotoRef, setCoverPhotoRef] = useState([]);
   useEffect(() => {
     const unsubscribeBuddiesListener = firebase.firestore()
       .collection("users")
@@ -60,7 +60,7 @@ export default ({navigation}) => {
   const handleAddTrip = () => {
     // let time = date.toLocaleDateString(undefined, options);
     Trip.addTrip(
-      {user, buddy, place, routeName, date, notes},
+      {user, buddy, place, routeName, date, notes, coverPhotoRef},
       (source) => {
         console.log("Added trip successfully");
         navigation.navigate(source);
@@ -101,6 +101,8 @@ export default ({navigation}) => {
         <PlaceSearch
           place={place}
           setPlace={setPlace}
+          coverPhotoRef={coverPhotoRef}
+          setCoverPhotoRef={setCoverPhotoRef}
           textPlaceHolder="Places to visit on this trip"
           moreDetails
         />

@@ -45,8 +45,12 @@ export default (props) => {
         // 'details' is provided when fetchDetails = true
             const arr = [...props.place, data];
             props.setPlace(arr);
-            if(details != null) {
-                props.coverPhotoRef == null && props.setCoverPhotoRef(details)
+            if(details != null && details.photos[0].photo_reference != null) {
+                const refArr = [...props.coverPhotoRef, details.photos[0].photo_reference];
+                console.log(details.photos[0].photo_reference)
+                props.setCoverPhotoRef(refArr);
+                console.log(props.coverPhotoRef)
+                // props.coverPhotoRef == null && props.setCoverPhotoRef(details)
             }
         }}
         // returnKeyType="search"
