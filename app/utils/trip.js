@@ -1,11 +1,5 @@
-import React from "react";
-import {View} from "react-native";
-import {Avatar, List} from "react-native-paper";
-import {CommonActions} from "@react-navigation/native";
-
 import firebase from "../utils/firebase";
 import * as Notifications from "../utils/notifications";
-import colorConst from "../src/constant/color";
 
 const db = firebase.firestore();
 

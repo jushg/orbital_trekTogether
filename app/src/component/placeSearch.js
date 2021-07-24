@@ -46,7 +46,7 @@ export default (props) => {
             const arr = [...props.place, data];
             props.setPlace(arr);
             if(details != null) {
-                props.coverPhoto == null && props.setCoverPhoto(details)
+                props.coverPhotoRef == null && props.setCoverPhotoRef(details)
             }
         }}
         // returnKeyType="search"
