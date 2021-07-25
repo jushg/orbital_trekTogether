@@ -38,7 +38,6 @@ export default ({route}) => {
     <KeyboardAvoidingView style={{flex: 1}} behavior="padding" keyboardVerticalOffset={0} enabled={Platform.OS === "ios"}> 
       <ScrollView keyboardShouldPersistTaps="handled">
         <View style={styles.container}>
-    
           <TextInput
             style={styles.input}
             multiline={true}
@@ -60,7 +59,7 @@ export default ({route}) => {
           />
         </View>
       </ScrollView>
-      </KeyboardAvoidingView>
+    </KeyboardAvoidingView>
   )
 }
 

@@ -135,10 +135,14 @@ export default ({ route }) => {
         {...props}
         wrapperStyle={{
           right: {
+            marginVertical:2,
+            elevation:3,
             borderWidth: 1,
             backgroundColor: colorConst.secondaryDark
           },
           left: { 
+            marginVertical:2,
+            elevation:3,
             borderWidth: 1,
             backgroundColor: colorConst.secondaryLight 
           }
@@ -163,14 +167,6 @@ export default ({ route }) => {
       </Screen>
     );
   }
-
-  // const renderComposer = () => {
-  //   return (
-  //     <TextInput
-  //     style={{flex:1}}
-  //     />
-  //   )
-  // }
 
   const renderSend = (props) => {
     return (
@@ -212,7 +208,6 @@ export default ({ route }) => {
       onSend={handleSend}
       user={{ _id: user.uid, name: user.displayName, avatar: user.photoURL }}
       alwaysShowSend
-      // showUserAvatar
       scrollToBottom
       renderAvatar={renderAvatar}
       renderBubble={renderBubble}
@@ -233,7 +228,6 @@ const styles = StyleSheet.create({
   sendingContainer: {
     justifyContent: 'center',
     alignItems: 'center',
-    // backgroundColor: colorConst.backgroundCard
   },
   bottomComponentContainer: {
     justifyContent: 'center',

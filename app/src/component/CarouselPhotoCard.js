@@ -10,9 +10,7 @@ const CarouselPhotoCard = ({item, onPress}) => {
   console.log("render new component");
 
   return (
-    <Pressable style={styles.card}
-               onPress={() => onPress(item)}
-    >
+    <Pressable style={styles.card} onPress={() => onPress(item)}>
       <Image
         uri={item}
         resizeMode={'contain'}

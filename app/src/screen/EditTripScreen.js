@@ -122,7 +122,6 @@ export default ({navigation, route}) => {
   return (
     <Screen style={styles.container}>
       <ScrollView keyboardShouldPersistTaps={"handled"}>
-
         <Subheading style={{paddingBottom: 10, fontWeight: "bold"}}>
           TRIP NAME
         </Subheading>
@@ -142,7 +141,6 @@ export default ({navigation, route}) => {
           textPlaceHolder="Where will this trip stop by?"
           moreDetails
         />
-
         <Subheading style={{paddingTop: 10, fontWeight: "bold"}}>
           DATE: { Platform.OS === 'ios' && date.toLocaleDateString(undefined, options) }
         </Subheading>
@@ -163,7 +161,6 @@ export default ({navigation, route}) => {
             onChange={onChangeDatePicker}
           />
         )}
-
         <Subheading style={{paddingVertical: 10, fontWeight: "bold"}}>
           BUDDY: {buddy.name}
         </Subheading>

@@ -60,7 +60,6 @@ export default ({navigation}) => {
           <FlatList
             data={futureTrips}
             keyExtractor={item => item.id}
-            // renderItem={({item}) => Trip.renderTrip({item, user})}
             renderItem={({item}) => renderCard({item, user, navigation})}
             ListFooterComponent={renderFootnote}
           />

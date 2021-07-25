@@ -54,8 +54,8 @@ export default (props) => {
       right={(props) => {
         if (hasBuddy)
           return (
-            <View style={{ justifyContent: 'center', padding: '0.5%' }}>
-              <Avatar.Image {...props} size={50} source={{uri: item.otherAvatarURL[user.uid]}} />
+            <View style={{ justifyContent: 'center', padding: '1.5%'}}>
+              <Avatar.Image {...props} size={60} source={{uri: item.otherAvatarURL[user.uid]}} />
             </View>
           );
       }}

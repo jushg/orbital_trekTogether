@@ -1,14 +1,12 @@
 import React, { useState } from 'react';
 import { Button, TextInput } from "react-native-paper";
 import { StyleSheet, Text, View, Pressable, Image, ScrollView } from 'react-native';
-// import { useDispatch } from 'react-redux';
+import {showMessage} from "react-native-flash-message";
 
 import Screen from "../component/screen"
 import TextBox from '../component/textbox';
 import * as Auth from "../../utils/auth"
-// import * as AuthCommons from "../../utils/context"
 import image from "../../assets/app-icon.png"
-import {showMessage} from "react-native-flash-message";
 
 export default ({ navigation }) => {
   const [email,setEmail] = useState("");

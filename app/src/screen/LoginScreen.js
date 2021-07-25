@@ -40,10 +40,8 @@ export default ({ navigation }) => {
   return (
     <Screen style={styles.container} >
       <ScrollView>
-
       <View style={{justifyContent:"center", alignItems:"center"}}>
       <Image source={image} style={{ width: 305, height: 300 }}/>
-
         <TextBox
         label="Email"
         placeholder="johndoe@gmail.com"
@@ -54,7 +52,6 @@ export default ({ navigation }) => {
         left={<TextInput.Icon name="email"/>}
         autoCapitalize="none"
         />
-
         <TextBox
         label="Password"
         placeholder="123456"
@@ -66,7 +63,6 @@ export default ({ navigation }) => {
         style={{marginBottom:10, width:"100%"}}
         autoCapitalize="none"
         />
-
         <Button
         mode="contained"
         style={styles.loginBtn}
@@ -93,8 +89,6 @@ export default ({ navigation }) => {
         </View>
         <Text style={{marginBottom:50}}> </Text>
 
-          
-          
         <View style= {{flexDirection:"row", justifyContent:"center"}}>
           <Text style={{fontSize:16}}>Don't have an account?  </Text>
           <Pressable 
@@ -108,12 +102,7 @@ export default ({ navigation }) => {
               styles.wrapperCustom
             ]}
             >
-            <Text
-              style={{fontSize:16, textDecorationLine: "underline"}}
-              // onPress={() => navigation.navigate("Sign Up")}
-              >
-              Sign Up
-            </Text>
+            <Text style={{fontSize:16, textDecorationLine: "underline"}}>Sign Up</Text>
           </Pressable>
         </View>
           </View>  

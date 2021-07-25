@@ -26,7 +26,6 @@ export default ({navigation}) => {
   return (
     <Screen style={styles.container}>
       <View style={{alignItems:"center", alignSelf: "stretch"}}>
-        <Headline >Profile</Headline>
         <Avatar.Image
           size={100}
           source={{ uri: Auth.getCurrentUser().photoURL }}
@@ -40,9 +39,9 @@ export default ({navigation}) => {
           Edit Profile
         </Button>
         {/*<Caption>Under Development</Caption>*/}
-
+        <Button onPress={handleLogout} style={styles.button} mode="contained">Log Out</Button>
       </View>
-      <Button onPress={handleLogout} style={styles.button} mode="contained">Log Out</Button>
+      
     </Screen>
   )
 }
@@ -53,7 +52,7 @@ const styles = StyleSheet.create({
     paddingTop: 30,
   },
   button: {
-    width:"40%",
+    width:"50%",
     borderRadius:25,
     alignItems:"center",
     justifyContent:"center",

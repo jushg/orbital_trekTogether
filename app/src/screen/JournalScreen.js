@@ -106,7 +106,6 @@ export default ({navigation, route}) => {
             title={trip.routeName?trip.routeName:trip.place} 
             titleStyle={{color:colorConst.accent}}
             subtitle={trip.date.toDate().toLocaleDateString()} 
-            // subtitleStyle={{color:colorConst.secondaryDark}}
             subtitleNumberOfLines={4}
             right={(props) => {
               if (trip.members.length === 2)
@@ -122,26 +121,7 @@ export default ({navigation, route}) => {
               <Caption style={{fontStyle: 'italic', color: 'green'}}>Latest update: {journal.lastEditedBy}</Caption>
             </Card.Content>
           </Card> 
-          {/* <Card.Title 
-            title="Your photos"
-            subtitle={thumbnailUrl?"":"You have no photos yet!"}
-            right={() => <IconButton icon="camera-outline" onPress={onPressPhotos} size={25}/>}
-          />
-          {thumbnailUrl &&
-          <Card.Cover
-            source={{uri: thumbnailUrl}}
-            resizeMode={'cover'}
-            // style={{width: itemWidth, height: itemHeight}}
-            onPress={onPressThumbnail}
-          /> 
-          } */}
-          {/* <Card.Title 
-            title="Your notes"
-            right={() => <IconButton icon="pencil-outline" onPress={onPressText} size={25}/>}
-          />
-          <Card.Content>
-            <Paragraph style={styles.textBox}>{journal.text? journal.text: "Wanna write some memories down?"}</Paragraph>
-          </Card.Content>*/}
+          
         
         {/* <Title> {trip.routeName?trip.routeName:trip.place}</Title>
         <Subheading>{trip.date.toDate().toLocaleDateString()}</Subheading>

@@ -19,10 +19,7 @@ export default ({navigation}) => {
   const [age, setAge] = useState('');
   const [level, setLevel] = useState('');
   const [about, setAbout] = useState("");
-  // const [hobby, setHobby] = useState("");
   const [place, setPlace] = useState([]);
-  // const [place, setPlace] = useState(["Hanoi", "Saigon"])
-
   const [date, setDate] = useState([false, false, false, false, false, false, false]);
   const daysInWeek = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
 

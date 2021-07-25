@@ -1,8 +1,9 @@
 import React, {useContext, useEffect, useState} from 'react';
-import { StyleSheet, FlatList, View, Animated } from 'react-native'
-import {List, Avatar, ActivityIndicator, Divider, Searchbar, Appbar, Caption, Button, } from "react-native-paper";
+import { StyleSheet, FlatList, View} from 'react-native'
+import {List, Avatar, ActivityIndicator, Divider, Appbar, Caption, Button } from "react-native-paper";
 import { CommonActions } from '@react-navigation/native'
 import Swipeable from 'react-native-gesture-handler/Swipeable';
+import {showMessage} from "react-native-flash-message";
 
 
 import firebase from "../../utils/firebase";
@@ -10,15 +11,11 @@ import {UserContext} from "../../utils/context";
 import colorConst from '../constant/color';
 import * as Match from "../../utils/match";
 import * as Trip from "../../utils/trip";
-import {showMessage} from "react-native-flash-message";
 
 export default ({navigation}) => {
   const {user} = useContext(UserContext);
   const [chats, setChats] = useState(null);
   
-  const [searchQuery, setSearchQuery] = useState(''); 
-  const onChangeSearch = query => setSearchQuery(query);
-
   useEffect(() => {
     const unsubscribeChatListener = firebase.firestore()
       .collection("chats")
@@ -97,7 +94,6 @@ export default ({navigation}) => {
         <List.Item
           title={otherUsername}
           description={lastMessage}
-          // left={props => <List.Icon {...props} icon="account"/>}
           left={(props) => {
             return <Avatar.Image {...props} 
             size={70} 
@@ -105,17 +101,13 @@ export default ({navigation}) => {
           }}
           onPress={() => navigation.dispatch(CommonActions.navigate({
               name: 'Chat',
-              //use this to pass in the name of other user
               params: {chat: item, otherName: otherUsername, otherID: otherID},
             })
           )}
           titleNumberOfLines={1}
           descriptionNumberOfLines={1}
           titleStyle={item.lastMessage.system ? {fontWeight:'bold', color:'black'} : {}}
-          // titleStyle={{fontWeight:"bold"}}
           descriptionStyle={item.lastMessage.system ? {fontWeight:'bold', color:'teal'} : {}}
-          
-          // style={{backgroundColor:colorConst}}
         />
       </Swipeable>
     )
@@ -125,20 +117,16 @@ export default ({navigation}) => {
       <>
         <Appbar.Header>
           <Appbar.Content title="Messages"  />
-            {/* <Appbar.Action icon="magnify" disabled  /> */}
-            {/* <Appbar.Action icon="cog" disabled/> */}
         </Appbar.Header>  
-
         {chats == null ?
           <View style={styles.loadingContainer}>
             <ActivityIndicator  size="large" color="black"/>
-          </View> :
-
-        chats.length === 0 ?
+          </View> 
+          : chats.length === 0 ?
           <View style={styles.loadingContainer}>
             <Caption>You have no current chats.</Caption>
-          </View> :
-
+          </View> 
+          :
           <View style={{flex: 1}}>
             <FlatList
               data={chats}
