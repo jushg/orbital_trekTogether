@@ -59,7 +59,7 @@ export const uploadManyPhotos = async (tripID, username, photos) => {
 
     const arr = [];
     for (const uri of photos) {
-      const downloadUrl = uploadImage(tripID, uri);
+      const downloadUrl = await uploadImage(tripID, uri);
       arr.push(downloadUrl);
     }
     // Should put storage address for deletion?
