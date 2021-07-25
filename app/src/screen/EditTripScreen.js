@@ -42,7 +42,7 @@ export default ({navigation, route}) => {
   }, [navigation]);
 
   const onPressDelete = async () => {
-    await Trip.deleteTrip(trip.id);
+    await Trip.deleteTrip(trip.id, originalBuddyID.current, user.displayName);
     navigation.navigate("Future");
   };
 
