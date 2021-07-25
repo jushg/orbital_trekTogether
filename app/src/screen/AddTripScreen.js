@@ -177,7 +177,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection:"column",
     justifyContent: 'center',
-    padding:10
+    paddingHorizontal:10
   },
   button : {
     width:'40%',

@@ -78,7 +78,7 @@ export default ({navigation, route}) => {
       originalBuddyID.current = trip.members[0] === user.uid ? trip.members[1] : trip.members[0];
       setBuddy(myBuddies[originalBuddyID.current]);
       setBuddyStatus("yes");
-    } else if (trip.inviting === "") {
+    } else if (!trip.inviting.uid) {
       setBuddy("None");
       setBuddyStatus("no");
     } else {
