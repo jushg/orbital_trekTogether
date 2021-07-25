@@ -139,9 +139,12 @@ export const updateTrip = async (
 //   )
 // };
 
-export const deleteTrip = async (tripID) => {
+export const deleteTrip = async (tripID, originalBuddyID, currentUsername) => {
   try {
     await db.collection("trips").doc(tripID).delete();
+    if (originalBuddyID) {
+      Notifications.sendCancelTripNotification(originalBuddyID, currentUsername);
+    }
     console.log("deleted trip");
   } catch (e) {
     console.error(e);

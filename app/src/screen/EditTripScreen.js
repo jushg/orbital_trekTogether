@@ -42,7 +42,7 @@ export default ({navigation, route}) => {
   }, [navigation]);
 
   const onPressDelete = async () => {
-    await Trip.deleteTrip(trip.id);
+    await Trip.deleteTrip(trip.id, originalBuddyID.current, user.displayName);
     navigation.navigate("Future");
   };
 
@@ -78,7 +78,7 @@ export default ({navigation, route}) => {
       originalBuddyID.current = trip.members[0] === user.uid ? trip.members[1] : trip.members[0];
       setBuddy(myBuddies[originalBuddyID.current]);
       setBuddyStatus("yes");
-    } else if (!trip.inviting.uid) {
+    } else if (!trip.inviting.name) {
       setBuddy("None");
       setBuddyStatus("no");
     } else {

@@ -69,7 +69,7 @@ const renderTrip = ({item, user, navigation}) => {
   const hasBuddy = item.members.length === 2;
   let buddyDesc = '';
   if (hasBuddy) {
-    buddyDesc = `Going with ${item.otherMemberName[user.uid]}`;
+    buddyDesc = `Went with ${item.otherMemberName[user.uid]}`;
   } else if (!item.inviting.name) {
     buddyDesc = "Solo trip";
   } else {
