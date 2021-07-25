@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useContext} from "react";
+import React, {useEffect, useState, useContext, useLayoutEffect} from "react";
 import {
   Alert,
   Image, Pressable,
@@ -9,9 +9,10 @@ import {
   useWindowDimensions,
   View
 } from "react-native";
-import {ActivityIndicator, Avatar, Card, Caption, Paragraph, Subheading, Title, IconButton} from "react-native-paper";
+import {ActivityIndicator, Avatar, Card, Caption, Paragraph, IconButton} from "react-native-paper";
 import Carousel from "react-native-snap-carousel";
 
+import * as Trip from "../../utils/trip";
 import { UserContext } from "../../utils/context";
 import firebase from "../../utils/firebase";
 import colorConst from "../constant/color";
@@ -33,20 +34,7 @@ export default ({navigation, route}) => {
   const modalHeight = useWindowDimensions().height * 3/5;
   const modalWidth = useWindowDimensions().width * 9/10;
 
-  const longPress = () => {
-    Alert.alert(
-      'Long press?',
-      'Should delete...',
-      [
-        { text: "No", style: 'cancel', onPress: () => {} },
-        {
-          text: 'Yes',
-          style: 'destructive',
-          onPress: () => {},
-        },
-      ]
-    );
-  }
+  
   const foo = ({item, index}) => {
     // console.log("render " + index + " view");
     return <CarouselPhotoCard item={item} onPress={setSelectedItem} />;
@@ -57,6 +45,27 @@ export default ({navigation, route}) => {
   const {user} = useContext(UserContext);
   const [journal, setJournal] = useState(null);
   const [thumbnailUrl, setThumbnailUrl] = useState(null);
+  const [buddyID,setBuddyID] = useState(null)
+
+  const getBuddyID = (members) => {
+    if(members.length > 1) {
+      members[0] === user.uid ? setBuddyID(members[1]):setBuddyID(members[0])
+    }
+  }
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <IconButton icon={'delete'} onPress={onPressDelete} size={27} color={colorConst.textHeader} />
+      )
+    });
+  }, [navigation]);
+
+  
+  const onPressDelete = async () => {
+    getBuddyID(trip.members)
+    await Trip.deleteTrip(trip.id, buddyID , user.displayName);
+    navigation.navigate("Past");
+  };
   useEffect(() => {
     const unsubscribeJournalListener = firebase.firestore()
       .collection('journals')
@@ -117,7 +126,7 @@ export default ({navigation, route}) => {
             }} 
             />
             <Card.Content>
-              <Paragraph>{otherName ? "Buddy: " + otherName : "Solo trip"}</Paragraph>
+              <Paragraph>{otherName ? otherName : "Solo trip"}</Paragraph>
               <Caption style={{fontStyle: 'italic', color: 'green'}}>Latest update: {journal.lastEditedBy}</Caption>
             </Card.Content>
           </Card> 
