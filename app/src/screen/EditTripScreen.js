@@ -120,95 +120,91 @@ export default ({navigation, route}) => {
   }
 
   return (
-    <Screen style={styles.container}>
-      <ScrollView keyboardShouldPersistTaps={"handled"}>
-        <Subheading style={{paddingBottom: 10, fontWeight: "bold"}}>
-          TRIP NAME
-        </Subheading>
-        <TextBox
-          placeholder="My Trip"
-          value={routeName}
-          autoCapitalize="words"
-          onChangeText={setRouteName}
-          style={{marginBottom: 10, alignSelf: "center"}}
+    <ScrollView style={styles.container} keyboardShouldPersistTaps={"handled"}>
+      <Subheading style={{paddingBottom: 10, fontWeight: "bold"}}>
+        TRIP NAME
+      </Subheading>
+      <TextBox
+        placeholder="My Trip"
+        value={routeName}
+        autoCapitalize="words"
+        onChangeText={setRouteName}
+        style={{marginBottom: 10, alignSelf: "center"}}
+      />
+      <Subheading style={{paddingTop: 10, fontWeight: "bold"}}>
+        PLACES
+      </Subheading>
+      <PlaceSearch
+        place={place}
+        setPlace={setPlace}
+        textPlaceHolder="Where will this trip stop by?"
+        moreDetails
+      />
+      <Subheading style={{paddingTop: 10, fontWeight: "bold"}}>
+        DATE: { Platform.OS === 'ios' && date.toLocaleDateString(undefined, options) }
+      </Subheading>
+      {Platform.OS === 'android' &&
+        <Button
+          onPress={() => setShowPicker(true)}
+          color={colorConst.secondaryDark}
+          labelStyle={{fontSize: 20}}
+        >
+          {date.toLocaleDateString(undefined, options)}
+        </Button>
+      }
+      {showPicker && (
+        <DateTimePicker
+          value={date}
+          mode="date"
+          display="default"
+          onChange={onChangeDatePicker}
         />
-        <Subheading style={{paddingTop: 10, fontWeight: "bold"}}>
-          PLACES
-        </Subheading>
-        <PlaceSearch
-          place={place}
-          setPlace={setPlace}
-          textPlaceHolder="Where will this trip stop by?"
-          moreDetails
-        />
-        <Subheading style={{paddingTop: 10, fontWeight: "bold"}}>
-          DATE: { Platform.OS === 'ios' && date.toLocaleDateString(undefined, options) }
-        </Subheading>
-        {Platform.OS === 'android' &&
-          <Button
-            onPress={() => setShowPicker(true)}
-            color={colorConst.secondaryDark}
-            labelStyle={{fontSize: 20}}
-          >
-            {date.toLocaleDateString(undefined, options)}
-          </Button>
-        }
-        {showPicker && (
-          <DateTimePicker
-            value={date}
-            mode="date"
-            display="default"
-            onChange={onChangeDatePicker}
-          />
-        )}
-        <Subheading style={{paddingVertical: 10, fontWeight: "bold"}}>
-          BUDDY: {buddy.name}
-        </Subheading>
-        {buddyStatus !== "pending" &&
-          <Picker
-            // style={{height: Platform.OS === "ios" ? 132 : 69}}
-            // itemStyle={{height: Platform.OS === "ios" ? 132 : 0}}
-            selectedValue={buddy}
-            dropdownIconColor={colorConst.secondaryDark}
-            mode="dropdown"
-            onValueChange={(itemValue) => {
-              setBuddy(itemValue);
-              if (itemValue.uid === originalBuddyID.current) {
-                setIsBuddyChanged(false);
-              } else {
-                setIsBuddyChanged(true);
-              }
-            }}
-          >
-            <Picker.Item label="None" value="None"/>
-            {Object.values(myBuddies).map((buddy, i) => (
-              <Picker.Item
-                key={i.toString()}
-                value={buddy}
-                label={buddy.name}
-              />
-            ))}
-          </Picker>
-        }
-        {buddyStatus === "pending" && <Subheading style={{paddingBottom: 10}}>{buddy}</Subheading>}
+      )}
+      <Subheading style={{paddingVertical: 10, fontWeight: "bold"}}>
+        BUDDY: {buddy.name}
+      </Subheading>
+      {buddyStatus !== "pending" &&
+        <Picker
+          // style={{height: Platform.OS === "ios" ? 132 : 69}}
+          // itemStyle={{height: Platform.OS === "ios" ? 132 : 0}}
+          selectedValue={buddy}
+          dropdownIconColor={colorConst.secondaryDark}
+          mode="dropdown"
+          onValueChange={(itemValue) => {
+            setBuddy(itemValue);
+            if (itemValue.uid === originalBuddyID.current) {
+              setIsBuddyChanged(false);
+            } else {
+              setIsBuddyChanged(true);
+            }
+          }}
+        >
+          <Picker.Item label="None" value="None"/>
+          {Object.values(myBuddies).map((buddy, i) => (
+            <Picker.Item
+              key={i.toString()}
+              value={buddy}
+              label={buddy.name}
+            />
+          ))}
+        </Picker>
+      }
+      {buddyStatus === "pending" && <Subheading style={{paddingBottom: 10}}>{buddy}</Subheading>}
 
-        <Subheading style={{paddingBottom: 10, paddingTop: 30, fontWeight: "bold"}}>
-          NOTES
-        </Subheading>
-        <TextBox
-          label="Notes"
-          placeholder="Food, weather, deadlines,..."
-          value={notes}
-          onChangeText={setNotes}
-          multiline={true}
-          numberOfLines={3}
-          underlineColor={colorConst.secondaryLight}
-          style={{marginBottom: 10, height: 140, alignSelf: "center"}}
-        />
-
-      </ScrollView>
-    </Screen>
-  
+      <Subheading style={{paddingBottom: 10, paddingTop: 30, fontWeight: "bold"}}>
+        NOTES
+      </Subheading>
+      <TextBox
+        label="Notes"
+        placeholder="Food, weather, deadlines,..."
+        value={notes}
+        onChangeText={setNotes}
+        multiline={true}
+        numberOfLines={3}
+        underlineColor={colorConst.secondaryLight}
+        style={{marginBottom: 10, height: 140, alignSelf: "center"}}
+      />
+    </ScrollView>  
   );
 }
 

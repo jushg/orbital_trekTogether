@@ -82,92 +82,90 @@ export default ({navigation}) => {
   }
 
   return (
-    <Screen style={styles.container} >
-      <ScrollView keyboardShouldPersistTaps={"handled"} style={{paddingHorizontal: 15}}>
-        <View style={{alignItems: "center"}}>
-          <Avatar.Image
-            size={105}
-            source={{uri: avatar}}
-            style={{marginTop: 10}}
-          />
-          <Button icon="camera" mode="contained" onPress={handlePickAvatar} style={styles.button}>
-            Change profile picture
-          </Button>
-        </View>
-
-        <Subheading style={styles.title}>AGE</Subheading>
-        <TextBox
-          placeholder="Just a number"
-          keyboardType="numeric"
-          value={age}
-          onChangeText={setAge}
+    <ScrollView keyboardShouldPersistTaps={"handled"} style={{paddingHorizontal: 15}}>
+      <View style={{alignItems: "center"}}>
+        <Avatar.Image
+          size={105}
+          source={{uri: avatar}}
+          style={{marginTop: 10}}
         />
+        <Button icon="camera" mode="contained" onPress={handlePickAvatar} style={styles.button}>
+          Change profile picture
+        </Button>
+      </View>
 
-        <Subheading style={styles.title}>LEVEL</Subheading>
-        <View style={{justifyContent:"center", borderWidth: 1, borderRadius: 10, backgroundColor:colorConst.secondaryLight}} >
-          <RadioButton.Group onValueChange={newLevel => {
-            console.log("Level " + newLevel);
-            setLevel(newLevel);
-          }} value={level}>
-            <RadioButton.Item label="Beginner" value={1} color={colorConst.backgroundCard} />
-            <Divider style={{backgroundColor:"black"}}/>
-            <RadioButton.Item label="Intermediate" value={2} color={colorConst.accentLight} />
-            <Divider style={{backgroundColor:"black"}}/>
-            <RadioButton.Item label="Advanced" value={3} color={colorConst.accent}/>
-          </RadioButton.Group>
-        </View>
+      <Subheading style={styles.title}>AGE</Subheading>
+      <TextBox
+        placeholder="Just a number"
+        keyboardType="numeric"
+        value={age}
+        onChangeText={setAge}
+      />
 
-        <Subheading style={styles.title}>ABOUT YOU</Subheading>
-        <TextBox
-          label="About"
-          placeholder="A few words to describe yourself..."
-          value={about}
-          onChangeText={setAbout}
-          style={{marginBottom:10, height: 120}}
-          multiline={true}
-          autoCorrect={false}
-        />
+      <Subheading style={styles.title}>LEVEL</Subheading>
+      <View style={{justifyContent:"center", borderWidth: 1, borderRadius: 10, backgroundColor:colorConst.secondaryLight}} >
+        <RadioButton.Group onValueChange={newLevel => {
+          console.log("Level " + newLevel);
+          setLevel(newLevel);
+        }} value={level}>
+          <RadioButton.Item label="Beginner" value={1} color={colorConst.backgroundCard} />
+          <Divider style={{backgroundColor:"black"}}/>
+          <RadioButton.Item label="Intermediate" value={2} color={colorConst.accentLight} />
+          <Divider style={{backgroundColor:"black"}}/>
+          <RadioButton.Item label="Advanced" value={3} color={colorConst.accent}/>
+        </RadioButton.Group>
+      </View>
 
-        <Subheading style={styles.title}>DESTINATION PREFERENCES</Subheading>
-        <PlaceSearch place={place} setPlace={setPlace} textPlaceHolder='Where do you want to visit?' />
+      <Subheading style={styles.title}>ABOUT YOU</Subheading>
+      <TextBox
+        label="About"
+        placeholder="A few words to describe yourself..."
+        value={about}
+        onChangeText={setAbout}
+        style={{marginBottom:10, height: 120}}
+        multiline={true}
+        autoCorrect={false}
+      />
 
-        <Subheading style={styles.title}>AVAILABILITY</Subheading>
-        <View style={{marginBottom: 3, flexWrap: 'wrap', flexDirection:"row" }}>
-          {daysInWeek.map((item, index) => {
-            return (
-              <View
-                style={{marginHorizontal:2,marginVertical:3 }}
+      <Subheading style={styles.title}>DESTINATION PREFERENCES</Subheading>
+      <PlaceSearch place={place} setPlace={setPlace} textPlaceHolder='Where do you want to visit?' />
+
+      <Subheading style={styles.title}>AVAILABILITY</Subheading>
+      <View style={{marginBottom: 3, flexWrap: 'wrap', flexDirection:"row" }}>
+        {daysInWeek.map((item, index) => {
+          return (
+            <View
+              style={{marginHorizontal:2,marginVertical:3 }}
+              key={index}
+            >
+              <Chip
                 key={index}
-              >
-                <Chip
-                  key={index}
-                  mode="flat" // changing display mode, default is flat
-                  height={30} // give desirable height to chip
-                  textStyle={{ color:'black', fontSize: 15 }} //label properties
-                  // style={{ backgroundColor: colorConst.secondaryDark }}
-                  selected={date[index]}
-                  style={{ backgroundColor: colorConst.secondaryLight ,borderColor:"black", elevation: 2}}
-                  selectedColor= {colorConst.primary}
-                  onPress={() => {
-                    let newDate = [...date];
-                    newDate[index] = !newDate[index];
-                    setDate(newDate);
-                  }}> { item }
-                </Chip>
-              </View>
-            );
-          })
-          }
-        </View>
-        <View style={{alignItems:"center"}}>
-          <Button mode="contained" onPress={handleUpdateProfile} style={[styles.button,{width: "40%"}]}
-                  // disabled
-          >
-            Finish
-          </Button>
-        </View>
-      </ScrollView>
-    </Screen>
+                mode="flat" // changing display mode, default is flat
+                height={30} // give desirable height to chip
+                textStyle={{ color:'black', fontSize: 15 }} //label properties
+                // style={{ backgroundColor: colorConst.secondaryDark }}
+                selected={date[index]}
+                style={{ backgroundColor: colorConst.secondaryLight ,borderColor:"black", elevation: 2}}
+                selectedColor= {colorConst.primary}
+                onPress={() => {
+                  let newDate = [...date];
+                  newDate[index] = !newDate[index];
+                  setDate(newDate);
+                }}> { item }
+              </Chip>
+            </View>
+          );
+        })
+        }
+      </View>
+      <View style={{alignItems:"center"}}>
+        <Button mode="contained" onPress={handleUpdateProfile} style={[styles.button,{width: "40%"}]}
+                // disabled
+        >
+          Finish
+        </Button>
+      </View>
+    </ScrollView>
   )
 }
 
@@ -176,10 +174,6 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center"
-  },
-  container: {
-    flex: 1,
-    // justifyContent: 'flex-start'
   },
   title: {
     paddingTop: 15,

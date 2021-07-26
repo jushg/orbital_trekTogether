@@ -79,12 +79,13 @@ export default ({navigation}) => {
   };
 
   return (
-    <Screen style={styles.container}>
+      <>
       {myBuddies == null ?
-      <ActivityIndicator size="large" color="black"/> :
-      <ScrollView keyboardShouldPersistTaps={"handled"}>
-
-        <Subheading style={{paddingBottom: 10, fontWeight:"bold"}}>
+      <View style={styles.container} >
+        <ActivityIndicator size="large" color="black"/> 
+      </View> :
+      <ScrollView style={styles.container} keyboardShouldPersistTaps={"handled"}>
+        <Subheading style={{paddingVertical: 10, fontWeight:"bold"}}>
           TRIP NAME
         </Subheading>
         <TextBox
@@ -167,7 +168,7 @@ export default ({navigation}) => {
 
       </ScrollView>
       }
-    </Screen>
+    </>
     
   );
 };
@@ -176,7 +177,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection:"column",
-    justifyContent: 'center',
     paddingHorizontal:10
   },
   button : {
