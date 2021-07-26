@@ -192,7 +192,7 @@ export default ({navigation, route}) => {
           <Card.Title 
             title="Your photos"
             subtitle={thumbnailUrl?"":"You have no photos yet!"}
-            right={() => <IconButton icon="camera-outline" onPress={onPressPhotos} size={25}/>}
+            right={() => <IconButton icon="camera-plus-outline" onPress={onPressPhotos} size={25}/>}
           />
           {thumbnailUrl &&
           <Card.Cover

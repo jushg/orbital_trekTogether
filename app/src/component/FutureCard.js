@@ -48,7 +48,7 @@ export default (props) => {
       onPress={() => navigation.navigate("Edit Trip", {trip: item})} >
       {imageURL == "none" ? <Card.Cover source={loadingImg} />: <Card.Cover source={{uri: imageURL}} />}
       <Card.Title 
-      title={item.routeName ? (item.routeName + " - " + date) : (item.place + " - " + date)}
+      title={item.routeName ? (item.routeName ) : (item.place )}
       subtitle={date + " - " + buddyDesc}
       subtitleNumberOfLines={3}
       right={(props) => {
