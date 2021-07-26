@@ -30,6 +30,9 @@ const CombinedDefaultTheme = {
 // Android problem with Firebase JS SDK, cannot be fixed
 LogBox.ignoreLogs(["Setting a timer for a long period of"]);
 
+// Suppress Warning
+LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
+
 const prefix = Linking.createURL('/');
 
 export default function App() {
