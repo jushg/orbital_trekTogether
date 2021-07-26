@@ -91,7 +91,7 @@ export default ({navigation}) => {
         <TextBox
           placeholder="Give this trip a name"
           value={routeName}
-          autoCapitalize="words"
+          // autoCapitalize="words"
           onChangeText={setRouteName}
           style={{marginBottom: 10,  alignSelf: "center"}}
         />
