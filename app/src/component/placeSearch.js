@@ -38,14 +38,14 @@ export default (props) => {
 
     <GooglePlacesAutocomplete
         placeholder={props.textPlaceHolder}
-        debounce={1000}     // delay after typing to call API
+        debounce={500}     // delay after typing to call API
         multiline={false}
         // fetchDetails={true}
         onPress={(data, details = null) => {
         // 'details' is provided when fetchDetails = true
             const arr = [...props.place, data];
             props.setPlace(arr);
-            if(details != null && details.photos[0].photo_reference != null) {
+            if(props.moreDetails && details.photos[0].photo_reference != null) {
                 const refArr = [...props.coverPhotoRef, details.photos[0].photo_reference];
                 console.log(details.photos[0].photo_reference)
                 props.setCoverPhotoRef(refArr);
