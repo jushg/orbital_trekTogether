@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, {useContext, useEffect, useRef, useState} from "react";
 import {FlatList, StyleSheet, View} from "react-native";
 import {ActivityIndicator, Caption} from "react-native-paper";
 
@@ -12,12 +12,12 @@ export default ({navigation}) => {
 
   const {user} = useContext(UserContext);
   const [invitations, setInvitations] = useState(null);
-  const acceptedTrips = [];
-  const declinedTrips = [];
+  const acceptedTrips = useRef([]);
+  const declinedTrips = useRef([]);
 
   useEffect(() => {
     const today = new Date(new Date().toDateString());
-    firebase.firestore()
+    const unsubscribe = firebase.firestore()
       .collection("trips")
       .where("inviting.uid", "==", user.uid)
       .where("date", ">=", today)
@@ -32,14 +32,15 @@ export default ({navigation}) => {
         });
         setInvitations(results);
       });
+    return () => unsubscribe();
   }, []);
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('beforeRemove', (e) => {
       e.preventDefault();
       const promises = [
-        Trip.acceptInvitations(user, acceptedTrips),
-        Trip.declineInvitations(user, declinedTrips)
+        Trip.acceptInvitations(user, acceptedTrips.current),
+        Trip.declineInvitations(user, declinedTrips.current)
       ];
       Promise.all(promises)
         .then(res => {
@@ -57,12 +58,12 @@ export default ({navigation}) => {
         trip={item}
         index={index}
         onAccept={(trip) => {
-          acceptedTrips.push(trip);
-          console.log("Accepted: " + acceptedTrips.length);
+          acceptedTrips.current.push(trip);
+          console.log("Accepted: " + acceptedTrips.current.length);
         }}
         onDecline={(trip) => {
-          declinedTrips.push(trip);
-          console.log("Declined: " + declinedTrips.length);
+          declinedTrips.current.push(trip);
+          console.log("Declined: " + declinedTrips.current.length);
         }}
       />
     )
