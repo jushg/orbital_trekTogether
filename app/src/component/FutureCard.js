@@ -1,6 +1,6 @@
 import React,{useState,useEffect} from "react"
-import { View, StyleSheet, Text } from "react-native";
-import { Card, Avatar,Paragraph, Title } from "react-native-paper"
+import { View, StyleSheet } from "react-native";
+import { Card, Avatar,Paragraph } from "react-native-paper"
 import { MAPS_API_KEY } from "@env";
 
 import loadingImg from "../../assets/loading.jpg"
@@ -33,41 +33,41 @@ export default (props) => {
 
   useEffect(() => {
     fetch(imageLookupURL)
-    .then(response => response.url)
-    .then(data => {
-      setImageURL(data)
-      console.log(imageURL)
-    })
-    .catch(err => console.error(err))
-    // .then(data => image = data);
+      .then(response => response.url)
+      .then(data => {
+        setImageURL(data)
+      })
+      .catch(err => console.error(err))
   }, []);
+
   return(
-      <Card 
+    <Card
       mode="outlined"
       style={styles.card}
-      onPress={() => navigation.navigate("Edit Trip", {trip: item})} >
-      {imageURL == "none" ? <Card.Cover source={loadingImg} />: <Card.Cover source={{uri: imageURL}} />}
-      <Card.Title 
-      title={item.routeName ? (item.routeName ) : (item.place )}
-      subtitle={date + " - " + buddyDesc}
-      subtitleNumberOfLines={3}
-      right={(props) => {
-        if (hasBuddy)
-          return (
-            <View style={{ justifyContent: 'center', padding: '1.5%'}}>
-              <Avatar.Image {...props} size={60} source={{uri: item.otherAvatarURL[user.uid]}} />
-            </View>
-          );
-      }}
-    />
-    <Card.Content>
-      <Paragraph style={{fontStyle: "italic"}}>{`Destination: ${placeDesc}`}</Paragraph>
-      {item.notes !== "" && 
-        <Paragraph>{`Notes: ${item.notes}`}</Paragraph>
-      }
-    </Card.Content>
-      
-      </Card>
+      onPress={() => navigation.navigate("Edit Trip", {trip: item})}
+    >
+      {imageURL === "none" ? <Card.Cover source={loadingImg} /> : <Card.Cover source={{uri: imageURL}} />}
+
+      <Card.Title
+        title={item.routeName ? (item.routeName ) : (item.place )}
+        subtitle={date + " - " + buddyDesc}
+        subtitleNumberOfLines={3}
+        right={(props) => {
+          if (hasBuddy)
+            return (
+              <View style={{ justifyContent: 'center', padding: '1.5%'}}>
+                <Avatar.Image {...props} size={60} source={{uri: item.otherAvatarURL[user.uid]}} />
+              </View>
+            );
+        }}
+      />
+
+      <Card.Content>
+        <Paragraph style={{fontStyle: "italic"}}>{`Destination: ${placeDesc}`}</Paragraph>
+        {item.notes !== "" && <Paragraph>{`Notes: ${item.notes}`}</Paragraph>}
+      </Card.Content>
+
+    </Card>
   )
 }
 

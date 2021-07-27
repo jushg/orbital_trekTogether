@@ -21,37 +21,18 @@ import CarouselPhotoCard from "../component/CarouselPhotoCard";
 export default ({navigation, route}) => {
 
   const sliderWidth = useWindowDimensions().width;
-  const itemWidth = sliderWidth*0.96;
+  const itemWidth = sliderWidth * 0.96;
   const itemHeight = itemWidth * 9/16;
-  const onPressPhotos = () => {
-    navigation.navigate("Edit Photos", {trip: trip})
-  }
 
-  const onPressText = () => {
-    navigation.navigate("Edit Text", {trip: trip})
-  }
-  const [selectedItem, setSelectedItem] = useState(null);
-  const modalHeight = useWindowDimensions().height * 3/5;
-  const modalWidth = useWindowDimensions().width * 9/10;
-
-  
-  const foo = ({item, index}) => {
-    // console.log("render " + index + " view");
-    return <CarouselPhotoCard item={item} onPress={setSelectedItem} />;
-  }
-
-  const trip = route.params.trip;
-  const otherName = route.params.otherName;
+  const {trip, otherName} = route.params;
   const {user} = useContext(UserContext);
   const [journal, setJournal] = useState(null);
   const [thumbnailUrl, setThumbnailUrl] = useState(null);
-  const [buddyID,setBuddyID] = useState(null)
 
-  const getBuddyID = (members) => {
-    if(members.length > 1) {
-      members[0] === user.uid ? setBuddyID(members[1]):setBuddyID(members[0])
-    }
-  }
+  const buddyID = trip.members.length === 1
+    ? null
+    : ( trip.members[0] === user.uid ? trip.members[1] : trip.members[0] );
+
   useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
@@ -60,12 +41,6 @@ export default ({navigation, route}) => {
     });
   }, [navigation]);
 
-  
-  const onPressDelete = async () => {
-    getBuddyID(trip.members)
-    await Trip.deleteTrip(trip.id, buddyID , user.displayName);
-    navigation.navigate("Past");
-  };
   useEffect(() => {
     const unsubscribeJournalListener = firebase.firestore()
       .collection('journals')
@@ -79,9 +54,22 @@ export default ({navigation, route}) => {
     return () => unsubscribeJournalListener();
   }, []);
 
+  const onPressDelete = async () => {
+    await Trip.deleteTrip(trip.id, buddyID, user.displayName);
+    navigation.navigate("Past");
+  };
+
   const onPressThumbnail = () => {
     if (thumbnailUrl)
       navigation.navigate("Photo Carousel", {'photos': journal.photos});
+  }
+
+  const onPressPhotos = () => {
+    navigation.navigate("Edit Photos", {trip: trip})
+  }
+
+  const onPressText = () => {
+    navigation.navigate("Edit Text", {trip: trip})
   }
 
   return (
@@ -111,10 +99,10 @@ export default ({navigation, route}) => {
 
       <ScrollView style={styles.container}>
         <Card style={styles.card}>
-          <Card.Title 
-            title={trip.routeName?trip.routeName:trip.place} 
+          <Card.Title
+            title={trip.routeName?trip.routeName:trip.place}
             titleStyle={{color:colorConst.accent}}
-            subtitle={trip.date.toDate().toLocaleDateString()} 
+            subtitle={trip.date.toDate().toLocaleDateString()}
             subtitleNumberOfLines={4}
             right={(props) => {
               if (trip.members.length === 2)
@@ -123,15 +111,15 @@ export default ({navigation, route}) => {
                     <Avatar.Image {...props} size={50} source={{uri: trip.otherAvatarURL[user.uid]}}/>
                   </View>
                 );
-            }} 
+            }}
             />
             <Card.Content>
               <Paragraph>{otherName ? otherName : "Solo trip"}</Paragraph>
               <Caption style={{fontStyle: 'italic', color: 'green'}}>Latest update: {journal.lastEditedBy}</Caption>
             </Card.Content>
-          </Card> 
-          
-        
+          </Card>
+
+
         {/* <Title> {trip.routeName?trip.routeName:trip.place}</Title>
         <Subheading>{trip.date.toDate().toLocaleDateString()}</Subheading>
         <Subheading>{otherName ? "Buddy: " + otherName : "Solo trip"}</Subheading>
@@ -158,9 +146,9 @@ export default ({navigation, route}) => {
         {/*  { thumbnailUrl*/}
         {/*  ? <Image*/}
         {/*    // source={require("../.. <Card>
-        <Card.Title 
-          title={trip.routeName?trip.routeName:trip.place} 
-          subtitle={trip.date.toDate().toLocaleDateString()} 
+        <Card.Title
+          title={trip.routeName?trip.routeName:trip.place}
+          subtitle={trip.date.toDate().toLocaleDateString()}
           subtitleNumberOfLines={4}
           // right={(props) => {
           //   if (hasBuddy)
@@ -171,7 +159,7 @@ export default ({navigation, route}) => {
           //         <Avatar.Image {...props} size={50} source={{uri: item.otherAvatarURL[user.uid]}}/>
           //       </View>
           //     );
-          // }} 
+          // }}
           />
         <Card.Content>
           <Paragraph>{otherName ? "Buddy: " + otherName : "Solo trip"}</Paragraph>
@@ -189,7 +177,7 @@ export default ({navigation, route}) => {
         {/*<Text style={styles.thumbnailCaption}>Click the above image to view photos</Text>*/}
 
         <Card onPress={onPressThumbnail} style={styles.card} >
-          <Card.Title 
+          <Card.Title
             title="Your photos"
             subtitle={thumbnailUrl?"":"You have no photos yet!"}
             right={() => <IconButton icon="camera-plus-outline" onPress={onPressPhotos} size={25}/>}
@@ -199,18 +187,18 @@ export default ({navigation, route}) => {
             source={{uri: thumbnailUrl}}
             resizeMode={'cover'}
             style={{ margin: "1%", borderWidth: 1, height:itemHeight, width:itemWidth}}
-          /> 
+          />
           }
         </Card>
         <Card style={styles.card}>
-          <Card.Title 
+          <Card.Title
             title="Your notes"
             right={() => <IconButton icon="pencil-outline" onPress={onPressText} size={25}/>}
           />
           <Card.Content>
-            <Paragraph style={styles.textBox}>{journal.text? journal.text: "Wanna write some memories down?"}</Paragraph>
+            <Paragraph style={styles.textBox}>{journal.text? journal.text: "No notes yet"}</Paragraph>
           </Card.Content>
-        </Card>     
+        </Card>
       </ScrollView>
       </>
     }

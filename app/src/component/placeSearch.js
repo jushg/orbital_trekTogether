@@ -47,9 +47,7 @@ export default (props) => {
             props.setPlace(arr);
             if(props.moreDetails && details.photos[0].photo_reference != null) {
                 const refArr = [...props.coverPhotoRef, details.photos[0].photo_reference];
-                console.log(details.photos[0].photo_reference)
                 props.setCoverPhotoRef(refArr);
-                console.log(props.coverPhotoRef)
                 // props.coverPhotoRef == null && props.setCoverPhotoRef(details)
             }
         }}

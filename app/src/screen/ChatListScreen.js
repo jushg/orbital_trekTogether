@@ -59,6 +59,7 @@ export default ({navigation}) => {
           Trip.deletePendingTripToUnmatchedBuddy(uid, otherID),
           Trip.deletePendingTripFromUnmatchedBuddy(uid, otherID)
         ]).then(console.log);
+
         showMessage({
           "message": `Unmatched with ${otherName}`,
           type: "info", icon: "auto", floating: true
