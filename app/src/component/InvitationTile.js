@@ -9,35 +9,12 @@ const InvitationTile = (props) => {
 
   const [accepted, setAccepted] = useState(null);
   const [declined, setDeclined] = useState(null);
+  const titlePrefix = trip.date.toDate() < new Date(Date.now()) ? "Journal collab: " : "New trip: ";
 
-  // return (
-  //   <View style={styles.invitation}>
-  //     <Text>From: {trip.otherMemberName[trip.inviterID]}</Text>
-  //     <Text>Date: {trip.date.toDate().toLocaleDateString()}</Text>
-  //     <Text>Place: {Array.isArray(trip.place) ? trip.place.join(", ") : trip.place}</Text>
-
-  //     {accepted && <Text style={{color: 'green', fontWeight: 'bold'}}>Accepted</Text>}
-  //     {declined && <Text style={{color: 'red', fontWeight: 'bold'}}>Declined</Text>}
-  //     {!accepted && !declined &&
-  //     <>
-  //       <Button icon={'check'} onPress={() => {
-  //         setAccepted(true);
-  //         setDeclined(false);
-  //         onAccept(trip);
-  //       }}>Accept</Button>
-  //       <Button icon={'delete'} onPress={() => {
-  //         setAccepted(false);
-  //         setDeclined(true);
-  //         onDecline(trip);
-  //       }}>Decline</Button>
-  //     </>
-  //     }
-  //   </View>
-  // )
   return(
     <Card style={styles.invitation}>
       <Card.Title
-      title={`From: ${trip.otherMemberName[trip.inviterID]}`}
+      title={titlePrefix + trip.otherMemberName[trip.inviterID]}
       subtitle={`Date: ${trip.date.toDate().toLocaleDateString()}`}
       right={(props) => {
           return (
@@ -45,12 +22,12 @@ const InvitationTile = (props) => {
               <Avatar.Image {...props} size={60} source={{uri: trip.otherAvatarURL[trip.inviterID]}} />
             </View>
           );
-      }}
+        }}
       />
       <Card.Content>
         <Paragraph>Place: {Array.isArray(trip.place) ? trip.place.join(", ") : trip.place}</Paragraph>
-        {accepted && <Text style={{color: 'green', fontWeight: 'bold'}}>Accepted</Text>}
-        {declined && <Text style={{color: 'red', fontWeight: 'bold'}}>Declined</Text>}
+        {accepted && <Text style={styles.accept}>Accepted</Text>}
+        {declined && <Text style={styles.decline}>Declined</Text>}
       </Card.Content>
       {!accepted && !declined &&
       <Card.Actions style={{justifyContent:"flex-end"}}>
@@ -65,7 +42,7 @@ const InvitationTile = (props) => {
           onDecline(trip);
         }}>Decline</Button>
       </Card.Actions>
-    }
+      }
     </Card>
   )
 };
@@ -78,6 +55,16 @@ const styles = StyleSheet.create({
     borderColor: "black",
     elevation: 10,
     marginVertical: 10
+  },
+  accept: {
+    color: 'green',
+    fontWeight: 'bold',
+    marginBottom: 5
+  },
+  decline: {
+    color: 'red',
+    fontWeight: 'bold',
+    marginBottom: 5
   }
 });
 

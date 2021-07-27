@@ -20,7 +20,7 @@ export default ({navigation}) => {
     const unsubscribe = firebase.firestore()
       .collection("trips")
       .where("inviting.uid", "==", user.uid)
-      .where("date", ">=", today)
+      // .where("date", ">=", today)
       .orderBy("date", "asc")
       .onSnapshot(querySnapshot => {
         const results = querySnapshot.docs.map(doc => {
@@ -52,7 +52,6 @@ export default ({navigation}) => {
   }, [acceptedTrips, declinedTrips]);
 
   const renderInvitation = ({item, index}) => {
-    // console.log("render invitation " + index);
     return (
       <InvitationTile
         trip={item}
