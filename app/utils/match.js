@@ -132,8 +132,7 @@ export const removeBuddy = async (user, oldBuddy) => {
   }
 };
 
-export const unmatchBetween = async (user, otherID) => {
-  const uid = user.uid;
+export const unmatchBetween = async (uid, otherID) => {
   const chatID = uid < otherID ? `${uid}_${otherID}` : `${otherID}_${uid}`;
   try {
     await Promise.all([
@@ -141,7 +140,7 @@ export const unmatchBetween = async (user, otherID) => {
       removeBuddy(uid, otherID),
       removeBuddy(otherID, uid),
       // deactivate chat
-      firebase.firestore().collection("chats")
+      firebaseApp.firestore().collection("chats")
         .doc(chatID)
         .update({isActive: false})
     ]);

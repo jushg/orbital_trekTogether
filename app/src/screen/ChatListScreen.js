@@ -51,11 +51,13 @@ export default ({navigation}) => {
 
   function renderRightActions(otherName, otherID) {
     const handleUnmatch = async () => {
-      // Unmatch + Delete all trips with ex-buddy
+      const uid = user.uid;
       try {
         Promise.all([
-          Match.unmatchBetween(user, otherID),
-          Trip.deleteFutureTripWithUnmatchedBuddy(user, otherID)
+          Match.unmatchBetween(uid, otherID),
+          Trip.deleteFutureTripWithUnmatchedBuddy(uid, otherID),
+          Trip.deletePendingTripToUnmatchedBuddy(uid, otherID),
+          Trip.deletePendingTripFromUnmatchedBuddy(uid, otherID)
         ]).then(console.log);
         showMessage({
           "message": `Unmatched with ${otherName}`,

@@ -24,19 +24,21 @@ export const DashboardHeader = ({navigation}) => {
 
 export const MessengerButtonHeader = ({navigation, otherName, otherID}) => {
   const {user} = useContext(UserContext);
+  const uid = user.uid;
   const [visible, setVisible] = useState(false);
   const openMenu = () => setVisible(true);
   const closeMenu = () => setVisible(false);
 
   const handleUnmatch = async () => {
-    // Unmatch + Delete all trips with ex-buddy
     try {
       const result = await Promise.all([
         Match.unmatchBetween(user, otherID),
-        Trip.deleteFutureTripWithUnmatchedBuddy(user, otherID)
+        Trip.deleteFutureTripWithUnmatchedBuddy(uid, otherID),
+        Trip.deletePendingTripToUnmatchedBuddy(uid, otherID),
+        Trip.deletePendingTripFromUnmatchedBuddy(uid, otherID)
       ]);
       console.log(result);
-      navigation.navigate("Message");   // bring user back to chat list
+      navigation.navigate("Messages");   // bring user back to chat list
       showMessage({
         "message": `Unmatched with ${otherName}`,
         type: "info", icon: "auto", floating: true

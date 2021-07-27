@@ -152,9 +152,8 @@ export const deleteTrip = async (tripID, originalBuddyID, currentUsername) => {
 };
 
 
-export const deleteFutureTripWithUnmatchedBuddy = async (user, otherID) => {
+export const deleteFutureTripWithUnmatchedBuddy = async (uid, otherID) => {
   try {
-    const uid = user.uid;
     const today = new Date(new Date().toDateString());
     const querySnapshot = await db.collection("trips")
       .where("members", "==", [uid, otherID].sort())
@@ -164,6 +163,34 @@ export const deleteFutureTripWithUnmatchedBuddy = async (user, otherID) => {
     return "deleted future trips with ex buddy";
   } catch (e) {
     console.error(e);
+  }
+};
+
+
+export const deletePendingTripToUnmatchedBuddy = async (uid, otherID) => {
+  try {
+    const querySnapshot = await db.collection("trips")
+      .where("members", "==", [uid,])
+      .where("inviting.uid", "==", otherID)
+      .get();
+    querySnapshot.forEach(doc => doc.ref.delete());
+    return "deleted pending trips to ex buddy";
+  } catch (e) {
+    console.error("trip.js - Delete pending to " + e);
+  }
+};
+
+
+export const deletePendingTripFromUnmatchedBuddy = async (uid, otherID) => {
+  try {
+    const querySnapshot = await db.collection("trips")
+      .where("members", "==", [otherID,])
+      .where("inviting.uid", "==", uid)
+      .get();
+    querySnapshot.forEach(doc => doc.ref.delete());
+    return "deleted pending trips from ex buddy";
+  } catch (e) {
+    console.error("trip.js - Delete pending from " + e);
   }
 };
 
