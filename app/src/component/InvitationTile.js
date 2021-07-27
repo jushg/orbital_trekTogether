@@ -9,13 +9,14 @@ const InvitationTile = (props) => {
 
   const [accepted, setAccepted] = useState(null);
   const [declined, setDeclined] = useState(null);
-  const titlePrefix = trip.date.toDate() < new Date(Date.now()) ? "Journal collab: " : "New trip: ";
+  const date = trip.date.toDate();
+  const titlePrefix = date < new Date(new Date().toDateString()) ? "Journal collab: " : "New trip: ";
 
   return(
     <Card style={styles.invitation}>
       <Card.Title
       title={titlePrefix + trip.otherMemberName[trip.inviterID]}
-      subtitle={`Date: ${trip.date.toDate().toLocaleDateString()}`}
+      subtitle={`Date: ${date.toLocaleDateString()}`}
       right={(props) => {
           return (
             <View style={{ justifyContent: 'center', padding: '1.5%' }}>
