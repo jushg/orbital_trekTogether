@@ -2,8 +2,10 @@
 
 [![runs with expo](https://img.shields.io/badge/Runs%20with%20Expo-4630EB.svg?style=flat&logo=EXPO&labelColor=f3f3f3&logoColor=000)](https://expo.io/@orbital-trektogether/trek-together)
 
+**The current demo may not work as we have disabled our Google Map API to avoid additional expenses**
+
 A platform for hikers to connect, plan and record their hiking experiences.
-> TrekTogether is a project for **[NUS Orbital 2021](https://orbital.comp.nus.edu.sg)** by **[Ngo Ngoc Phuong Uyen](https://github.com/uyencfi)** &amp; **[Hoang Trong Tan](https://github.com/jushg)**. This is an advanced-level project, **Apollo 11**
+> TrekTogether is a project for **[NUS Orbital 2021](https://orbital.comp.nus.edu.sg)** by _[Ngo Ngoc Phuong Uyen](https://github.com/uyencfi)_&amp; _[Hoang Trong Tan](https://github.com/jushg)_ . This is an advanced-level project, **Apollo 11**
 
 
 ## Project Scope

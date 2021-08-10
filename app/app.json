@@ -4,7 +4,7 @@
     "scheme": "myapp",
     "name": "trek-together",
     "slug": "trek-together",
-    "version": "2.0.1",
+    "version": "3.0.2",
     "orientation": "portrait",
     "icon": "./assets/app-icon.png",
     "splash": {
@@ -29,7 +29,7 @@
         "backgroundColor": "#FFFFFF"
       },
       "package": "com.orbital.trektogether",
-      "versionCode": 4
+      "versionCode": 7
     },
     "web": {
       "favicon": "./assets/favicon.png"
