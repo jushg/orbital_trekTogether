@@ -13,7 +13,7 @@ const db = firebaseApp.firestore().collection("users");
 export const getAllUsers = async () => {
   try {
     let snapshot = await db.get();
-    console.log(`3. match.js/getAllUsers()   snapshotSize=${snapshot.size}`);
+    // console.log(`3. match.js/getAllUsers()   snapshotSize=${snapshot.size}`);
     snapshot = snapshot.docs;
     return snapshot;
   } catch (err) {

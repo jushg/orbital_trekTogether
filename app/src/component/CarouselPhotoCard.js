@@ -7,7 +7,7 @@ const CarouselPhotoCard = ({item, onPress}) => {
   const cardWidth = windowWidth - 2 * styles.container.padding;
   const cardHeight = cardWidth * 9/16;
 
-  console.log("render new component");
+  // console.log("render new component");
 
   return (
     <Pressable style={styles.card} onPress={() => onPress(item)}>
@@ -37,10 +37,10 @@ const styles = StyleSheet.create({
   },
 });
 
-let count = 1;
+// let count = 1;
 const compareProps = (prev, next) => {
-  console.log(count);
-  count++;
+  // console.log(count);
+  // count++;
   return prev.item === next.item;
 }
 

@@ -58,11 +58,11 @@ export default ({navigation}) => {
         index={index}
         onAccept={(trip) => {
           acceptedTrips.current.push(trip);
-          console.log("Accepted: " + acceptedTrips.current.length);
+          // console.log("Accepted: " + acceptedTrips.current.length);
         }}
         onDecline={(trip) => {
           declinedTrips.current.push(trip);
-          console.log("Declined: " + declinedTrips.current.length);
+          // console.log("Declined: " + declinedTrips.current.length);
         }}
       />
     )

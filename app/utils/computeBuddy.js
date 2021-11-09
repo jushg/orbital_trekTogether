@@ -69,26 +69,26 @@ const userComparator = (u1, u2) => { return scores.get(u2.id) - scores.get(u1.id
 const processPotentialBuddies = async (uid) => {
   const currData = await Match.getUserData(uid);
   try {
-    console.log("2. getting all users...")
+    // console.log("2. getting all users...")
     // an array of documents (not data yet!)
     let temp = await Match.getAllUsers();
 
-    console.log(`4. potentialBuddies pre-filter= ${temp.length}`);
+    // console.log(`4. potentialBuddies pre-filter= ${temp.length}`);
     let potentialBuddies = temp.filter(doc => doc.id !== uid
         && doc.data().isProfileCompleted
         && !currData.buddies.includes(doc.id)
         && !currData.like.includes(doc.id)
         && !currData.pass.includes(doc.id)
     )
-    console.log(`5. potentialBuddies post-filter= ${potentialBuddies.length}`);
+    // console.log(`5. potentialBuddies post-filter= ${potentialBuddies.length}`);
 
     potentialBuddies.forEach(doc => {
       scores.set(doc.id, computeScore(doc.data(), currData));
     })
 
-    console.log("begin sorting...")
+    // console.log("begin sorting...")
     potentialBuddies.sort(userComparator)
-    console.log("finish sorting.")
+    // console.log("finish sorting.")
 
     return potentialBuddies;
   } catch (err) {
@@ -106,19 +106,19 @@ function shuffleArray(array, from, to) {
 }
 
 export const getAllPotentialBuddies = async (user) => {
-  console.log("1. getAllPotentialBuddies of " + user.displayName)
+  // console.log("1. getAllPotentialBuddies of " + user.displayName)
   try {
     let potentialBuddies = await processPotentialBuddies(user.uid);
     // partition of 10 and shuffle
-    console.log("begin shuffling...")
+    // console.log("begin shuffling...")
     let index = 0;
     while (index < potentialBuddies.length) {
       shuffleArray(potentialBuddies, index, Math.min(index + 10, potentialBuddies.length));
       index += 10;
     }
-    console.log("finish shuffling.")
+    // console.log("finish shuffling.")
     return potentialBuddies;
   } catch (err) {
-    console.log("compute/getAllPotentialBuddies: " + err);
+    // console.log("compute/getAllPotentialBuddies: " + err);
   }
 }

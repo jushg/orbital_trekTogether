@@ -119,7 +119,7 @@ export default ({navigation}) => {
                   let newDate = [...date];
                   newDate[index] = !newDate[index];
                   setDate(newDate);
-                  console.log('Clicked chip '+ item)
+                  // console.log('Clicked chip '+ item)
                 }}> { item }
               </Chip>
             </View>

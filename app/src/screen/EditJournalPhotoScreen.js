@@ -40,7 +40,7 @@ export default ({navigation, route}) => {
       isSelected
         ? photosSelected.current.add(uri)
         : photosSelected.current.delete(uri);
-      console.log("tick total: " + photosSelected.current.size);
+      // console.log("tick total: " + photosSelected.current.size);
     },
     [photosSelected.current]
   );

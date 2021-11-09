@@ -21,7 +21,7 @@ export default ({navigation}) => {
   useEffect(() => {
     const setUpPushNotifications = async () => {
       await Notifications.registerForPushNotificationsAsync(user);
-      // Notifications.setForegroundNotificationHandler();
+      Notifications.setForegroundNotificationHandler();
     };
     setUpPushNotifications();
   }, []);
@@ -64,7 +64,7 @@ export default ({navigation}) => {
           
             
           </View>
-          <View style={styles.verticalLine}></View>
+          <View style={styles.verticalLine} />
           <View style={{flex:1 , alignItems:"center"}}>
           <Subheading style={{fontWeight:'bold'}}>{computeDate(data.date)} free day{computeDate(data.date) > 1 ? "s":" "}</Subheading>
             {data.date[0] && <Paragraph>Monday</Paragraph>}
@@ -89,14 +89,14 @@ export default ({navigation}) => {
 
   function handleSwipeLeft(cardIndex) {
     const other = buddies[cardIndex];
-    Match.addPassUser(user.uid, other.id).then(console.log);
+    Match.addPassUser(user.uid, other.id);
   }
 
   async function handleSwipeRight(cardIndex) {
     const other = buddies[cardIndex];
     const otherData = other.data();
     if (!otherData.like.includes(user.uid)) {
-      Match.addLikeUser(user.uid, other.id).then(console.log);
+      Match.addLikeUser(user.uid, other.id);
     } else {    // mutual like
       await Promise.all([
         Match.removeLikeUser(other.id, user.uid),
@@ -129,7 +129,7 @@ export default ({navigation}) => {
             verticalSwipe={false}
             cards={buddies}
             renderCard={renderCard}
-            onSwipedLeft={handleSwipeLeft}
+            // onSwipedLeft={handleSwipeLeft}
             onSwipedRight={handleSwipeRight}
             onSwipedAll={() => setSwipedAll(true)}
             cardIndex={0}
